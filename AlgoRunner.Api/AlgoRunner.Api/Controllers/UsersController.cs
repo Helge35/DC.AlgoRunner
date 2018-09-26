@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AlgoRunner.Api.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +23,10 @@ namespace AlgoRunner.Api.Controllers
         // GET: api/<controller>
         [Authorize]
         [HttpGet]
-        public ActionResult<string> Get()
+        public ActionResult<User> Get()
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
-            return userName;
+            return Ok(new User { Id = 0, Name = userName });
         }
 
         private IHttpContextAccessor _accessor;

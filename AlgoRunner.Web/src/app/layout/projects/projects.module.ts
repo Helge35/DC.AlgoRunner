@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ProjectsdRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
 import { ProjectIcoComponent } from './project-ico/project-ico.component';
+import { ProjectsService } from './projects.service';
 
 import { PageHeaderModule } from '../../shared';
 
@@ -18,7 +19,8 @@ import { PageHeaderModule } from '../../shared';
     NgbModule.forRoot(),
     PageHeaderModule,
   ],
-  declarations: [ProjectsComponent, ProjectIcoComponent]
+  declarations: [ProjectsComponent, ProjectIcoComponent],
+  providers:[ProjectsService]
 })
 export class ProjectsModule { }
 

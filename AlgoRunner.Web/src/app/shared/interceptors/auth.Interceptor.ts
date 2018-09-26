@@ -12,7 +12,7 @@ export class WinAuthInterceptor implements HttpInterceptor {
 
         request = request.clone({
             withCredentials: true,
-            responseType: 'text'
+           /* responseType: 'text'*/
         });
         return next.handle(request);
     }

@@ -1,42 +1,24 @@
-/*import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { DashboardInfo } from './models/dashboardInfo';
 
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class ReportsService {
 
-  reportsUrl: string = "localhost:57017/api/reports";
-  selectedReport: Observable<Report>;
+export class ProjectsService {
 
-  getReportsList(): Observable<Report[]> {
-    //return of(REPORTS);
-    return this.http.get<Report[]>(this.reportsUrl)
-      .pipe(
-        catchError(this.handleError('getReportsList', []))
-      );
 
+  apiUrl: string = environment.apiUrl + "projects";
+
+  getDashboardInfo(): Observable<DashboardInfo> {
+    return this._http.get<DashboardInfo>(this.apiUrl);
   }
 
-  getReport(id: number): void {
-    this.selectedReport = of(REPORTS.find(rep => rep.id === id));
+  constructor(private _http: HttpClient) {
   }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      return of(result as T);
-    };
-  }
-
-
-  constructor(private http: HttpClient) { }
-}*/
+}
