@@ -10,6 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 
+import { AuthService } from './shared/services/auth.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { WinAuthInterceptor } from './shared/interceptors/auth.Interceptor';
+
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -37,7 +41,11 @@ export const createTranslateLoader = (http: HttpClient) => {
         AppRoutingModule
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard],
+    providers: [AuthGuard, AuthService, {
+        provide: HTTP_INTERCEPTORS,
+        useClass: WinAuthInterceptor,
+        multi: true
+      }],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
