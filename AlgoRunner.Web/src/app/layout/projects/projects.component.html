@@ -1,3 +1,61 @@
-<p>
-  projects works!
-</p>
+<div class="row">
+    <div class="col-xl-6 text-xs-center">
+        <div class="alert alert-info">
+            <strong> Favorites:</strong>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <span *ngFor='let proj of favoriteProjects' style="padding: 10px; float: left">
+                    <project-ico [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name" [isFavorite]="true"></project-ico>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-6 text-xs-center">
+        <div class="alert alert-info">
+            <strong> Resent:</strong>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <span *ngFor='let proj of resentProjects' style="padding: 10px; float: left">
+                    <project-ico [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name"></project-ico>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row" style="padding-top: 50px">
+    <div class="col-xl-6 text-xs-center">
+        <div class="alert alert-warning">
+            <strong> All:</strong>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <span *ngFor='let proj of projects' style="padding: 10px; float: left">
+                    <project-ico [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name"></project-ico>
+                </span>
+            </div>
+            <div class="card-footer">
+                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="progectsTotalItems" [pageSize]="12"
+                    [(page)]="projectsCurrentpage" (pageChange)="loadPage($event)"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-6 text-xs-center">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Execution</div>
+                <div class="card-body">
+       
+                    <p class="card-text">There are no projects executed.</p>
+                </div>
+            </div>
+    </div>
+</div>
