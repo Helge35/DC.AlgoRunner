@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlgoRunner.Api.Controllers
 {
-   // [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
 
