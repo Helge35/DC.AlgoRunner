@@ -4,4 +4,5 @@ export class DashboardInfo {
   favoriteList: Project[];
   resentList: Project[];
   allList: Project[];
+  totalSize : number;
 }

@@ -1,53 +1,55 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from './models/project';
-import { DashboardInfo } from './models/dashboardInfo';
 import { ProjectsService } from './projects.service';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss']
+  styleUrls: ['./projects.component.scss'],
 })
 export class ProjectsComponent implements OnInit {
 
-  favoriteProjects: Project[] 
-  resentProjects: Project[] 
-  projects: Project[] 
+  favoriteProjects: Project[]
+  resentProjects: Project[]
+  projects: Project[]
 
   projectsCurrentpage: number
   progectsTotalItems: number
-  previousPage: number
 
-  loadPage(page: number) {
-    if (page !== this.previousPage) {
-      this.previousPage = page;
-      // this.loadData();
+
+
+  onFavoriteChanged(proj: Project, ) {
+
+    if (proj.isFavorite == true)//remove
+    {
+      this.favoriteProjects = this.favoriteProjects.filter(item => item.id !== proj.id);
+    }
+    else//add
+    {
+      this.favoriteProjects.push(proj);
     }
   }
 
+  loadPage(page: number) {
+    this._service.loadProjectData(page).subscribe(info => {
+      this.projects = info.allList;
+      this.progectsTotalItems = info.totalSize;
+    }, error => { console.log('Error: ' + error.message); });
+  }
 
-  /*loadData() {
-    this.dataService.query({
-      page: this.page - 1,
-      size: this.itemsPerPage,
-    }).subscribe(
-      (res: Response) => this.onSuccess(res.json(), res.headers),
-      (res: Response) => this.onError(res.json())
-      )
-  }*/
 
   getDashboardInfo(): void {
     this._service.getDashboardInfo().subscribe(info => {
       this.projects = info.allList;
       this.favoriteProjects = info.favoriteList;
       this.resentProjects = info.resentList;
+      this.progectsTotalItems = info.totalSize;
     }, error => { console.log('Error: ' + error.message); });
   }
 
   constructor(private _service: ProjectsService) {
     this.projectsCurrentpage = 1;
-    this.previousPage = 1;
-    this.progectsTotalItems = 50;
+
   }
 
   ngOnInit() {

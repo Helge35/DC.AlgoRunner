@@ -15,7 +15,7 @@
             <span><i class="fa fa-arrow-circle-right"></i></span>
         </a>
 
-        <a href="javascript:void(0)" class="float-left card-inverse" >
+        <a href="javascript:void(0)" class="float-left card-inverse" (click)="addToFavorite()" [style.visibility]="isFavoriteVisible ? 'visible' : 'hidden'">
                 <span><i [ngClass]="[isFavorite? 'fa fa-star' : 'fa fa-star-o']"></i></span>
             </a>
 

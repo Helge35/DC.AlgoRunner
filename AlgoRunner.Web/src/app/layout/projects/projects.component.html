@@ -6,7 +6,9 @@
         <div class="card mb-3">
             <div class="card-body">
                 <span *ngFor='let proj of favoriteProjects' style="padding: 10px; float: left">
-                    <project-ico [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name" [isFavorite]="true"></project-ico>
+                    <project-ico [id]="proj.id" [bgClass]="'warning'" [icon]="'fa-tasks'"
+                     [title]="proj.name" [isFavorite]="true"  [isFavoriteList]="true"
+                     (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
                 </span>
             </div>
         </div>
@@ -21,7 +23,9 @@
         <div class="card mb-3">
             <div class="card-body">
                 <span *ngFor='let proj of resentProjects' style="padding: 10px; float: left">
-                    <project-ico [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name"></project-ico>
+                    <project-ico [id]="proj.id" [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name"
+                    [isFavorite]="proj.isFavorite" [isFavoriteList]="false"
+                    (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
                 </span>
             </div>
         </div>
@@ -35,14 +39,16 @@
         <div class="alert alert-warning">
             <strong> All:</strong>
         </div>
-        <div class="card mb-3">
+        <div class="card mb-3" style="height: 420px">
             <div class="card-body">
                 <span *ngFor='let proj of projects' style="padding: 10px; float: left">
-                    <project-ico [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name"></project-ico>
+                    <project-ico [id]="proj.id" [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name"
+                    [isFavorite]="proj.isFavorite" [isFavoriteList]="false"
+                    (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
                 </span>
             </div>
             <div class="card-footer">
-                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="progectsTotalItems" [pageSize]="12"
+                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="progectsTotalItems" [pageSize]="8"
                     [(page)]="projectsCurrentpage" (pageChange)="loadPage($event)"></ngb-pagination>
             </div>
         </div>

@@ -10,5 +10,7 @@ namespace AlgoRunner.Api.Entities
         public IEnumerable<Project> FavoriteList { get; set; }
         public IEnumerable<Project> ResentList { get; set; }
         public IEnumerable<Project> AllList { get; set; }
+
+        public int TotalSize { get; set; }
     }
 }
