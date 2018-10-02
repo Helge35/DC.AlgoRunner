@@ -11,6 +11,7 @@ const routes: Routes = [
             { path: '', redirectTo: 'projects', pathMatch: 'prefix' },
             { path: 'projects', loadChildren: './projects/projects.module#ProjectsModule' },
             { path: 'project/:id', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
+            { path: 'project', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
 
 
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
