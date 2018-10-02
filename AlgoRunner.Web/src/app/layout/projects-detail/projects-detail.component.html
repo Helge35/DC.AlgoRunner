@@ -1,9 +1,12 @@
-  
-  <div>
-  <a href="javascript:void(0)" class="float-left card-inverse" [routerLink]="['/projects']">Back</a>
+<div class="row">
+  <a href="javascript:void(0)" class="float-left card-inverse" [routerLink]="['/projects']">Back to projects</a>
 </div>
-<div style="padding-top: 100px">
-    projects-detail works!
+<div class="row alert alert-info mb-0">
+  <h2> {{project.name}}</h2>
 </div>
 
-
+<div class="row">
+  <div class="col-xl-12 text-xs-center ">
+      {{project.id}} -  {{project.name}}
+  </div>
+</div>

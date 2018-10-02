@@ -10,7 +10,7 @@ const routes: Routes = [
             //{ path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
             { path: '', redirectTo: 'projects', pathMatch: 'prefix' },
             { path: 'projects', loadChildren: './projects/projects.module#ProjectsModule' },
-            { path: 'projectDetail', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
+            { path: 'project/:id', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
 
 
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },

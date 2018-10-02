@@ -52,5 +52,12 @@ namespace AlgoRunner.Api.Controllers
             dashboard.TotalSize = totalSize;
             return Ok(dashboard);
         }
+
+        [HttpGet("GetProject/{id}")]
+        public ActionResult<Project> GetProject(int id)
+        {
+           var project = _repository.GetProject(id);
+            return Ok(project);
+        }
     }
 }

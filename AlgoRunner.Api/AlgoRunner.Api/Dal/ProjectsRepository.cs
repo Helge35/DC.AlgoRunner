@@ -34,6 +34,11 @@ namespace AlgoRunner.Api.Dal
                };
         }
 
+        internal Project GetProject(int id)
+        {
+            return new Project { Id = id, Name = "Project " + id, LastExecutionDate = new DateTime(2018, 1, 1), IsFavorite = true };
+        }
+
         private List<Project> projects;
 
         internal void AddToFavorite(int projectID)
