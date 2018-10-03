@@ -5,13 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { ProjectsDetailRoutingModule } from './projects-detail-routing.module';
 import { ProjectsDetailComponent } from './projects-detail.component';
 
-import { PageHeaderModule } from '../../shared';
+import { ProjectsPageHeaderModule } from '../../shared/modules/projects-page-header/projects-page-header.module';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ProjectsDetailRoutingModule,
-    PageHeaderModule,
+    ProjectsPageHeaderModule,
   ],
   declarations: [ProjectsDetailComponent,]
 })

@@ -1,12 +1,9 @@
-<div class="row">
-  <a href="javascript:void(0)" class="float-left card-inverse" [routerLink]="['/projects']">Back to projects</a>
-</div>
-<div class="row alert alert-info mb-0">
-  <h2> {{project.name}}</h2>
-</div>
+<projects-page-header [header]="project.name"></projects-page-header>
 
-<div class="row">
-  <div class="col-xl-12 text-xs-center ">
-      {{project.id}} -  {{project.name}}
-  </div>
+<div class="col-xl-12 text-xs-center">
+    <div class="card mb-3">
+        <div class="card-body">
+            {{project.id}} - {{project.name}}
+        </div>
+    </div>
 </div>
