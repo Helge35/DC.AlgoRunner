@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { AlgorithmComponent } from './algorithm.component';
-
+import { AlgoIcoComponent } from './algo-ico.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    FormsModule
   ],
-  declarations: [AlgorithmComponent]
+  declarations: [AlgoIcoComponent],
+  exports: [AlgoIcoComponent]
 })
-export class AlgorithmModule { }
+export class AlgoIcoModule { }

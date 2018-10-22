@@ -6,15 +6,17 @@ import { ProjectsDetailRoutingModule } from './projects-detail-routing.module';
 import { ProjectsDetailComponent } from './projects-detail.component';
 
 import { ProjectsPageHeaderModule } from '../../shared/modules/projects-page-header/projects-page-header.module';
-import { AlgoIcoComponent } from './algo-ico/algo-ico.component';
+import {AlgoIcoModule} from '../algorithm/algo-ico/algo-ico.module'
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ProjectsDetailRoutingModule,
     ProjectsPageHeaderModule,
+    AlgoIcoModule
   ],
-  declarations: [ProjectsDetailComponent, AlgoIcoComponent,]
+  declarations: [ProjectsDetailComponent,]
 })
 export class ProjectsDetailModule { }
 

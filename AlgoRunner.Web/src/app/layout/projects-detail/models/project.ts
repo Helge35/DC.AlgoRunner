@@ -1,4 +1,5 @@
 import {ProjectExecution} from './projectExecution';
+import { Algorithm } from '../../algorithm/models/algorithm';
 
 export class Project {
     id: number;
@@ -8,4 +9,5 @@ export class Project {
     isFavorite : boolean;
     lastExecutionDate: Date;
     executionsList : ProjectExecution[];
+    algorithmsList : Algorithm[]
   }

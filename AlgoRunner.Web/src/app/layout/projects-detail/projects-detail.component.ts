@@ -15,8 +15,11 @@ export class ProjectsDetailComponent implements OnInit {
 
   getProject() {
     if (this.id) {
-      this.http.getProject(this.id).subscribe(info => { this.project = info; },
-        error => { console.log('Error: ' + error.message); });
+      this.http.getProject(this.id).subscribe(info => {
+        this.project = info;
+      },
+        error => { console.log('Error: ' + error.message); }
+      );
     }
     else {
       this.project = new Project();

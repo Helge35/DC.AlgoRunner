@@ -8,8 +8,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <span *ngFor='let proj of favoriteProjects' style="padding: 10px; float: left">
-                            <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="true" 
-                                [activityName]="proj.activity ? proj.activity.name : ''"
+                            <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="true" [activityName]="proj.activity ? proj.activity.name : ''"
                                 [isFavoriteList]="true" (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
                         </span>
                     </div>
@@ -25,8 +24,8 @@
                     <div class="card-body">
                         <span *ngFor='let proj of resentProjects' style="padding: 10px; float: left">
                             <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
-                                [activityName]="proj.activity ? proj.activity.name : ''"
-                                [isFavoriteList]="false" (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
+                                [activityName]="proj.activity ? proj.activity.name : ''" [isFavoriteList]="false"
+                                (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
                         </span>
                     </div>
                 </div>
@@ -44,8 +43,8 @@
                     <div class="card-body">
                         <span *ngFor='let proj of projects' style="padding: 10px; float: left">
                             <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
-                                [activityName]="proj.activity ? proj.activity.name : ''"
-                                [isFavoriteList]="false" (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
+                                [activityName]="proj.activity ? proj.activity.name : ''" [isFavoriteList]="false"
+                                (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
                         </span>
                     </div>
                     <div class="card-footer" style="height:50px;">
@@ -72,16 +71,16 @@
             <div class="alert alert-info">
                 <strong> Algorthms</strong>
             </div>
-            <div class="card mb-3" >
+            <div class="card mb-3">
                 <div class="card-body" style="height:78vh;">
-                   <div *ngFor='let alg of algs'>
-                    <alg-ico  [id]="alg.id" [title]="alg.name" [activityName]="alg.activity ? alg.activity.name : ''"></alg-ico >
-                   </div>
+                    <div *ngFor='let alg of algs'>
+                        <algo-ico [id]="alg.id" [title]="alg.name" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
+                    </div>
                 </div>
             </div>
             <div class="card-footer" style="height:50px;">
-                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="algsTotalItems" 
-                    [pageSize]="16" [(page)]="algsCurrentpage" (pageChange)="loadPageAlgs($event)"></ngb-pagination>
+                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="algsTotalItems" [pageSize]="16"
+                    [(page)]="algsCurrentpage" (pageChange)="loadPageAlgs($event)"></ngb-pagination>
             </div>
         </div>
     </div>
