@@ -6,6 +6,7 @@ import { ProjectsDetailRoutingModule } from './projects-detail-routing.module';
 import { ProjectsDetailComponent } from './projects-detail.component';
 
 import { ProjectsPageHeaderModule } from '../../shared/modules/projects-page-header/projects-page-header.module';
+import { AlgoIcoComponent } from './algo-ico/algo-ico.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -13,7 +14,7 @@ import { ProjectsPageHeaderModule } from '../../shared/modules/projects-page-hea
     ProjectsDetailRoutingModule,
     ProjectsPageHeaderModule,
   ],
-  declarations: [ProjectsDetailComponent,]
+  declarations: [ProjectsDetailComponent, AlgoIcoComponent,]
 })
 export class ProjectsDetailModule { }
 

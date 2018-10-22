@@ -26,7 +26,7 @@ namespace AlgoRunner.Api.Controllers
         public ActionResult<User> Get()
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
-            return Ok(new User { Id = 0, Name = userName });
+            return Ok(new User { Id = 0, Name = userName, IsAdmin = true });
         }
 
         private IHttpContextAccessor _accessor;

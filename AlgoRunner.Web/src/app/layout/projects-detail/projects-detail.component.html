@@ -1,22 +1,80 @@
 <projects-page-header [header]="project.name"></projects-page-header>
 
-<div class="col-xl-12 text-xs-center">
-    <div class="card mb-3">
-        <div class="card-body">
-            <fieldset >
-                <div class="form-group row">
-                    <label class="col-1 col-form-label">Project name:</label>
-                    <div class="col-2">
-                        <input class="form-control" type="text" value="{{project.name}}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                        <label class="col-1 col-form-label">Created by:</label>
-                        <div class="col-2">
-                            <input class="form-control" type="text" value="Oleg" readonly>
+<div class="row">
+    <div class="col-xl-5">
+        <div class="card mb-3 ">
+            <div class="card-body">
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Project name:</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" value="{{project.name}}" readonly>
                         </div>
                     </div>
-            </fieldset>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Description:</label>
+                        <div class="col-8">
+                            <textarea class="form-control" rows="3" value="{{project.desc}}" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Created by:</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" value="{{project.createdBy}}" readonly>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-5"></div>
+    <div class="col-xl-2">
+        <button type="button" class="btn btn-lg btn-success">
+            <span>Execute&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></span>
+        </button>
+    </div>
+</div>
+
+
+
+
+
+<div class="row" style="margin-top: 50px">
+    <div class="col-xl-8">
+        <div class="card mb-3">
+            <div class="card-header">Algorithms</div>
+            <div class="card-body ">
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="card mb-3">
+            <div class="card-header">Execution plans</div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th width="150px">Executed by</th>
+                            <th width="180px">Start Date Time</th>
+                            <th width="180px"> End Date Time</th>
+                            <th width="50px">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let projExe of project.executionsList'>
+                            <td>{{projExe.executedBy}}</td>
+                            <td>{{projExe.startDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{projExe.endDate | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>
+                                    <button type="button" class="btn btn-info">Show &nbsp;
+                                            <span><i class="fa fa-arrow-circle-right"></i></span>
+                                        </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

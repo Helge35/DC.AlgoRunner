@@ -12,6 +12,7 @@ const routes: Routes = [
             { path: 'projects', loadChildren: './projects/projects.module#ProjectsModule' },
             { path: 'project/:id', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
             { path: 'project', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
+            { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
 
 
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },

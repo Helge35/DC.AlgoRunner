@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from './models/project';
+import { Algorithm } from '../algorithm/models/algorithm';
 import { ProjectsService } from './projects.service';
 
 @Component({
@@ -12,9 +13,13 @@ export class ProjectsComponent implements OnInit {
   favoriteProjects: Project[]
   resentProjects: Project[]
   projects: Project[]
+  algs: Algorithm[]
 
   projectsCurrentpage: number
   progectsTotalItems: number
+
+  algsCurrentpage: number
+  algsTotalItems: number
 
 
 
@@ -30,10 +35,17 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
+  loadPageAlgs(page: number) {
+    this._service.loadAlgsData(page).subscribe(info => {
+      this.algs = info.algorithmsList;
+      this.algsTotalItems = info.algorithmsTotalSize;
+    }, error => { console.log('Error: ' + error.message); });
+  }
+
   loadPage(page: number) {
     this._service.loadProjectData(page).subscribe(info => {
       this.projects = info.allList;
-      this.progectsTotalItems = info.totalSize;
+      this.progectsTotalItems = info.projectsTotalSize;
     }, error => { console.log('Error: ' + error.message); });
   }
 
@@ -43,7 +55,9 @@ export class ProjectsComponent implements OnInit {
       this.projects = info.allList;
       this.favoriteProjects = info.favoriteList;
       this.resentProjects = info.resentList;
-      this.progectsTotalItems = info.totalSize;
+      this.progectsTotalItems = info.projectsTotalSize;
+      this.algs = info.algorithmsList;
+      this.algsTotalItems = info.algorithmsTotalSize;
     }, error => { console.log('Error: ' + error.message); });
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ProjectsService } from './../projects.service';
 import { Project } from '../models/project';
+import { Activity } from '../../../shared/models/activity';
 
 @Component({
   selector: 'project-ico',
@@ -12,13 +13,13 @@ export class ProjectIcoComponent implements OnInit {
   project: Project;
   isFavoriteVisible : boolean;
   @Input() id: number;
-  @Input() bgClass: string;
-  @Input() icon: string;
   @Input() title: string;
   @Input() isFavorite: boolean;
   @Input() isFavoriteList: boolean;
+  @Input() activityName: string;
+  
   @Output() favoriteChangeEvent: EventEmitter<Project> = new EventEmitter<Project>();
-  rr: boolean;
+
 
   addToFavorite(): void {
     this._service.addToFavorite(this.id).subscribe();
@@ -36,6 +37,8 @@ export class ProjectIcoComponent implements OnInit {
     this.project.id = this.id;
     this.project.name = this.title;
     this.project.isFavorite = this.isFavorite;
+    this.project.activity = new Activity();
+    this.project.activity.name = this.activityName;
 
     this.isFavoriteVisible = (this.isFavorite && this.isFavoriteList) || (!this.isFavorite && !this.isFavoriteList)
   }

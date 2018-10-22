@@ -17,7 +17,8 @@ namespace AlgoRunner.Api.Controllers
     public class ProjectsController : ControllerBase
     {
         private ProjectsRepository _repository;
-        private const int _projectPageSize = 8;
+        private const int _projectPageSize = 9;
+        private const int _algsPageSize = 16;
 
         public ProjectsController(ProjectsRepository projectsRepository)
         {
@@ -28,11 +29,14 @@ namespace AlgoRunner.Api.Controllers
         public ActionResult<DashboardInfo> Get()
         {
             var dashboard = new DashboardInfo();
-            int totalSize = 0;
+            int projectsTotalSize = 0;
+            int algsTotalSize = 0;
             dashboard.FavoriteList = _repository.GetFavoritesProjects();
             dashboard.ResentList = _repository.GetResentProjects();
-            dashboard.AllList = _repository.GetProjectsByPage(1, _projectPageSize, out totalSize);
-            dashboard.TotalSize = totalSize;
+            dashboard.AllList = _repository.GetProjectsByPage(1, _projectPageSize, out projectsTotalSize);
+            dashboard.ProjectsTotalSize = projectsTotalSize;
+            dashboard.AlgorithmsList = _repository.GetAlgsByPage(1, _algsPageSize, out algsTotalSize);
+            dashboard.AlgorithmsTotalSize = algsTotalSize;
             return Ok(dashboard);
         }
 
@@ -49,7 +53,17 @@ namespace AlgoRunner.Api.Controllers
             var dashboard = new DashboardInfo();
             int totalSize = 0;
             dashboard.AllList = _repository.GetProjectsByPage(page, _projectPageSize, out totalSize);
-            dashboard.TotalSize = totalSize;
+            dashboard.ProjectsTotalSize = totalSize;
+            return Ok(dashboard);
+        }
+
+        [HttpGet("LoadAlgs/{page}")]
+        public ActionResult<DashboardInfo> LoadAlgs(int page)
+        {
+            var dashboard = new DashboardInfo();
+            int totalSize = 0;
+            dashboard.AlgorithmsList = _repository.GetAlgsByPage(page, _algsPageSize, out totalSize);
+            dashboard.AlgorithmsTotalSize = totalSize;
             return Ok(dashboard);
         }
 

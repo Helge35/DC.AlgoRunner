@@ -13,12 +13,12 @@ export class AuthService {
 
     private httpHeaders: HttpHeaders;
     apiUrl: string = environment.apiUrl + "users";
-    user: string;
-    authChange: EventEmitter<string> = new EventEmitter();
+    user: User;
+    authChange: EventEmitter<User> = new EventEmitter();
 
     logIn(): boolean {
         this.logInPrv().subscribe(u => {
-            this.user = u.name;
+            this.user = u;
             this.authChange.emit(this.user);
         },
             error => { console.log('Error: ' + error.message); });

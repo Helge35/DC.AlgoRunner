@@ -3,8 +3,6 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { DashboardInfo } from './models/dashboardInfo';
-import {Project} from './models/project'
-
 
 
 @Injectable({
@@ -27,6 +25,11 @@ export class ProjectsService {
   loadProjectData(page: number):Observable<DashboardInfo>
   {
     return this._http.get<DashboardInfo>(this.apiUrl + "/LoadProjects/"+page);
+  }
+
+  loadAlgsData(page: number):Observable<DashboardInfo>
+  {
+    return this._http.get<DashboardInfo>(this.apiUrl + "/LoadAlgs/"+page);
   }
 
   constructor(private _http: HttpClient) {

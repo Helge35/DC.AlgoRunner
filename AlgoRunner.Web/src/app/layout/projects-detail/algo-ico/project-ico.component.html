@@ -1,0 +1,22 @@
+<div class="card text-white bg-{{bgClass}}" style="width: 190px;">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-xs-3">
+                <i class="fa {{icon}} fa-2x"></i>
+            </div>
+            <div class="col col-xs-9 text-right">
+                <div class="d-block">{{title}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+       
+        <a href="javascript:void(0)" class="float-right card-inverse" [routerLink]="['/project', id]"  >
+            <span><i class="fa fa-arrow-circle-right"></i></span>
+        </a>
+
+        <a href="javascript:void(0)" class="float-left card-inverse" (click)="addToFavorite()" [style.visibility]="isFavoriteVisible ? 'visible' : 'hidden'">
+                <span><i [ngClass]="[isFavorite? 'fa fa-star' : 'fa fa-star-o']"></i></span>
+            </a>
+    </div>
+</div>

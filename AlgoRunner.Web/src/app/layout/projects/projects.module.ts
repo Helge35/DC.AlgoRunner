@@ -9,6 +9,7 @@ import { ProjectIcoComponent } from './project-ico/project-ico.component';
 import { ProjectsService } from './projects.service';
 
 import { PageHeaderModule } from '../../shared';
+import { AlgIcoComponent } from './alg-ico/alg-ico.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { PageHeaderModule } from '../../shared';
     NgbModule.forRoot(),
     PageHeaderModule,
   ],
-  declarations: [ProjectsComponent, ProjectIcoComponent],
+  declarations: [ProjectsComponent, ProjectIcoComponent, AlgIcoComponent],
   providers:[ProjectsService]
 })
 export class ProjectsModule { }

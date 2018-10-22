@@ -1,67 +1,88 @@
 <div class="row">
-    <div class="col-xl-6 text-xs-center">
-        <div class="alert alert-info">
-            <strong> Favorites:</strong>
-        </div>
-        <div class="card mb-3">
-            <div class="card-body">
-                <span *ngFor='let proj of favoriteProjects' style="padding: 10px; float: left">
-                    <project-ico [id]="proj.id" [bgClass]="'warning'" [icon]="'fa-tasks'"
-                     [title]="proj.name" [isFavorite]="true"  [isFavoriteList]="true"
-                     (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
-                </span>
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="col-xl-6 text-xs-center">
-        <div class="alert alert-info">
-            <strong> Resent:</strong>
-        </div>
-        <div class="card mb-3">
-            <div class="card-body">
-                <span *ngFor='let proj of resentProjects' style="padding: 10px; float: left">
-                    <project-ico [id]="proj.id" [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name"
-                    [isFavorite]="proj.isFavorite" [isFavoriteList]="false"
-                    (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="row" style="padding-top: 50px">
-    <div class="col-xl-6 text-xs-center">
-        <div class="alert alert-warning">
-            <strong> All:</strong>
-        </div>
-        <div class="card mb-3" style="height: 420px">
-            <div class="card-body">
-                <span *ngFor='let proj of projects' style="padding: 10px; float: left">
-                    <project-ico [id]="proj.id" [bgClass]="'warning'" [icon]="'fa-tasks'" [title]="proj.name"
-                    [isFavorite]="proj.isFavorite" [isFavoriteList]="false"
-                    (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
-                </span>
-            </div>
-            <div class="card-footer">
-                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="progectsTotalItems" [pageSize]="8"
-                    [(page)]="projectsCurrentpage" (pageChange)="loadPage($event)"></ngb-pagination>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="col-xl-6 text-xs-center">
-            <div class="card text-white bg-info mb-3">
-                <div class="card-header">Execution</div>
-                <div class="card-body">
-       
-                    <p class="card-text">There are no projects executed.</p>
+    <div class="col-xl-9">
+        <div class="row">
+            <div class="col-xl-6 text-xs-center">
+                <div class="alert alert-info">
+                    <strong> Favorites</strong>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <span *ngFor='let proj of favoriteProjects' style="padding: 10px; float: left">
+                            <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="true" 
+                                [activityName]="proj.activity ? proj.activity.name : ''"
+                                [isFavoriteList]="true" (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
+                        </span>
+                    </div>
                 </div>
             </div>
+
+
+            <div class="col-xl-6 text-xs-center">
+                <div class="alert alert-info">
+                    <strong> Resent</strong>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <span *ngFor='let proj of resentProjects' style="padding: 10px; float: left">
+                            <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
+                                [activityName]="proj.activity ? proj.activity.name : ''"
+                                [isFavoriteList]="false" (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row" style="margin-top: 30px">
+            <div class="col-xl-6 text-xs-center">
+                <div class="alert alert-warning">
+                    <strong> All</strong>
+                </div>
+                <div class="card mb-3" style="min-height: 450px">
+                    <div class="card-body">
+                        <span *ngFor='let proj of projects' style="padding: 10px; float: left">
+                            <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
+                                [activityName]="proj.activity ? proj.activity.name : ''"
+                                [isFavoriteList]="false" (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
+                        </span>
+                    </div>
+                    <div class="card-footer" style="height:50px;">
+                        <ngb-pagination class="d-flex justify-content-center" [collectionSize]="progectsTotalItems"
+                            [pageSize]="9" [(page)]="projectsCurrentpage" (pageChange)="loadPage($event)"></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-6 text-xs-center">
+                <div class="card text-white bg-info mb-3">
+                    <div class="card-header">Execution</div>
+                    <div class="card-body">
+
+                        <p class="card-text">There are no projects executed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3">
+        <div class="col-xl-12 text-xs-center">
+            <div class="alert alert-info">
+                <strong> Algorthms</strong>
+            </div>
+            <div class="card mb-3" >
+                <div class="card-body" style="height:78vh;">
+                   <div *ngFor='let alg of algs'>
+                    <alg-ico  [id]="alg.id" [title]="alg.name" [activityName]="alg.activity ? alg.activity.name : ''"></alg-ico >
+                   </div>
+                </div>
+            </div>
+            <div class="card-footer" style="height:50px;">
+                <ngb-pagination class="d-flex justify-content-center" [collectionSize]="algsTotalItems" 
+                    [pageSize]="16" [(page)]="algsCurrentpage" (pageChange)="loadPageAlgs($event)"></ngb-pagination>
+            </div>
+        </div>
     </div>
 </div>

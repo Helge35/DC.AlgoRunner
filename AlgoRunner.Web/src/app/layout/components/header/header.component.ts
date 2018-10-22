@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../shared/services/auth.service';
+import { User } from '../../../shared/services/user';
 
 @Component({
     selector: 'app-header',
@@ -10,7 +11,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
-    userName :string;
+    user :User;
 
     constructor(private translate: TranslateService, public router: Router, private authService : AuthService) {
 
@@ -31,7 +32,7 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-         this.authService.getAuthChangeEmitter().subscribe(u=>this.userName = u);
+         this.authService.getAuthChangeEmitter().subscribe(u=>this.user = u);
     }
 
     isToggled(): boolean {
