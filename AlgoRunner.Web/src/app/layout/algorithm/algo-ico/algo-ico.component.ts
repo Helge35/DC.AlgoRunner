@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Activity } from '../../../shared/models/activity';
 
 @Component({
   selector: 'algo-ico',
@@ -11,6 +12,7 @@ export class AlgoIcoComponent implements OnInit {
   @Input() id: number;
   @Input() title: string;
   @Input() activityName: string;
+  @Input() alg: Activity;
 
   closeResult: string;
 

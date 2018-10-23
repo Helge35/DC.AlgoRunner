@@ -74,7 +74,7 @@
             <div class="card mb-3">
                 <div class="card-body" style="height:78vh;">
                     <div *ngFor='let alg of algs'>
-                        <algo-ico [id]="alg.id" [title]="alg.name" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
+                        <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
                     </div>
                 </div>
             </div>

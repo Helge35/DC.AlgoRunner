@@ -11,13 +11,13 @@ import { Activity } from '../../../shared/models/activity';
 export class ProjectIcoComponent implements OnInit {
 
   project: Project;
-  isFavoriteVisible : boolean;
+  isFavoriteVisible: boolean;
   @Input() id: number;
   @Input() title: string;
   @Input() isFavorite: boolean;
   @Input() isFavoriteList: boolean;
   @Input() activityName: string;
-  
+
   @Output() favoriteChangeEvent: EventEmitter<Project> = new EventEmitter<Project>();
 
 
@@ -26,7 +26,7 @@ export class ProjectIcoComponent implements OnInit {
     this.isFavorite = !this.isFavorite;
     this.favoriteChangeEvent.emit(this.project);
 
-    this.isFavoriteVisible = (this.isFavorite && this.isFavoriteList) || !this.isFavorite 
+    this.isFavoriteVisible = (this.isFavorite && this.isFavoriteList) || !this.isFavorite
   }
 
   constructor(private _service: ProjectsService) {

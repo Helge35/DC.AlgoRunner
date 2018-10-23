@@ -43,7 +43,7 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div *ngFor='let alg of project.algorithmsList'>
-                                        <algo-ico [id]="alg.id" [title]="alg.name" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
+                                        <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
                                     </div>
                                 </div>
                             </div>

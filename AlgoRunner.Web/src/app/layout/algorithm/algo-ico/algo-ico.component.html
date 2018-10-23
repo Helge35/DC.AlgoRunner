@@ -5,7 +5,7 @@
             <i class="fa fa-cog fa-2x"></i>
         </div>
         <div class=" col-xl-8 text-left">
-            <div class="d-block" title="{{title}}">{{title | slice:0:15}}</div>
+            <div class="d-block" title="{{title}}">{{alg.name | slice:0:15}}</div>
             <div style="font-size: x-small; color: black; float: left;">{{activityName}}</div>
         </div>
         <div class=" col-xl-2 text-center">
@@ -14,18 +14,43 @@
             </a>
         </div>
     </div>
-    <ng-template #content let-c="close" let-d="dismiss">
-        <div class="modal-header">
-            <h4 class="modal-title">
+    <ng-template #content let-c="close" let-d="dismiss"  >
+        <div class="modal-header bg-info" >
+            <h4 class="modal-title" >
                 <i class="fa fa-cog fa-2x"></i>
-                 <span style="margin-left: 10px; ">{{title}}</span>
+                <span style="margin-left: 10px; ">{{alg.name}}</span>
             </h4>
             <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <p>One fine body&hellip;</p>
+            <fieldset>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Description:</label>
+                    <div class="col-8">
+                        <textarea class="form-control" rows="3" value="{{alg.desc}}" readonly></textarea>
+                    </div>
+                </div>
+                <div class="form-group row" *ngIf="alg.activity">
+                    <label class="col-3 col-form-label">Project:</label>
+                    <div class="col-8">
+                        <input class="form-control" type="text" value="{{alg.activity.name}}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Created By:</label>
+                    <div class="col-8">
+                        <input class="form-control" type="text" value="{{alg.createdBy}}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row" *ngIf="alg.resultType">
+                        <label class="col-3 col-form-label">Result Type:</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" value="{{alg.resultType.name}}" readonly>
+                        </div>
+                    </div>
+            </fieldset>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>

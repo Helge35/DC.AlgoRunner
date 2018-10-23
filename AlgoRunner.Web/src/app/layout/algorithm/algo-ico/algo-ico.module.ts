@@ -6,7 +6,7 @@ import { AlgoIcoComponent } from './algo-ico.component';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
   ],
   declarations: [AlgoIcoComponent],
   exports: [AlgoIcoComponent]
