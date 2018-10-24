@@ -8,6 +8,13 @@ namespace AlgoRunner.Api.Dal
 {
     public class ProjectsRepository
     {
+
+        public List<Algorithm> _algorithms;
+        private List<Project> _projects;
+        private List<Activity> _activities;
+        private List<AlgResultType> _algResultTypes;
+
+
         public ProjectsRepository()
         {
             _algResultTypes = new List<AlgResultType>()
@@ -99,8 +106,6 @@ namespace AlgoRunner.Api.Dal
                     new Project{Id = 19, Name= "Project 19", LastExecutionDate= new DateTime(2018, 1,10), IsFavorite = false},
 
                };
-
-
         }
 
         internal List<Activity> GetAllActivities()
@@ -119,11 +124,6 @@ namespace AlgoRunner.Api.Dal
         {
             return _projects.First(x => x.Id == id);
         }
-
-        public List<Algorithm> _algorithms;
-        private List<Project> _projects;
-        private List<Activity> _activities;
-        private List<AlgResultType> _algResultTypes;
 
         internal void AddToFavorite(int projectID)
         {

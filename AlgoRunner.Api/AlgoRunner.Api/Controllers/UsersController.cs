@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AlgoRunner.Api.Dal;
 using AlgoRunner.Api.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,9 +16,10 @@ namespace AlgoRunner.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        public UsersController(IHttpContextAccessor accessor)
+        public UsersController(IHttpContextAccessor accessor, UsersRepository repository)
         {
             _accessor = accessor;
+            _repository = repository;
         }
 
         // GET: api/<controller>
@@ -29,6 +31,24 @@ namespace AlgoRunner.Api.Controllers
             return Ok(new User { Id = 0, Name = userName, IsAdmin = true });
         }
 
+        [Authorize]
+        [HttpGet("GetAdminInfo")]
+        public ActionResult<AdminInfo> GetAdminInfo()
+        {
+            var members = _repository.GetAllMembers();
+            var activities = _repository.GetAllActivities();
+            return Ok(new AdminInfo { Members = members, Activities = activities });
+        }
+
+        [Authorize]
+        [HttpGet("AddActivity/{name}")]
+        public ActionResult<Activity> AddActivity(string name)
+        {
+            var activitiy = _repository.AddActivity(name);
+            return Ok(activitiy);
+        }
+
         private IHttpContextAccessor _accessor;
+        private UsersRepository _repository;
     }
 }

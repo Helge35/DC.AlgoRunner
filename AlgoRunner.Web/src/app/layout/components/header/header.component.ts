@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../shared/services/auth.service';
-import { User } from '../../../shared/services/user';
+import { User } from '../../../shared/models/user';
 
 @Component({
     selector: 'app-header',

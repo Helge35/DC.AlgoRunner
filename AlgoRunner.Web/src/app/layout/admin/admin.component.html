@@ -1,5 +1,83 @@
-<projects-page-header [header]='title'></projects-page-header>
+<projects-page-header [header]='"Admin Panel"'></projects-page-header>
 
-<div>
-  admin works!
+<div class=row>
+  <div class="col-lg-8">
+    <div class="card card-default">
+      <div class="card-header">
+        <i class="fa fa-group fa-fw"></i> Members
+      </div>
+      <!-- /.users list -->
+      <div class="card-body">
+
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th width="150px">Name</th>
+              <th width="100px">IsAdmin</th>
+              <th width="100px">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let user of members'>
+              <td>{{user.name}}</td>
+              <td><input type="checkbox" ng-checked="user.isAdmin" disabled=""></td>
+              <td>
+                <p>
+                  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                    Show activities
+                  </button>
+                </p>
+                <div id="collapseExample" [ngbCollapse]="!isCollapsed">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="list-group">
+                        <a href="#" class="list-group-item clearfix d-block" *ngFor="let act of user.activities">
+                          {{act.name}}
+                          <span class="float-right text-muted small"><em>
+                              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </em></span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="card card-default mb-3">
+      <div class="card-header">
+        <i class="fa fa-bolt fa-fw"></i> Activities
+      </div>
+      <!-- /.projects -->
+      <div class="card-body">
+        <div class="list-group">
+          <a href="#" class="list-group-item clearfix d-block" *ngFor="let act of activities">
+            {{act.name}}
+            <span class="float-right text-muted small"><em>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </em></span>
+          </a>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="form-group row">
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="Activity name" [(ngModel)]="newActivityName">
+          </div>
+          <button type="button" class="btn btn-default btn-block col-2" (click)="addActivity()">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

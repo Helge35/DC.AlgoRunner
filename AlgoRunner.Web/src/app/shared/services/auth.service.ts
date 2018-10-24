@@ -2,7 +2,9 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { User } from './user';
+import { User } from '../models/user';
+import { AdminInfo } from '../models/adminInfo';
+import { Activity } from '../models/activity';
 
 
 @Injectable({
@@ -33,6 +35,15 @@ export class AuthService {
     getAuthChangeEmitter() {
         return this.authChange;
     }
+
+    getAdminInfo(): Observable<AdminInfo> {
+        return this._http.get<AdminInfo>(this.apiUrl + "/GetAdminInfo");
+    }
+
+    addActivity(activityName: string): Observable<Activity> {
+        return this._http.get<Activity>(this.apiUrl + "/AddActivity/" + activityName);
+    }
+
 
     constructor(private _http: HttpClient) {
     }
