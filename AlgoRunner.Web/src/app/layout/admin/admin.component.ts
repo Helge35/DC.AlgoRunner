@@ -24,8 +24,15 @@ export class AdminComponent implements OnInit {
 
   addActivity() {
     this._service.addActivity(this.newActivityName).subscribe(info => {
+      this.newActivityName = '';
       this.activities.push(info);
     });
+  }
+
+  removeActivity(activityId: number) {
+    
+    this._service.removeActivity(activityId);
+    this.activities = this.activities.filter(item => item.id !== activityId);
   }
 
   constructor(private _service: AuthService) { }

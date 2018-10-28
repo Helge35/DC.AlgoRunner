@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlgoRunner.Api.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -23,12 +23,17 @@ namespace AlgoRunner.Api.Controllers
         }
 
         // GET: api/<controller>
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         public ActionResult<User> Get()
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
-            return Ok(new User { Id = 0, Name = userName, IsAdmin = true });
+            var user = _repository.GetUserInfo(userName);
+
+            if (user != null)
+                return Ok(user);
+            else
+                return Ok(new User { Id = -1, Name = userName, IsAdmin = false });
         }
 
         [Authorize]
@@ -46,6 +51,13 @@ namespace AlgoRunner.Api.Controllers
         {
             var activitiy = _repository.AddActivity(name);
             return Ok(activitiy);
+        }
+
+        [Authorize]
+        [HttpPost("RemoveActivity")]
+        public void RemoveActivity([FromBody]int id)
+        {
+            _repository.RemoveActivity(id);
         }
 
         private IHttpContextAccessor _accessor;
