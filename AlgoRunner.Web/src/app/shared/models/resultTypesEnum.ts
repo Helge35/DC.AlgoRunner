@@ -1,10 +1,11 @@
-import { KeyValue } from "./KeyValue";
+import { AlgResultType } from "../../layout/algorithm/models/algResultType";
 
-export const ResultTypesEnum : KeyValue[]=[
 
-    {id: 1, value: 'Text'},
-    {id: 2, value: 'Table'},
-    {id: 3, value: 'Graph-Lines'},
-    {id: 4, value: 'Graph-Pie'},
-    {id: 5, value: 'Graph-Bars'},
+export const ResultTypesEnum : AlgResultType[]=[
+
+    {id: 1, name: 'Text'},
+    {id: 2, name: 'Table'},
+    {id: 3, name: 'Graph-Lines'},
+    {id: 4, name: 'Graph-Pie'},
+    {id: 5, name: 'Graph-Bars'},
 ];

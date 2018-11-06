@@ -37,16 +37,64 @@
       <div class="col-8">
         <select>
           <option *ngFor="let result of resultTypes" [value]="result.id">
-            {{result.value}}
+            {{result.name}}
           </option>
         </select>
       </div>
     </div>
     <div class="form-group row">
-        <label class="col-3 col-form-label">File Upload:</label>
-        <div class="col-8">
-            <input type="file" class="form-control-file" id="exampleInputFile">
+      <label class="col-3 col-form-label">File Upload:</label>
+      <div class="col-8">
+        <!--input type="file" class="form-control-file" id="exampleInputFile"-->
+        <input type="file" #file (change)="onFilesAdded()" multiple />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-8 col-form-label"></label>
+      <div class="col-2">
+        <button type="button" class="btn btn-lg btn-success">
+          <span>Upload & Save&nbsp;&nbsp;<i class="fa fa-arrow-circle-up"></i></span>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+  <div class="col-2"></div>
+  <div class="col-4">
+    <div class="col-xl-12 text-xs-center">
+      <div class="alert alert-info">
+        <strong> Properties </strong>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header">
+          <div class="row">
+            <fieldset class="form-group" class="col-xl-6 text-xs-center">
+              <label>Name</label>
+              <input class="form-control" [(ngModel)]="newParameter.name" required placeholder="Enter name">
+            </fieldset>
+            <fieldset class="form-group" class="col-xl-6 text-xs-center">
+              <label>Type</label>
+              <select class="form-control" [(ngModel)]="newParameter.type" required >
+                <option *ngFor="let type of propertyTypes" [ngValue]="type">
+                  {{type.value}}
+                </option>
+              </select>
+            </fieldset>
+            <fieldset class="form-group" class="col-xl-12 ">
+              <button type="button" class="btn btn-info form-control" style="float: right;width: 80px; margin-top: 10px"
+                (click)='addNewParameter()' [disabled]="!newParameter.name || !newParameter.type">+ Add</button>
+            </fieldset>
+          </div>
+        </div>
+        <div class="card-body" style="height:65vh;">
+          <div *ngFor='let param of alg.algoParams' class=" list-group-item ">
+            {{param.name}}
+            <span class="float-right text-muted small"><em>{{param.type.value}}</em></span>
+          </div>
         </div>
       </div>
-  </fieldset>
+
+
+    </div>
+  </div>
 </div>
