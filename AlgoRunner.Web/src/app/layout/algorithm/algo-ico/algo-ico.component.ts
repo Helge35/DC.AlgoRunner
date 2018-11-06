@@ -12,7 +12,7 @@ export class AlgoIcoComponent implements OnInit {
   @Input() id: number;
   @Input() title: string;
   @Input() activityName: string;
-  @Input() alg: Activity;
+  @Input() alg: Algorithm;
 
   closeResult: string;
 

@@ -22,14 +22,12 @@ export class ProjectsService {
     return this._http.get<boolean>(this.apiUrl + "/AddToFavorite/" + id);
   }
 
-  loadProjectData(page: number):Observable<DashboardInfo>
-  {
-    return this._http.get<DashboardInfo>(this.apiUrl + "/LoadProjects/"+page);
+  loadProjectData(page: number): Observable<DashboardInfo> {
+    return this._http.get<DashboardInfo>(this.apiUrl + "/LoadProjects/" + page);
   }
 
-  loadAlgsData(page: number):Observable<DashboardInfo>
-  {
-    return this._http.get<DashboardInfo>(this.apiUrl + "/LoadAlgs/"+page);
+  loadAlgsData(page: number): Observable<DashboardInfo> {
+    return this._http.get<DashboardInfo>(this.apiUrl + "/LoadAlgs/" + page);
   }
 
   constructor(private _http: HttpClient) {

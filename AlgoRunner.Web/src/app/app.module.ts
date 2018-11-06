@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 
 import { AuthService } from './shared/services/auth.service';
+import { ActivityService } from './shared/services/activity.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WinAuthInterceptor } from './shared/interceptors/auth.Interceptor';
 
@@ -44,11 +45,11 @@ export const createTranslateLoader = (http: HttpClient) => {
         AppRoutingModule
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard, AuthService, {
+    providers: [AuthGuard, AuthService, ActivityService, {
         provide: HTTP_INTERCEPTORS,
         useClass: WinAuthInterceptor,
         multi: true
-      }],
+    }],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

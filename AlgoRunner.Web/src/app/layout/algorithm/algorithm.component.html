@@ -1,3 +1,52 @@
-<p>
-  algorithm works!
-</p>
+<projects-page-header [header]="'New Algorithm'"></projects-page-header>
+
+
+<div class="row">
+  <fieldset class="col-6">
+    <div class="form-group row">
+      <label class="col-3 col-form-label">Name:</label>
+      <div class="col-8">
+        <input class="form-control" type="text" value="{{alg.name}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-3 col-form-label">Description:</label>
+      <div class="col-8">
+        <textarea class="form-control" rows="3" value="{{alg.desc}}" placeholder="Write unclassified info only"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-3 col-form-label">Project:</label>
+      <div class="col-8">
+        <select>
+          <option value="0">--No Project--</option>
+          <option *ngFor="let activity of activities" [value]="activity.id">
+            {{activity.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-3 col-form-label">Created By:</label>
+      <div class="col-8">
+        <input class="form-control" type="text" value="{{alg.createdBy}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-3 col-form-label">Result Type:</label>
+      <div class="col-8">
+        <select>
+          <option *ngFor="let result of resultTypes" [value]="result.id">
+            {{result.value}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-3 col-form-label">File Upload:</label>
+        <div class="col-8">
+            <input type="file" class="form-control-file" id="exampleInputFile">
+        </div>
+      </div>
+  </fieldset>
+</div>

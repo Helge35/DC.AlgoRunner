@@ -40,6 +40,13 @@ namespace AlgoRunner.Api.Controllers
             return Ok(dashboard);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Project> Get(int id)
+        {
+            var project = _repository.GetProject(id);
+            return Ok(project);
+        }
+
         [HttpGet("AddToFavorite/{id}")]
         public ActionResult<bool> AddToFavorite(int id)
         {
@@ -65,13 +72,6 @@ namespace AlgoRunner.Api.Controllers
             dashboard.AlgorithmsList = _repository.GetAlgsByPage(page, _algsPageSize, out totalSize);
             dashboard.AlgorithmsTotalSize = totalSize;
             return Ok(dashboard);
-        }
-
-        [HttpGet("GetProject/{id}")]
-        public ActionResult<Project> GetProject(int id)
-        {
-           var project = _repository.GetProject(id);
-            return Ok(project);
         }
     }
 }

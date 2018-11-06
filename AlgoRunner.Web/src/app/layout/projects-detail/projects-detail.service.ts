@@ -18,7 +18,7 @@ export class ProjectsDetailService {
 
   getProject(id: number):Observable<Project>
   {
-    return this._http.get<Project>(this.apiUrl + "/getProject/"+id);
+    return this._http.get<Project>(this.apiUrl + "/"+id);
   }
 
   constructor(private _http: HttpClient) {

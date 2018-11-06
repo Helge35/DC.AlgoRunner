@@ -36,18 +36,7 @@ export class AuthService {
         return this.authChange;
     }
 
-    getAdminInfo(): Observable<AdminInfo> {
-        return this._http.get<AdminInfo>(this.apiUrl + "/GetAdminInfo");
-    }
-
-    addActivity(activityName: string): Observable<Activity> {
-        return this._http.get<Activity>(this.apiUrl + "/AddActivity/" + activityName);
-    }
-
-    removeActivity(id: number): void  {
-         this._http.post(this.apiUrl + "/RemoveActivity/", id).subscribe();
-      }
-
+  
     constructor(private _http: HttpClient) {
     }
 }

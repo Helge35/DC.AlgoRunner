@@ -1,0 +1,14 @@
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Release\netcoreapp2.2\AlgoRunner.Api.deps.json
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Release\netcoreapp2.2\AlgoRunner.Api.runtimeconfig.json
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Release\netcoreapp2.2\AlgoRunner.Api.runtimeconfig.dev.json
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Release\netcoreapp2.2\AlgoRunner.Api.dll
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Release\netcoreapp2.2\AlgoRunner.Api.pdb
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.csprojAssemblyReference.cache
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.csproj.CoreCompileInputs.cache
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.RazorAssemblyInfo.cache
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.RazorAssemblyInfo.cs
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.AssemblyInfoInputs.cache
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.AssemblyInfo.cs
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.RazorTargetAssemblyInfo.cache
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.dll
+C:\Users\Oleg\Documents\Projects\AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Release\netcoreapp2.2\AlgoRunner.Api.pdb

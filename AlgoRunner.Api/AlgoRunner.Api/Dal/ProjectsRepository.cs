@@ -11,12 +11,13 @@ namespace AlgoRunner.Api.Dal
 
         public List<Algorithm> _algorithms;
         private List<Project> _projects;
-        private List<Activity> _activities;
+
         private List<AlgResultType> _algResultTypes;
+        private List<Activity> _activities;
 
-
-        public ProjectsRepository()
+        public ProjectsRepository(ActivityRepository activityRepository)
         {
+            _activities = activityRepository.GetAllActivities();
             _algResultTypes = new List<AlgResultType>()
             {
                 new AlgResultType{Id = 1, Name="Text"},
@@ -25,12 +26,6 @@ namespace AlgoRunner.Api.Dal
                 new AlgResultType{Id = 4, Name="Pie Graph"},
                 new AlgResultType{Id = 5, Name="Bars Graph"},
             };
-
-            _activities = new List<Activity> {
-                new Activity{Id= 1, Name="Big company project"},
-                new Activity{Id= 2, Name="Small company project"},
-            };
-
 
             _algorithms = new List<Algorithm> {
                     new Algorithm{Id=1, Name="Alg 1", CreatedBy="user a1", Desc="1 Alg.............end", Activity = _activities.First() ,ResultType = _algResultTypes.First(x=>x.Id == 1),},
@@ -108,10 +103,6 @@ namespace AlgoRunner.Api.Dal
                };
         }
 
-        internal List<Activity> GetAllActivities()
-        {
-            return _activities;
-        }
 
         internal List<Algorithm> GetAlgsByPage(int pageNum, int algsPageSize, out int algsTotalSize)
         {

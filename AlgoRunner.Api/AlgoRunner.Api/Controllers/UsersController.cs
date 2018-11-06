@@ -36,29 +36,7 @@ namespace AlgoRunner.Api.Controllers
                 return Ok(new User { Id = -1, Name = userName, IsAdmin = false });
         }
 
-        [Authorize]
-        [HttpGet("GetAdminInfo")]
-        public ActionResult<AdminInfo> GetAdminInfo()
-        {
-            var members = _repository.GetAllMembers();
-            var activities = _repository.GetAllActivities();
-            return Ok(new AdminInfo { Members = members, Activities = activities });
-        }
 
-        [Authorize]
-        [HttpGet("AddActivity/{name}")]
-        public ActionResult<Activity> AddActivity(string name)
-        {
-            var activitiy = _repository.AddActivity(name);
-            return Ok(activitiy);
-        }
-
-        [Authorize]
-        [HttpPost("RemoveActivity")]
-        public void RemoveActivity([FromBody]int id)
-        {
-            _repository.RemoveActivity(id);
-        }
 
         private IHttpContextAccessor _accessor;
         private UsersRepository _repository;

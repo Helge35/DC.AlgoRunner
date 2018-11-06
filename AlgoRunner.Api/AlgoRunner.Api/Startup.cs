@@ -34,6 +34,7 @@ namespace AlgoRunner.Api
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<ProjectsRepository>();
             services.AddSingleton<UsersRepository>();
+            services.AddSingleton<ActivityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

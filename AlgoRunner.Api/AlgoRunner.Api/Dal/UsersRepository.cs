@@ -8,15 +8,12 @@ namespace AlgoRunner.Api.Dal
 {
     public class UsersRepository
     {
-        private List<Activity> _activities;
         private List<User> _members;
+        private List<Activity> _activities;
 
-        public UsersRepository()
+        public UsersRepository(ActivityRepository activityRepository)
         {
-            _activities = new List<Activity> {
-                new Activity{Id= 1, Name="Big company project"},
-                new Activity{Id= 2, Name="Small company project"},
-            };
+            _activities = activityRepository.GetAllActivities();
             _members = new List<User> {
                    new User{Id=101, Name="User 10", IsAdmin=false, Activities= new List<Activity>{_activities.First()}},
                    new User{Id=102, Name="User 12",IsAdmin=false,  Activities= new List<Activity>{_activities.Last()}},
@@ -36,20 +33,6 @@ namespace AlgoRunner.Api.Dal
             return _members;
         }
 
-        internal List<Activity> GetAllActivities()
-        {
-            return _activities;
-        }
 
-        internal Activity AddActivity(string name)
-        {
-            _activities.Add(new Activity { Name = name, Id=1000});
-            return new Activity { Name = name, Id = 1000 };
-        }
-
-        internal void RemoveActivity(int id)
-        {
-            _activities.Remove(_activities.FirstOrDefault(x => x.Id == id));
-        }
     }
 }

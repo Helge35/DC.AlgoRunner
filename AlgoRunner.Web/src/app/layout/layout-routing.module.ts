@@ -13,6 +13,7 @@ const routes: Routes = [
             { path: 'project/:id', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
             { path: 'project', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
             { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
+            { path: 'algo', loadChildren:  './algorithm/algorithm.module#AlgorithmModule' },
 
 
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
