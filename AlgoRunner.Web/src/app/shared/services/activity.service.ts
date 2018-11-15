@@ -18,8 +18,8 @@ export class ActivityService {
     }
 
 
-    addActivity(activityName: string): Observable<Activity> {
-        return this._http.get<Activity>(this.apiUrl + "/AddActivity/" + activityName);
+    addActivity(newActiviry: Activity): Observable<Activity> {
+        return this._http.post<Activity>(this.apiUrl, newActiviry);
     }
 
     removeActivity(id: number): void {

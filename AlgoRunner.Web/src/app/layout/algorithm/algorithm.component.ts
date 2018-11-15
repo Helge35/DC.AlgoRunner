@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModuleRef } from '@angular/core';
 import { Algorithm } from './models/algorithm';
 import { Activity } from '../../shared/models/activity';
 import { ResultTypesEnum } from '../../shared/models/resultTypesEnum';
@@ -6,7 +6,10 @@ import { ActivityService } from '../../shared/services/activity.service';
 import { AlgResultType } from './models/algResultType';
 import { KeyValue } from '@angular/common';
 import { AlgoParam } from './models/algoParam';
-import { AlertComponent } from '../bs-component/components';
+import { NgbModal , NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { PropertyTypesEnum } from '../../shared/models/propertyTypesEnum';
+
+
 
 @Component({
   selector: 'app-algorithm',
@@ -18,29 +21,75 @@ export class AlgorithmComponent implements OnInit {
   alg: Algorithm;
   resultTypes: AlgResultType[] = ResultTypesEnum;
   activities: Activity[];
-  propertyTypes: KeyValue<number, string>[]= [
-    {key:1, value: "Number"},
-    {key:2, value: "Text"},
-    {key:3, value: "Boolean"},
-  ]
+  propertyTypes: KeyValue<number, string>[] = PropertyTypesEnum;
   newParameter: AlgoParam;
+  fileToUpload: File = null;
+  enumList: string[]=[];
+  newEnum: string;
+  avtiveModal: NgbActiveModal;
+  updatedParam: AlgoParam;
 
   getActivities() {
     this._serviceActivity.getActivities().subscribe(i => this.activities = i);
   }
 
-  addNewParameter()
-  {
+  addNewParameter() {
     this.alg.algoParams.push(this.newParameter);
     this.newParameter = new AlgoParam();
+    this.newParameter.range =[];
+    this.enumList=[];
+    this.newEnum = '';
   }
 
-  constructor(private _serviceActivity: ActivityService) { }
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  openModal(content, param: AlgoParam) {
+    this.updatedParam = param;
+    this.enumList = param.range;
+    this.avtiveModal= this.modalService.open(content);
+  }
+
+  addEnumValue() {
+    this.enumList.push(this.newEnum);
+    this.newEnum = '';
+  }
+
+  addEnumListToProperty(){
+    this.avtiveModal.dismiss();
+    this.updatedParam.range= this.enumList;
+  }
+
+/*
+  fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+        let file: File = fileList[0];
+        let formData:FormData = new FormData();
+        formData.append('uploadFile', file, file.name);
+        let headers = new Headers();
+    
+        headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        let options = new RequestOptions({ headers: headers });
+        this.http.post(`${this.apiEndPoint}`, formData, options)
+            .map(res => res.json())
+            .catch(error => Observable.throw(error))
+            .subscribe(
+                data => console.log('success'),
+                error => console.log(error)
+            )
+    }
+}*/
+
+  constructor(private _serviceActivity: ActivityService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.alg = new Algorithm();
     this.alg.algoParams = [];
     this.newParameter = new AlgoParam();
+    this.newParameter.range = [];
 
     this.getActivities();
   }

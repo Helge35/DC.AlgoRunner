@@ -2,8 +2,8 @@
 
 <div class=row>
 
-  <div class="col-lg-3">
-    <div class="card card-default mb-3">
+  <div class="col-lg-6">
+    <div class="card card-default mb-6">
       <div class="card-header">
         <i class="fa fa-bolt fa-fw"></i> Activities
       </div>
@@ -11,19 +11,28 @@
       <div class="card-body">
         <div class="list-group">
           <div href="#" class="list-group-item clearfix d-block" *ngFor="let act of activities">
-            {{act.name}}
-            <span class="float-right text-muted small" ><em>
-                <button type="button" class="close" aria-label="Close" (click)="removeActivity(act.id)">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </em></span>
+
+            <div class="form-group row">
+              <label class="col-3 col-form-label">{{act.name}}</label>
+              <div class="col-8">
+                <input class="form-control" type="text" [(ngModel)]="act.serverPath">
+              </div>
+              <span class="float-right text-muted small"><em>
+                  <button type="button" class="close" aria-label="Close" (click)="removeActivity(act.id)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </em></span>
             </div>
+          </div>
         </div>
       </div>
       <div class="card-footer">
         <div class="form-group row">
-          <div class="col-10">
-            <input class="form-control" type="text" placeholder="Activity name" [(ngModel)]="newActivityName">
+          <div class="col-5">
+            <input class="form-control" type="text" placeholder="Activity name" [(ngModel)]="newActivitie.name">
+          </div>
+          <div class="col-5">
+            <input class="form-control" type="text" placeholder="Algorithms path" [(ngModel)]="newActivitie.serverPath">
           </div>
           <button type="button" class="btn btn-default btn-block col-2" (click)="addActivity()">+</button>
         </div>

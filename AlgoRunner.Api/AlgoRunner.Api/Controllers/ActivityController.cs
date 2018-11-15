@@ -27,15 +27,13 @@ namespace AlgoRunner.Api.Controllers
             return Ok(_repository.GetAllActivities());
         }
 
-        [Authorize]
-        [HttpGet("AddActivity/{name}")]
-        public ActionResult<Activity> AddActivity(string name)
+        [HttpPost]
+        public ActionResult<Activity> Post(Activity newActivity)
         {
-            var activitiy = _repository.AddActivity(name);
+            var activitiy = _repository.AddActivity( newActivity);
             return Ok(activitiy);
         }
 
-        [Authorize]
         [HttpPost("RemoveActivity")]
         public void RemoveActivity([FromBody]int id)
         {

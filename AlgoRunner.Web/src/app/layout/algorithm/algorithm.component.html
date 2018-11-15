@@ -46,13 +46,15 @@
       <label class="col-3 col-form-label">File Upload:</label>
       <div class="col-8">
         <!--input type="file" class="form-control-file" id="exampleInputFile"-->
-        <input type="file" #file (change)="onFilesAdded()" multiple />
+        <!--input type="file" #file (change)="onFilesAdded()" multiple /-->
+        <!--input type="file" id="file" (change)="handleFileInput($event.target.files)"-->
+        <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx, .json">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-8 col-form-label"></label>
       <div class="col-2">
-        <button type="button" class="btn btn-lg btn-success">
+        <button type="button" class="btn btn-lg btn-success" (click)=uploadAndSaveAlg()>
           <span>Upload & Save&nbsp;&nbsp;<i class="fa fa-arrow-circle-up"></i></span>
         </button>
       </div>
@@ -74,13 +76,17 @@
             </fieldset>
             <fieldset class="form-group" class="col-xl-6 text-xs-center">
               <label>Type</label>
-              <select class="form-control" [(ngModel)]="newParameter.type" required >
+              <select class="form-control" [(ngModel)]="newParameter.type" required>
                 <option *ngFor="let type of propertyTypes" [ngValue]="type">
                   {{type.value}}
                 </option>
               </select>
             </fieldset>
-            <fieldset class="form-group" class="col-xl-12 ">
+            <fieldset class="form-group" class="col-xl-9">
+              <a href="javascript:void(0)" class="float-right card-inverse" *ngIf="newParameter.type && newParameter.type.key == 4"
+                (click)="openModal(content, newParameter)"> Set Enum</a>
+            </fieldset>
+            <fieldset class="form-group" class="col-xl-3 ">
               <button type="button" class="btn btn-info form-control" style="float: right;width: 80px; margin-top: 10px"
                 (click)='addNewParameter()' [disabled]="!newParameter.name || !newParameter.type">+ Add</button>
             </fieldset>
@@ -89,12 +95,44 @@
         <div class="card-body" style="height:65vh;">
           <div *ngFor='let param of alg.algoParams' class=" list-group-item ">
             {{param.name}}
-            <span class="float-right text-muted small"><em>{{param.type.value}}</em></span>
+
+            <span class="float-right text-muted small">
+              <em>{{param.type.value}}</em>
+            </span>
+            <span  style="float: right; margin-right: 50px">
+                <a href="javascript:void(0)" *ngIf="param.type && param.type.key == 4" (click)="openModal(content, param)">
+                  Set Enum</a>
+              </span>
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header bg-default">
+      <span style="margin-left: 10px; ">Enum values</span>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor='let enumValue of enumList'> {{enumValue}}</li>
+        </ul>
+      </div>
+      <div class="row" style="margin-top: 10px">
+        <div class="col-9">
+          <input class="form-control" type="text" placeholder="Enter value" [(ngModel)]="newEnum">
+        </div>
+        <button type="button" class="btn btn-default btn-block col-2 float-right" style="width: 80px;" (click)="addEnumValue()">+</button>
+      </div>
+    </div>
+    <div class="modal-footer ">
+      <button type="button" class="btn btn-sm  btn-info float-left col-3" (click)="addEnumListToProperty()">Save</button>
+      <button type="button" class="btn btn-sm btn-secondary float-right col-3" (click)="c('Close click')">Close</button>
+    </div>
+  </ng-template>
+
 </div>

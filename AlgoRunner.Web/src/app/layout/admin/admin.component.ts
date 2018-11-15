@@ -12,7 +12,8 @@ export class AdminComponent implements OnInit {
 
 
   activities: Activity[];
-  newActivityName: string;
+  newActivitie: Activity;
+
 
   getAdminInfo() {
     this._serviceActivity.getActivities().subscribe(info => {
@@ -21,8 +22,9 @@ export class AdminComponent implements OnInit {
   }
 
   addActivity() {
-    this._serviceActivity.addActivity(this.newActivityName).subscribe(info => {
-      this.newActivityName = '';
+
+    this._serviceActivity.addActivity(this.newActivitie).subscribe(info => {
+      this.newActivitie = new Activity();
       this.activities.push(info);
     });
   }
@@ -36,6 +38,7 @@ export class AdminComponent implements OnInit {
   constructor(private _service: AuthService, private _serviceActivity: ActivityService) { }
 
   ngOnInit() {
+    this.newActivitie = new Activity();
     this.getAdminInfo();
   }
 

@@ -24,10 +24,12 @@ namespace AlgoRunner.Api.Dal
             return _activities;
         }
 
-        internal Activity AddActivity(string name)
+
+        internal Activity AddActivity(Activity newActivity)
         {
-            _activities.Add(new Activity { Name = name, Id = 1000 });
-            return new Activity { Name = name, Id = 1000 };
+            newActivity.Id = 1000;
+            _activities.Add(newActivity);
+            return newActivity;
         }
 
         internal void RemoveActivity(int id)
