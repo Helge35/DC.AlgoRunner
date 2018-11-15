@@ -36,5 +36,10 @@ namespace AlgoRunner.Api.Dal
         {
             _activities.Remove(_activities.FirstOrDefault(x => x.Id == id));
         }
+
+        internal string GetActivityPath(int activityID)
+        {
+           return _activities.First(x => x.Id == activityID).ServerPath;
+        }
     }
 }

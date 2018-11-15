@@ -14,5 +14,6 @@ namespace AlgoRunner.Api.Entities
         public string CreatedBy { get; set; }
         public AlgResultType ResultType { get; set; }
         public List<AlgoParam> AlgoParams { get; set; }
+        public string FileServerPath { get; set; }
     }
 }

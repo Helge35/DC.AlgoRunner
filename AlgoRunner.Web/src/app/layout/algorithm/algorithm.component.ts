@@ -30,6 +30,7 @@ export class AlgorithmComponent implements OnInit {
   newEnum: string;
   avtiveModal: NgbActiveModal;
   updatedParam: AlgoParam;
+  algoFile: File;
 
   getActivities() {
     this._serviceActivity.getActivities().subscribe(i => this.activities = i);
@@ -64,37 +65,35 @@ export class AlgorithmComponent implements OnInit {
 
 
   uploadAndSaveAlg() {
-    this._serviceAlgo.saveAlg(this.alg).subscribe();
-   // this._route.navigate(['']);
+    let activityID: number = 0;
+
+    if (this.alg.activity) {
+      activityID = this.alg.activity.id;
+    }
+
+    this._serviceAlgo.uploadAlg(this.algoFile, activityID).subscribe(
+      data => {
+        this.alg.fileServerPath = data;
+        this._serviceAlgo.saveAlg(this.alg).subscribe();
+        this._route.navigate(['']);
+    },
+      error => alert(error)
+    );
+
   }
 
-  
-    fileChange(event) {
-      let fileList: FileList = event.target.files;
-      if(fileList.length > 0) {
-          let file: File = fileList[0];
-          let formData:FormData = new FormData();
-          formData.append('uploadFile', file, file.name);
-          let headers = new Headers();
-          alert(file.type);
-      /*
-          headers.append('Content-Type', 'multipart/form-data');
-          headers.append('Accept', 'application/json');
-          let options = new RequestOptions({ headers: headers });
-          this.http.post(`${this.apiEndPoint}`, formData, options)
-              .map(res => res.json())
-              .catch(error => Observable.throw(error))
-              .subscribe(
-                  data => console.log('success'),
-                  error => console.log(error)
-              )*/
-      }
+
+  fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      this.algoFile = fileList[0];
+    }
   }
 
   constructor(private _serviceActivity: ActivityService,
-     private _serviceAlgo: AlgorithmService,
-      private modalService: NgbModal,
-      private _route: Router) {
+    private _serviceAlgo: AlgorithmService,
+    private modalService: NgbModal,
+    private _route: Router) {
 
   }
 

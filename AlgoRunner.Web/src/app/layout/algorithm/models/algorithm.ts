@@ -10,6 +10,7 @@ export class Algorithm {
     createdBy:  string;
     resultType : AlgResultType;
     algoParams: AlgoParam[];
+    fileServerPath: string;
 
     constructor() {
       this.algoParams=[];
