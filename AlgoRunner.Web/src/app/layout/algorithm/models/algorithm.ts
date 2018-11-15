@@ -5,9 +5,13 @@ import { AlgoParam } from "./algoParam";
 export class Algorithm {
     id: number;
     name: string;
-    isFavorite : boolean;
-    lastExecutionDate: Date;
+    desc: string;
     activity : Activity;
+    createdBy:  string;
     resultType : AlgResultType;
     algoParams: AlgoParam[];
+
+    constructor() {
+      this.algoParams=[];
+    } 
   }

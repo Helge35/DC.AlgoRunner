@@ -6,8 +6,10 @@ import { ActivityService } from '../../shared/services/activity.service';
 import { AlgResultType } from './models/algResultType';
 import { KeyValue } from '@angular/common';
 import { AlgoParam } from './models/algoParam';
-import { NgbModal , NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyTypesEnum } from '../../shared/models/propertyTypesEnum';
+import { AlgorithmService } from './algorithm.service';
+import { Router } from '@angular/router';
 
 
 
@@ -24,7 +26,7 @@ export class AlgorithmComponent implements OnInit {
   propertyTypes: KeyValue<number, string>[] = PropertyTypesEnum;
   newParameter: AlgoParam;
   fileToUpload: File = null;
-  enumList: string[]=[];
+  enumList: string[] = [];
   newEnum: string;
   avtiveModal: NgbActiveModal;
   updatedParam: AlgoParam;
@@ -36,8 +38,7 @@ export class AlgorithmComponent implements OnInit {
   addNewParameter() {
     this.alg.algoParams.push(this.newParameter);
     this.newParameter = new AlgoParam();
-    this.newParameter.range =[];
-    this.enumList=[];
+    this.enumList = [];
     this.newEnum = '';
   }
 
@@ -48,7 +49,7 @@ export class AlgorithmComponent implements OnInit {
   openModal(content, param: AlgoParam) {
     this.updatedParam = param;
     this.enumList = param.range;
-    this.avtiveModal= this.modalService.open(content);
+    this.avtiveModal = this.modalService.open(content);
   }
 
   addEnumValue() {
@@ -56,40 +57,50 @@ export class AlgorithmComponent implements OnInit {
     this.newEnum = '';
   }
 
-  addEnumListToProperty(){
+  addEnumListToProperty() {
     this.avtiveModal.dismiss();
-    this.updatedParam.range= this.enumList;
+    this.updatedParam.range = this.enumList;
   }
 
-/*
-  fileChange(event) {
-    let fileList: FileList = event.target.files;
-    if(fileList.length > 0) {
-        let file: File = fileList[0];
-        let formData:FormData = new FormData();
-        formData.append('uploadFile', file, file.name);
-        let headers = new Headers();
-    
-        headers.append('Content-Type', 'multipart/form-data');
-        headers.append('Accept', 'application/json');
-        let options = new RequestOptions({ headers: headers });
-        this.http.post(`${this.apiEndPoint}`, formData, options)
-            .map(res => res.json())
-            .catch(error => Observable.throw(error))
-            .subscribe(
-                data => console.log('success'),
-                error => console.log(error)
-            )
-    }
-}*/
 
-  constructor(private _serviceActivity: ActivityService, private modalService: NgbModal) { }
+  uploadAndSaveAlg() {
+    this._serviceAlgo.saveAlg(this.alg).subscribe();
+   // this._route.navigate(['']);
+  }
+
+  
+    fileChange(event) {
+      let fileList: FileList = event.target.files;
+      if(fileList.length > 0) {
+          let file: File = fileList[0];
+          let formData:FormData = new FormData();
+          formData.append('uploadFile', file, file.name);
+          let headers = new Headers();
+          alert(file.type);
+      /*
+          headers.append('Content-Type', 'multipart/form-data');
+          headers.append('Accept', 'application/json');
+          let options = new RequestOptions({ headers: headers });
+          this.http.post(`${this.apiEndPoint}`, formData, options)
+              .map(res => res.json())
+              .catch(error => Observable.throw(error))
+              .subscribe(
+                  data => console.log('success'),
+                  error => console.log(error)
+              )*/
+      }
+  }
+
+  constructor(private _serviceActivity: ActivityService,
+     private _serviceAlgo: AlgorithmService,
+      private modalService: NgbModal,
+      private _route: Router) {
+
+  }
 
   ngOnInit() {
     this.alg = new Algorithm();
-    this.alg.algoParams = [];
     this.newParameter = new AlgoParam();
-    this.newParameter.range = [];
 
     this.getActivities();
   }

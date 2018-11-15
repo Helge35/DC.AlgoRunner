@@ -103,6 +103,10 @@ namespace AlgoRunner.Api.Dal
                };
         }
 
+        internal void AddNewAlg(Algorithm algo)
+        {
+            _algorithms.Add(algo);
+        }
 
         internal List<Algorithm> GetAlgsByPage(int pageNum, int algsPageSize, out int algsTotalSize)
         {

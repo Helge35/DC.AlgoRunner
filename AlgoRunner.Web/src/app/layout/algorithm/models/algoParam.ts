@@ -4,5 +4,9 @@ export class AlgoParam {
     id: number;
     name: string;
     type: KeyValue<number, string>;
-    range : any[];
+    range : string[];
+
+    constructor(){
+        this.range=[];
+    }
 }
