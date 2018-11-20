@@ -14,6 +14,9 @@ const routes: Routes = [
             { path: 'project', loadChildren: './projects-detail/projects-detail.module#ProjectsDetailModule' },
             { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
             { path: 'algo', loadChildren:  './algorithm/algorithm.module#AlgorithmModule' },
+            { path: 'algoexe/:id', loadChildren:  './algo-exe/algo-exe.module#AlgoExeModule' },
+
+  
 
 
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },

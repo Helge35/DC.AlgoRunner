@@ -15,6 +15,7 @@ namespace AlgoRunner.Api.Dal
             _activities = new List<Activity> {
                 new Activity{Id= 1, Name="Big company project", ServerPath=@"C:\\AlgoRunnerProjects\Bp"},
                 new Activity{Id= 2, Name="Small company project",ServerPath=@"C:\\AlgoRunnerProjects\Sp"},
+                new Activity{Id= 3, Name="Restricted project",ServerPath=@"C:\Users\admin"},
             };
 
         }

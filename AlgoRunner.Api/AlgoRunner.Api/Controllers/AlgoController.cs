@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.AccessControl;
 
 namespace AlgoRunner.Api.Controllers
 {
@@ -24,6 +25,13 @@ namespace AlgoRunner.Api.Controllers
             _projectsRepository = projectsRepository;
             _hostingEnvironment = hostingEnvironment;
             _activityRepository = activityRepository;
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Algorithm> Get(int id)
+        {
+            var alg = _projectsRepository.GetAlgorithm(id);
+            return Ok(alg);
         }
 
         [HttpPost]
@@ -48,7 +56,7 @@ namespace AlgoRunner.Api.Controllers
 
                 if (file.Length > 0)
                 {
-                    fileName = Guid.NewGuid().ToString().Replace("-", string.Empty).Trim() + "." + file.FileName.Split('.')[1];
+                    fileName = Guid.NewGuid().ToString() + "." + file.FileName.Split('.')[1];
                     fullPath = Path.Combine(newPath, fileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
@@ -61,6 +69,54 @@ namespace AlgoRunner.Api.Controllers
             {
                 return BadRequest("Upload Failed: " + ex.Message);
             }
+        }
+
+        [HttpPost("CheckAccess")]
+        public ActionResult CheckAccess([FromBody]int algId)
+        {
+            string path = _projectsRepository.GetAlgFilePath(algId);
+            if (!IsFolderAlowed(path))
+                return Forbid();
+
+            if (!System.IO.File.Exists(path))
+                return NotFound();
+
+            return Ok();
+        }
+
+        [HttpPost("RunAlgorithm")]
+        public ActionResult RunAlgorithm([FromBody]Algorithm algo)
+        {
+
+
+            return Ok();
+        }
+
+        
+
+        private bool IsFolderAlowed(string path)
+        {
+            DirectorySecurity dbSecurity;
+            try
+            {
+                string dirPath = new FileInfo(path).Directory.FullName;
+                DirectoryInfo dInfo = new DirectoryInfo(dirPath);
+                dbSecurity = dInfo.GetAccessControl();
+            }
+            catch (System.UnauthorizedAccessException)
+            {
+                return false;
+            }
+
+            var acl = dbSecurity.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
+
+            foreach (FileSystemAccessRule far in acl)
+            {
+                if (far.AccessControlType == AccessControlType.Allow && far.FileSystemRights >= FileSystemRights.ReadPermissions)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

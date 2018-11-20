@@ -28,12 +28,32 @@ namespace AlgoRunner.Api.Dal
             };
 
             _algorithms = new List<Algorithm> {
-                    new Algorithm{Id=1, Name="Alg 1", CreatedBy="user a1", Desc="1 Alg.............end", Activity = _activities.First() ,ResultType = _algResultTypes.First(x=>x.Id == 1),},
+                    new Algorithm{Id=1,
+                        Name ="Alg 1",
+                        CreatedBy ="developer a1",
+                        Desc ="1 Alg.............end",
+                        Activity = _activities.First() ,
+                        ResultType = _algResultTypes.First(x=>x.Id == 1),
+                        FileServerPath = @"C:\AlgoRunnerProjects\Bp\9b1599ff-e207-4c72-a3e9-9e41f2ecf398.bat",
+                        AlgoParams = new List<AlgoParam>{
+                            new AlgoParam { Id = 501, Name="TimeOut", Type = new KeyValuePair<int, string>(1, "Number"), Range = new List<string>()},
+                            new AlgoParam { Id = 502, Name="DemoStr", Type = new KeyValuePair<int, string>(2, "Text"), },
+                            new AlgoParam { Id = 503, Name="Demo Boll", Type = new KeyValuePair<int, string>(3, "Boolean"), },
+                            new AlgoParam { Id = 504, Name="Demo Enum", Type = new KeyValuePair<int, string>(4, "Enum"), Range=new List<string>{ "First", "Second", "Third" } },
+                        }
+                    },
+
+
+
+
                     new Algorithm{
-                        Id =2, Name="Alg 2", CreatedBy="user a1", Desc="2 Alg.............end",Activity = _activities.First(),
+                        Id =2, Name="Alg 2", CreatedBy="user a1", Desc="2 Alg.............end",Activity = _activities.First(), FileServerPath = @"C:\AlgoRunnerProjects\Bp\9b-9e41f2ecf398.bat",
                          ResultType = _algResultTypes.First(x=>x.Id == 2),
                     },
-                    new Algorithm{Id=3, Name="Alg 3", CreatedBy="user a1", Desc="3 Alg.............end",Activity = _activities.First(), ResultType = _algResultTypes.First(x=>x.Id == 4)},
+                    new Algorithm{Id=3, Name="Alg 3", CreatedBy="user a1", FileServerPath=@"C:\Users\admin\1111.bat",
+                        Desc ="3 Alg.............end",Activity = _activities.First(x=>x.Id==3), ResultType = _algResultTypes.First(x=>x.Id == 4)},
+
+
                     new Algorithm{Id=1, Name="Alg 4", CreatedBy="user a1", Desc="1 Alg.............end",Activity = _activities.Last()},
                     new Algorithm{Id=2, Name="Alg 5", CreatedBy="user a1", Desc="2 Alg.............end",Activity = _activities.Last()},
                     new Algorithm{Id=3, Name="Alg 6", CreatedBy="user a1", Desc="3 Alg.............end",Activity = _activities.Last()},
@@ -103,6 +123,11 @@ namespace AlgoRunner.Api.Dal
                };
         }
 
+        internal string GetAlgFilePath(int algId)
+        {
+            return _algorithms.First(x => x.Id == algId).FileServerPath;
+        }
+
         internal void AddNewAlg(Algorithm algo)
         {
             _algorithms.Add(algo);
@@ -113,6 +138,11 @@ namespace AlgoRunner.Api.Dal
             algsTotalSize = _algorithms.Count;
             int from = algsPageSize * (pageNum - 1);
             return _algorithms.Skip(from).Take(algsPageSize).ToList();
+        }
+
+        internal Algorithm GetAlgorithm(int id)
+        {
+            return _algorithms.First(x => x.Id == id);
         }
 
         internal Project GetProject(int id)

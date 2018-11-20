@@ -7,7 +7,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
-import { AlgoExeComponent } from './algo-exe/algo-exe.component';
+
 
 
 @NgModule({
@@ -17,6 +17,6 @@ import { AlgoExeComponent } from './algo-exe/algo-exe.component';
         TranslateModule,
         NgbDropdownModule.forRoot()
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, AlgoExeComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
 })
 export class LayoutModule {}

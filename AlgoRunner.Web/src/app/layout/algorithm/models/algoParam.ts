@@ -5,6 +5,7 @@ export class AlgoParam {
     name: string;
     type: KeyValue<number, string>;
     range : string[];
+    value: string;
 
     constructor(){
         this.range=[];

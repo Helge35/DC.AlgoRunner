@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Input, } from '@angular/core';
+import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'algo-ico',
@@ -13,27 +14,19 @@ export class AlgoIcoComponent implements OnInit {
     @Input() activityName: string;
     @Input() alg: Algorithm;
 
-    closeResult: string;
+    avtiveModal: NgbActiveModal;
 
     open(content) {
-        this.modalService.open(content).result.then((result) => {
-            this.closeResult = `Closed with: ${result}`;
-        }, (reason) => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        });
+        this.avtiveModal = this.modalService.open(content);
     }
 
-    private getDismissReason(reason: any): string {
-        if (reason === ModalDismissReasons.ESC) {
-            return 'by pressing ESC';
-        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-            return 'by clicking on a backdrop';
-        } else {
-            return `with: ${reason}`;
-        }
+    navigateToExe(id: number) {
+        this.avtiveModal.dismiss();
+        this._route.navigate(['/algoexe', id]);
     }
 
-    constructor(private modalService: NgbModal) { }
+
+    constructor(private modalService: NgbModal, private _route: Router) { }
 
     ngOnInit() {
     }

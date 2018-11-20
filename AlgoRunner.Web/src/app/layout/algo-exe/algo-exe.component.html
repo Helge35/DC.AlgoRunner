@@ -1,3 +1,47 @@
-<p>
-  algo-exe works!
-</p>
+<projects-page-header [header]="'Algorithm Execution'"></projects-page-header>
+
+<div *ngIf="accessStatus===403">
+    <ngb-alert [type]="'warning'">You don't have permission to access this directory. Contact administrator to obtain
+        permission</ngb-alert>
+</div>
+<div *ngIf="accessStatus===404">
+    <ngb-alert [type]="'warning'">Algorithm file doesn't exist. Contact administrator</ngb-alert>
+</div>
+<div class="col-6" *ngIf="accessStatus===200 && algo">
+    <div class="card-header text-white bg-dark ">
+        <h4 class="card-title">
+            <span style="margin-left: 10px; ">{{algo.name}}
+                <span class=" text-muted small">
+                    <em>[{{algo.activity.name}}]</em>
+                </span>
+            </span>
+        </h4>
+    </div>
+    <div class="card-body">
+        <fieldset>
+            <div *ngFor='let param of algo.algoParams'>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">{{param.name}}</label>
+                    <div class="col-8">
+                        <input *ngIf="param.type.key===1" class="form-control" type="number" [(ngModel)]="param.value">
+                        <input *ngIf="param.type.key===2" class="form-control" type="text" [(ngModel)]="param.value">
+                        <input *ngIf="param.type.key===3" class="form-control float-left" type="checkbox" [(ngModel)]="param.value">
+                        <select *ngIf="param.type.key===4" class="form-control" [(ngModel)]="param.value">
+                            <option *ngFor="let enum of param.range" [ngValue]="enum">
+                                {{enum}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class=" text-muted small col-1">
+                        <em>[{{param.type.value}}]</em>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-lg btn-success float-right" (click)="runAlgorithm()">
+            <span>Run&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></span>
+        </button>
+    </div>
+</div>

@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Algorithm } from './models/algorithm';
+import { Algorithm } from '../../layout/algorithm/models/algorithm';
 
 
 @Injectable({
@@ -10,6 +10,7 @@ import { Algorithm } from './models/algorithm';
 })
 
 export class AlgorithmService {
+
 
   apiUrl: string = environment.apiUrl + "algo/";
 
@@ -24,6 +25,18 @@ export class AlgorithmService {
     formData.append(file.name, file);
     formData.append(activityId.toString(), '');
     return this._http.post<string>(this.apiUrl + "UploadFile", formData)
+  }
+
+  getAlg(id: number): Observable<Algorithm> {
+    return this._http.get<Algorithm>(this.apiUrl + id);
+  }
+
+  checkAccess(activityId: number): Observable<any> {
+    return this._http.post<string>(this.apiUrl + "checkAccess", activityId);
+  }
+
+  runAlgorithm(algo: Algorithm) {
+    return this._http.post(this.apiUrl + "RunAlgorithm", algo);
   }
 
   constructor(private _http: HttpClient) {

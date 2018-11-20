@@ -36,5 +36,6 @@ namespace AlgoRunner.Api.Controllers
         {
             _repository.RemoveActivity(id);
         }
+
     }
 }

@@ -56,9 +56,10 @@
             </fieldset>
         </div>
         <div class="modal-footer ">
-            <button type="button" class="btn btn-sm btn-success col-3" style="float: left;">
+            <button type="button" class="btn btn-sm btn-success col-3" style="float: left;" (click)='navigateToExe(alg.id)' >
                 <span>Execute&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></span>
             </button>
+          
             <div class="col-6" ></div>
             <button type="button" class="btn btn-secondary " (click)="c('Close click')">Close</button>
         </div>

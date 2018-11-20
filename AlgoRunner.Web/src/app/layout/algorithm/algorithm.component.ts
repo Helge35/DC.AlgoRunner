@@ -8,8 +8,8 @@ import { KeyValue } from '@angular/common';
 import { AlgoParam } from './models/algoParam';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyTypesEnum } from '../../shared/models/propertyTypesEnum';
-import { AlgorithmService } from './algorithm.service';
 import { Router } from '@angular/router';
+import { AlgorithmService } from '../../shared/services/algorithm.service';
 
 
 
