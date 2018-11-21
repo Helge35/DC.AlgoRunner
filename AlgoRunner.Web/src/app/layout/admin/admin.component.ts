@@ -13,16 +13,17 @@ export class AdminComponent implements OnInit {
 
   activities: Activity[];
   newActivitie: Activity;
+  commonActivitie: Activity;
 
 
   getAdminInfo() {
     this._serviceActivity.getActivities().subscribe(info => {
-      this.activities = info;
+      this.commonActivitie = info.find(c=>c.id <0)
+      this.activities = info.filter(item => item.id >= 0);
     });
   }
 
   addActivity() {
-
     this._serviceActivity.addActivity(this.newActivitie).subscribe(info => {
       this.newActivitie = new Activity();
       this.activities.push(info);
@@ -35,11 +36,17 @@ export class AdminComponent implements OnInit {
     this.activities = this.activities.filter(item => item.id !== activityId);
   }
 
+  saveCommonPath(){
+    this._serviceActivity.saveCommonPath(this.commonActivitie);
+  }
+
   constructor(private _service: AuthService, private _serviceActivity: ActivityService) { }
 
   ngOnInit() {
     this.newActivitie = new Activity();
     this.getAdminInfo();
+
+    this.commonActivitie = new Activity()
   }
 
 }

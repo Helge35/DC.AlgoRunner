@@ -37,5 +37,12 @@ namespace AlgoRunner.Api.Controllers
             _repository.RemoveActivity(id);
         }
 
+        [HttpPost("SaveCommonPath")]
+        public void SaveCommonPath(Activity common)
+        {
+            _repository.UpdateCommonPath(common.ServerPath);
+        }
+
+
     }
 }

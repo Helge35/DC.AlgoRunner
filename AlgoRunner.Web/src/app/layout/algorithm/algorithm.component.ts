@@ -82,7 +82,6 @@ export class AlgorithmComponent implements OnInit {
 
   }
 
-
   fileChange(event) {
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {

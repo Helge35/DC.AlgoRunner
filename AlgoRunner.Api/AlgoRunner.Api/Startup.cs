@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AlgoRunner.Api.Dal;
+﻿using AlgoRunner.Api.Dal;
+using AlgoRunner.Api.Services;
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace AlgoRunner.Api
 {
@@ -35,6 +30,9 @@ namespace AlgoRunner.Api
             services.AddSingleton<ProjectsRepository>();
             services.AddSingleton<UsersRepository>();
             services.AddSingleton<ActivityRepository>();
+            services.AddSingleton<AlgoExecutionService>();
+
+            services.AddHangfire(x => { x.UseMemoryStorage(); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +54,8 @@ namespace AlgoRunner.Api
                 app.UseHsts();
             }
 
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

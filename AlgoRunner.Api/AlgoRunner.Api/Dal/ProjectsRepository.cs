@@ -34,7 +34,7 @@ namespace AlgoRunner.Api.Dal
                         Desc ="1 Alg.............end",
                         Activity = _activities.First() ,
                         ResultType = _algResultTypes.First(x=>x.Id == 1),
-                        FileServerPath = @"C:\AlgoRunnerProjects\Bp\9b1599ff-e207-4c72-a3e9-9e41f2ecf398.bat",
+                        FileServerPath = @"C:\AlgoRunnerProjects\Bp\cacbb170-b2e1-4594-b46d-c2f439a3a5a4.py",
                         AlgoParams = new List<AlgoParam>{
                             new AlgoParam { Id = 501, Name="TimeOut", Type = new KeyValuePair<int, string>(1, "Number"), Range = new List<string>()},
                             new AlgoParam { Id = 502, Name="DemoStr", Type = new KeyValuePair<int, string>(2, "Text"), },

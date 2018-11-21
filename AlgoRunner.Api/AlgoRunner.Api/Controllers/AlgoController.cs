@@ -1,5 +1,7 @@
 ﻿using AlgoRunner.Api.Dal;
 using AlgoRunner.Api.Entities;
+using AlgoRunner.Api.Services;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -17,14 +19,14 @@ namespace AlgoRunner.Api.Controllers
     public class AlgoController : ControllerBase
     {
         private ProjectsRepository _projectsRepository;
-        private IHostingEnvironment _hostingEnvironment;
         private ActivityRepository _activityRepository;
+        private AlgoExecutionService _algoExecutionService;
 
-        public AlgoController(ProjectsRepository projectsRepository, ActivityRepository activityRepository, IHostingEnvironment hostingEnvironment)
+        public AlgoController(ProjectsRepository projectsRepository, ActivityRepository activityRepository, AlgoExecutionService algoExecutionService)
         {
             _projectsRepository = projectsRepository;
-            _hostingEnvironment = hostingEnvironment;
             _activityRepository = activityRepository;
+            _algoExecutionService = algoExecutionService;
         }
 
         [HttpGet("{id}")]
@@ -87,12 +89,9 @@ namespace AlgoRunner.Api.Controllers
         [HttpPost("RunAlgorithm")]
         public ActionResult RunAlgorithm([FromBody]Algorithm algo)
         {
-
-
+            _algoExecutionService.Run(algo);
             return Ok();
         }
-
-        
 
         private bool IsFolderAlowed(string path)
         {

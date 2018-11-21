@@ -26,6 +26,11 @@ export class ActivityService {
         this._http.post(this.apiUrl + "/RemoveActivity/", id).subscribe();
     }
 
+    saveCommonPath(common:Activity): void {
+        this._http.post(this.apiUrl + "/SaveCommonPath/", common).subscribe();
+    }
+
+
 
     constructor(private _http: HttpClient) {
     }

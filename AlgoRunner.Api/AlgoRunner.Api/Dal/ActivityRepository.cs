@@ -13,6 +13,7 @@ namespace AlgoRunner.Api.Dal
         public ActivityRepository()
         {
             _activities = new List<Activity> {
+                new Activity{Id= -1, Name="Common", ServerPath=@"C:\\AlgoRunnerProjects\Common"},
                 new Activity{Id= 1, Name="Big company project", ServerPath=@"C:\\AlgoRunnerProjects\Bp"},
                 new Activity{Id= 2, Name="Small company project",ServerPath=@"C:\\AlgoRunnerProjects\Sp"},
                 new Activity{Id= 3, Name="Restricted project",ServerPath=@"C:\Users\admin"},
@@ -36,6 +37,11 @@ namespace AlgoRunner.Api.Dal
         internal void RemoveActivity(int id)
         {
             _activities.Remove(_activities.FirstOrDefault(x => x.Id == id));
+        }
+
+        internal void UpdateCommonPath(string path)
+        {
+            _activities.First(x => x.Id < 0).ServerPath = path;
         }
 
         internal string GetActivityPath(int activityID)

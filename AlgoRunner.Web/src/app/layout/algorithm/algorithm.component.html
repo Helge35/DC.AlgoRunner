@@ -19,7 +19,6 @@
       <label class="col-3 col-form-label">Project:</label>
       <div class="col-8">
         <select [(ngModel)]="alg.activity">
-          <option value="0">--No Project--</option>
           <option *ngFor="let activity of activities" [ngValue]="activity">
             {{activity.name}}
           </option>
@@ -45,9 +44,6 @@
     <div class="form-group row">
       <label class="col-3 col-form-label">File Upload:</label>
       <div class="col-8">
-        <!--input type="file" class="form-control-file" id="exampleInputFile"-->
-        <!--input type="file" #file (change)="onFilesAdded()" multiple /-->
-        <!--input type="file" id="file" (change)="handleFileInput($event.target.files)"-->
         <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".py, .exe, .bat">
       </div>
     </div>
