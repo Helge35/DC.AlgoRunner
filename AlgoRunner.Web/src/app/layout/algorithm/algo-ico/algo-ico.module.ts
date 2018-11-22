@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     FormsModule,
     NgbModule.forRoot(),
-    RouterModule
+    RouterModule,
   ],
   declarations: [AlgoIcoComponent],
   exports: [AlgoIcoComponent]

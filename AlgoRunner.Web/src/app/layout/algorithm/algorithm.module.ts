@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { ProjectsPageHeaderModule } from '../../shared/modules/projects-page-header/projects-page-header.module';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -14,7 +13,7 @@ import { AlgorithmRoutingModule } from './algorithm-routing.module';
     FormsModule,
     NgbModule.forRoot(),
     ProjectsPageHeaderModule,
-    AlgorithmRoutingModule
+    AlgorithmRoutingModule,
   ],
   declarations: [AlgorithmComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModuleRef } from '@angular/core';
+import { Component, OnInit, NgModuleRef, ViewChild } from '@angular/core';
 import { Algorithm } from './models/algorithm';
 import { Activity } from '../../shared/models/activity';
 import { ResultTypesEnum } from '../../shared/models/resultTypesEnum';
@@ -31,6 +31,7 @@ export class AlgorithmComponent implements OnInit {
   avtiveModal: NgbActiveModal;
   updatedParam: AlgoParam;
   algoFile: File;
+  submitted = false;
 
   getActivities() {
     this._serviceActivity.getActivities().subscribe(i => this.activities = i);
@@ -41,10 +42,6 @@ export class AlgorithmComponent implements OnInit {
     this.newParameter = new AlgoParam();
     this.enumList = [];
     this.newEnum = '';
-  }
-
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
   }
 
   openModal(content, param: AlgoParam) {
@@ -62,9 +59,14 @@ export class AlgorithmComponent implements OnInit {
     this.avtiveModal.dismiss();
     this.updatedParam.range = this.enumList;
   }
+  onFormSubmit() {
+    console.log("Full Address", "ol");
+  }
 
+  uploadAndSaveAlg({ valid }: { valid: boolean }) {
+    this.submitted = true;
+    if (!valid && !this.algoFile) { return}
 
-  uploadAndSaveAlg() {
     let activityID: number = 0;
 
     if (this.alg.activity) {

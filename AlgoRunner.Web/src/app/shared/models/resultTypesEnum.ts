@@ -8,4 +8,5 @@ export const ResultTypesEnum : AlgResultType[]=[
     {id: 3, name: 'Graph-Lines'},
     {id: 4, name: 'Graph-Pie'},
     {id: 5, name: 'Graph-Bars'},
+    {id: 6, name: 'Graph-Dotes'},
 ];

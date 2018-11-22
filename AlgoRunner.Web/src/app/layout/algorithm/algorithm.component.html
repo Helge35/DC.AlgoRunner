@@ -1,61 +1,75 @@
 <projects-page-header [header]="'New Algorithm'"></projects-page-header>
 
-
 <div class="row">
   <fieldset class="col-6">
-    <div class="form-group row">
-      <label class="col-3 col-form-label">Name:</label>
-      <div class="col-8">
-        <input class="form-control" type="text" [(ngModel)]="alg.name">
+    <form (ngSubmit)="uploadAndSaveAlg(mform)" #mform="ngForm">
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Name:</label>
+        <div class="col-8">
+          <input class="form-control" type="text" [(ngModel)]="alg.name" required #algname="ngModel" name="algname">
+          <div *ngIf="submitted && algname.invalid" style="color:red">
+            Algorithm Name is required
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-3 col-form-label">Description:</label>
-      <div class="col-8">
-        <textarea class="form-control" rows="3" [(ngModel)]="alg.desc" placeholder="Write unclassified info only"></textarea>
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Description:</label>
+        <div class="col-8">
+          <textarea class="form-control" rows="3" [(ngModel)]="alg.desc" name="algdesc" placeholder="Write unclassified info only"></textarea>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-3 col-form-label">Project:</label>
-      <div class="col-8">
-        <select [(ngModel)]="alg.activity">
-          <option *ngFor="let activity of activities" [ngValue]="activity">
-            {{activity.name}}
-          </option>
-        </select>
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Project:</label>
+        <div class="col-8">
+          <select [(ngModel)]="alg.activity" name="algactivity" required  #algactivity="ngModel">
+            <option *ngFor="let activity of activities" [ngValue]="activity">
+              {{activity.name}}
+            </option>
+          </select>
+          <div *ngIf="submitted && algactivity.invalid" style="color:red">
+            Activity is required
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-3 col-form-label">Created By:</label>
-      <div class="col-8">
-        <input class="form-control" type="text" [(ngModel)]="alg.createdBy">
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Created By:</label>
+        <div class="col-8">
+          <input class="form-control" type="text" [(ngModel)]="alg.createdBy" name="algcreatedBy">
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-3 col-form-label">Result Type:</label>
-      <div class="col-8">
-        <select [(ngModel)]="alg.resultType">
-          <option *ngFor="let result of resultTypes" [ngValue]="result">
-            {{result.name}}
-          </option>
-        </select>
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Result Type:</label>
+        <div class="col-8">
+          <select [(ngModel)]="alg.resultType" name="algresultType" required  #algresultType="ngModel">
+            <option *ngFor="let result of resultTypes" [ngValue]="result">
+              {{result.name}}
+            </option>
+          </select>
+          <div *ngIf="submitted && algresultType.invalid" style="color:red">
+            Result Type is required
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-3 col-form-label">File Upload:</label>
-      <div class="col-8">
-        <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".py, .exe, .bat">
+      <div class="form-group row">
+        <label class="col-3 col-form-label">File Upload:</label>
+        <div class="col-8">
+          <input type="file" (change)="fileChange($event)" placeholder="Upload file" name="algfile"  accept=".py">
+          <div *ngIf="submitted && !algoFile" style="color:red">
+            Algorithm file is required
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-8 col-form-label"></label>
-      <div class="col-2">
-        <button type="button" class="btn btn-lg btn-success" (click)=uploadAndSaveAlg()>
-          <span>Upload & Save&nbsp;&nbsp;<i class="fa fa-arrow-circle-up"></i></span>
-        </button>
+      <div class="form-group row">
+        <label class="col-8 col-form-label"></label>
+        <div class="col-2">
+          <button type="submit" class="btn btn-lg btn-success">
+            <span>Upload & Save&nbsp;&nbsp;<i class="fa fa-arrow-circle-up"></i></span>
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
   </fieldset>
+
   <div class="col-2"></div>
   <div class="col-4">
     <div class="col-xl-12 text-xs-center">
