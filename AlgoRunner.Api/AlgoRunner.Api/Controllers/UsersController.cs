@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlgoRunner.Api.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -23,7 +23,7 @@ namespace AlgoRunner.Api.Controllers
         }
 
         // GET: api/<controller>
-        // [Authorize]
+
         [HttpGet]
         public ActionResult<User> Get()
         {

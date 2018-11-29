@@ -31,6 +31,7 @@ namespace AlgoRunner.Api
             services.AddSingleton<UsersRepository>();
             services.AddSingleton<ActivityRepository>();
             services.AddSingleton<AlgoExecutionService>();
+            services.AddSingleton<MessagesRepository>();
 
             services.AddHangfire(x => { x.UseMemoryStorage(); });
         }
