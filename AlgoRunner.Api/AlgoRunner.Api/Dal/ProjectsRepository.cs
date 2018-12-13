@@ -25,6 +25,7 @@ namespace AlgoRunner.Api.Dal
                 new AlgResultType{Id = 3, Name="Lines Graph"},
                 new AlgResultType{Id = 4, Name="Pie Graph"},
                 new AlgResultType{Id = 5, Name="Bars Graph"},
+                new AlgResultType{Id = 6, Name="Dotes Graph"},
             };
 
             _algorithms = new List<Algorithm> {
@@ -53,8 +54,18 @@ namespace AlgoRunner.Api.Dal
                     new Algorithm{Id=3, Name="Alg 3", CreatedBy="user a1", FileServerPath=@"C:\Users\admin\1111.bat",
                         Desc ="3 Alg.............end",Activity = _activities.First(x=>x.Id==3), ResultType = _algResultTypes.First(x=>x.Id == 4)},
 
+                    new Algorithm{Id=4,
+                        Name ="Tester 1",
+                        CreatedBy ="developer a1",
+                        Desc ="1 Alg.............end",
+                        Activity = _activities.First(),
+                        ResultType = _algResultTypes.First(x=>x.Id == 6),
+                        FileServerPath = @"C:\AlgoRunnerProjects\Bp\6792778d-221d-4e81-8c36-b00ee12416a1.py",
+                        AlgoParams = new List<AlgoParam>{
+                            new AlgoParam { Id = 601, Name="Num of molec", Type = new KeyValuePair<int, string>(1, "Number"), Range = new List<string>()},
+                        }
+                    },
 
-                    new Algorithm{Id=1, Name="Alg 4", CreatedBy="user a1", Desc="1 Alg.............end",Activity = _activities.Last()},
                     new Algorithm{Id=2, Name="Alg 5", CreatedBy="user a1", Desc="2 Alg.............end",Activity = _activities.Last()},
                     new Algorithm{Id=3, Name="Alg 6", CreatedBy="user a1", Desc="3 Alg.............end",Activity = _activities.Last()},
                     new Algorithm{Id=1, Name="Alg 7", CreatedBy="user a1", Desc="1 Alg.............end",Activity = _activities.Last()},

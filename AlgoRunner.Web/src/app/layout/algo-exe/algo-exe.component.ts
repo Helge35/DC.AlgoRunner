@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Algorithm } from '../algorithm/models/algorithm';
 import { AlgorithmService } from '../../shared/services/algorithm.service';
 
@@ -25,12 +25,13 @@ export class AlgoExeComponent implements OnInit {
 
   runAlgorithm(){
     this._serviceAlgo.runAlgorithm(this.algo).subscribe();
+    this._router.navigate(['']);
   }
 
-  constructor(private route: ActivatedRoute, private _serviceAlgo: AlgorithmService) { }
+  constructor(private _activatedRoute: ActivatedRoute, private _serviceAlgo: AlgorithmService, private _router: Router) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => { this.id = +params['id']; });
+    this._activatedRoute.params.subscribe(params => { this.id = +params['id']; });
     this.getAlg();
   }
 }

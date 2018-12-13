@@ -1,15 +1,11 @@
 ﻿using AlgoRunner.Api.Dal;
 using AlgoRunner.Api.Entities;
 using AlgoRunner.Api.Services;
-using Hangfire;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.AccessControl;
 
 namespace AlgoRunner.Api.Controllers
 {
@@ -21,12 +17,14 @@ namespace AlgoRunner.Api.Controllers
         private ProjectsRepository _projectsRepository;
         private ActivityRepository _activityRepository;
         private AlgoExecutionService _algoExecutionService;
+        private FilesService _filesService;
 
-        public AlgoController(ProjectsRepository projectsRepository, ActivityRepository activityRepository, AlgoExecutionService algoExecutionService)
+        public AlgoController(ProjectsRepository projectsRepository, ActivityRepository activityRepository, AlgoExecutionService algoExecutionService, FilesService filesService)
         {
             _projectsRepository = projectsRepository;
             _activityRepository = activityRepository;
             _algoExecutionService = algoExecutionService;
+            _filesService = filesService;
         }
 
         [HttpGet("{id}")]
@@ -77,7 +75,7 @@ namespace AlgoRunner.Api.Controllers
         public ActionResult CheckAccess([FromBody]int algId)
         {
             string path = _projectsRepository.GetAlgFilePath(algId);
-            if (!IsFolderAlowed(path))
+            if (!_filesService.IsFolderAlowed(path))
                 return Forbid();
 
             if (!System.IO.File.Exists(path))
@@ -93,29 +91,6 @@ namespace AlgoRunner.Api.Controllers
             return Ok();
         }
 
-        private bool IsFolderAlowed(string path)
-        {
-            DirectorySecurity dbSecurity;
-            try
-            {
-                string dirPath = new FileInfo(path).Directory.FullName;
-                DirectoryInfo dInfo = new DirectoryInfo(dirPath);
-                dbSecurity = dInfo.GetAccessControl();
-            }
-            catch (System.UnauthorizedAccessException)
-            {
-                return false;
-            }
 
-            var acl = dbSecurity.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
-
-            foreach (FileSystemAccessRule far in acl)
-            {
-                if (far.AccessControlType == AccessControlType.Allow && far.FileSystemRights >= FileSystemRights.ReadPermissions)
-                    return true;
-            }
-
-            return false;
-        }
     }
 }

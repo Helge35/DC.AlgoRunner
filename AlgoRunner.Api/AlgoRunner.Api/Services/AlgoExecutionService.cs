@@ -1,8 +1,8 @@
 ﻿using AlgoRunner.Api.Entities;
 using Hangfire;
+using Hangfire.Storage;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,14 +23,22 @@ namespace AlgoRunner.Api.Services
             PytonExePath = configuration.GetSection("PytonExePath").Value;
         }
 
-
-
         public string ExecutionPath { get; set; }
         public string PytonExePath { get; set; }
+        public Timer Timer { get; set; }
+        public string BackgroundJobID { get; set; }
 
         public void Run(Algorithm algo)
         {
-            string backgroundJobID = BackgroundJob.Enqueue(() => StartExecution(algo));
+            BackgroundJobID = BackgroundJob.Enqueue(() => StartExecution(algo));
+           // Timer = new Timer(GetStatus, null, 0, 2000);
+        }
+
+        private void GetStatus(object state)
+        {
+            IStorageConnection connection = JobStorage.Current.GetConnection();
+            JobData jobData = connection.GetJobData(BackgroundJobID);
+            string stateName = jobData.State;
         }
 
         public void StartExecution(Algorithm algo)
@@ -54,26 +62,58 @@ namespace AlgoRunner.Api.Services
             }
         }
 
-        private string RunPyton(string inputFilePath, string outputFilePath, string commangPath)
+        private string RunPyton(string inputFilePath, string outputFilePath, string commandPath)
         {
             string standartError = string.Empty;
+
+            /////
+            ///
+
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = PytonExePath;
-            start.Arguments = string.Format("\"{0}\" \"{1}\" \"{2}\"", commangPath, inputFilePath, outputFilePath);
+            start.Arguments = string.Format("{0} {1} {2}", commandPath, inputFilePath, outputFilePath);
             start.UseShellExecute = false;
-            start.CreateNoWindow = true;
             start.RedirectStandardOutput = true;
-            start.RedirectStandardError = true;
+
             using (Process process = Process.Start(start))
             {
                 using (StreamReader reader = process.StandardOutput)
                 {
-                    standartError = process.StandardError.ReadToEnd(); // Here are the exceptions from our Python script
-                    if (string.IsNullOrEmpty(standartError))
-                        return standartError;
                     string result = reader.ReadToEnd();
+                    Console.Write(result);
                 }
             }
+
+            /*
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = PytonExePath;
+            start.Arguments = string.Format("\"{0}\" \"{1}\" \"{2}\"", commandPath, inputFilePath, outputFilePath);
+            start.UseShellExecute = false;
+            start.CreateNoWindow = true;
+            start.RedirectStandardOutput = true;
+            start.RedirectStandardError = true;
+            try
+            {
+                using (Process process = Process.Start(start))
+                {
+                    using (StreamReader reader = process.StandardOutput)
+                    {
+                        standartError = process.StandardError.ReadToEnd(); // Here are the exceptions from our Python script
+                        //if (!string.IsNullOrEmpty(standartError))
+                        //    return standartError;
+                        //string result = reader.ReadToEnd();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                standartError = ex.Message;
+            }
+            finally
+            {
+                Timer.Change(Timeout.Infinite, Timeout.Infinite);
+            }*/
+
             return standartError;
         }
 

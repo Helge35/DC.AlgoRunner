@@ -30,8 +30,10 @@ namespace AlgoRunner.Api
             services.AddSingleton<ProjectsRepository>();
             services.AddSingleton<UsersRepository>();
             services.AddSingleton<ActivityRepository>();
-            services.AddSingleton<AlgoExecutionService>();
             services.AddSingleton<MessagesRepository>();
+
+            services.AddSingleton<AlgoExecutionService>();
+            services.AddSingleton<FilesService>();
 
             services.AddHangfire(x => { x.UseMemoryStorage(); });
         }

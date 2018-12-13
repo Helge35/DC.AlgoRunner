@@ -1,0 +1,19 @@
+<projects-page-header [header]='"Results"'></projects-page-header>
+
+
+<div class="card-header text-white bg-dark " style="max-width: 300px">
+    <h4 class="card-title">
+        <span style="margin-left: 10px; ">  {{scatterData.algoName}}
+ </span>
+    </h4>
+</div>
+<div class=card-body>
+  <div style="display: block;" class="col-lg-10" *ngIf="scatterData" >  
+    <canvas baseChart 
+            [datasets]="scatterData.categories"              
+            [options]="ScatterchartOptions"  
+            [legend]="'true'"  
+            [colors]="chartColors"  
+            [chartType]="'scatter'"></canvas>  
+  </div>  
+</div>

@@ -22,8 +22,6 @@ namespace AlgoRunner.Api.Dal
                                                 new Message{Id =3, UserID=104,
                     Context =@"This is probably the last (at least for now) of my posts about push notifications. I've updated the demo project with support for features described here (and there is still couple things on the issues list to come in future).",
                 CreateDate= new DateTime(2018, 10, 3), Title="Post 3"},
-
-
             };
         }
 
