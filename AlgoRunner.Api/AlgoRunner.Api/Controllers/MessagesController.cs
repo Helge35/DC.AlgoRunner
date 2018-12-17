@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AlgoRunner.Api.Dal;
 using AlgoRunner.Api.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlgoRunner.Api.Controllers
@@ -14,17 +15,19 @@ namespace AlgoRunner.Api.Controllers
     public class MessagesController : Controller
     {
         MessagesRepository _repository;
+        IHttpContextAccessor _accessor;
 
-        public MessagesController(MessagesRepository repository)
+        public MessagesController(MessagesRepository repository, IHttpContextAccessor accessor)
         {
+            _accessor = accessor;
             _repository = repository;
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public IEnumerable<Message> Get(int id)
+        [HttpGet]
+        public IEnumerable<Message> Get()
         {
-            return _repository.GetMessages(id);
+            string userName = _accessor.HttpContext.User.Identity.Name;
+            return _repository.GetMessages(userName);
         }
 
         // DELETE api/<controller>/5

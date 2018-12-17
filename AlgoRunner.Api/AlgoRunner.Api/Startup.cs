@@ -1,4 +1,5 @@
 ﻿using AlgoRunner.Api.Dal;
+using AlgoRunner.Api.Hubs;
 using AlgoRunner.Api.Services;
 using Hangfire;
 using Hangfire.MemoryStorage;
@@ -23,7 +24,9 @@ namespace AlgoRunner.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddCors();
+            services.AddMvc();
+            services.AddSignalR();
             services.AddAuthentication(Microsoft.AspNetCore.Server.IISIntegration.IISDefaults.AuthenticationScheme);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -42,9 +45,10 @@ namespace AlgoRunner.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseCors(x => x
-                .AllowAnyOrigin()
+               // .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
+                .WithOrigins("http://localhost:4200")
                 .AllowCredentials());
 
 
@@ -56,6 +60,11 @@ namespace AlgoRunner.Api
             {
                 app.UseHsts();
             }
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<MessageHub>("/hubs/message");
+            });
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

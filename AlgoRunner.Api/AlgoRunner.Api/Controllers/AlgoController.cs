@@ -2,6 +2,7 @@
 using AlgoRunner.Api.Entities;
 using AlgoRunner.Api.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
@@ -18,13 +19,15 @@ namespace AlgoRunner.Api.Controllers
         private ActivityRepository _activityRepository;
         private AlgoExecutionService _algoExecutionService;
         private FilesService _filesService;
+        private IHttpContextAccessor _accessor;
 
-        public AlgoController(ProjectsRepository projectsRepository, ActivityRepository activityRepository, AlgoExecutionService algoExecutionService, FilesService filesService)
+        public AlgoController(ProjectsRepository projectsRepository, ActivityRepository activityRepository, AlgoExecutionService algoExecutionService, FilesService filesService, IHttpContextAccessor accessor)
         {
             _projectsRepository = projectsRepository;
             _activityRepository = activityRepository;
             _algoExecutionService = algoExecutionService;
             _filesService = filesService;
+            _accessor = accessor;
         }
 
         [HttpGet("{id}")]
@@ -87,10 +90,9 @@ namespace AlgoRunner.Api.Controllers
         [HttpPost("RunAlgorithm")]
         public ActionResult RunAlgorithm([FromBody]Algorithm algo)
         {
-            _algoExecutionService.Run(algo);
+            string userName = _accessor.HttpContext.User.Identity.Name;
+            _algoExecutionService.Run(algo, userName);
             return Ok();
         }
-
-
     }
 }
