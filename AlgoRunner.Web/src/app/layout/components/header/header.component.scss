@@ -55,17 +55,5 @@ $topnav-background-color: #125673;
         text-decoration: none;
         font-family: calibri;
     }
-
-    .messages-new  {
-        svg {
-          path {
-            fill: red;
-          }
-        }
-      }
-
-      img[style*="color:"] svg [fill] {
-        fill: red;
-    }
       
 }

@@ -13,7 +13,7 @@ namespace AlgoRunner.Api.Controllers
     public class ProjectsController : ControllerBase
     {
         private ProjectsRepository _repository;
-        private const int _projectPageSize = 15;
+        private const int _projectPageSize = 12;
         private const int _algsPageSize = 16;
 
         public ProjectsController(ProjectsRepository projectsRepository)

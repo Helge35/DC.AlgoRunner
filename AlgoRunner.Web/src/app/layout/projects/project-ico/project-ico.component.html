@@ -8,7 +8,7 @@
         </div>
     </div>
     <div style="height: 55px;" [style.background]="isFavoriteList ? '#fae1bb' : '#F3E9B5'">
-        <div style="font-size: x-small; color: black;height: 10px; text-align: center">{{activityName}}</div>
+        <div style="font-size: 15px; ;height: 10px; text-align: center" [style.color]="isFavoriteList ? '#EC8800' : '#B6A710'">{{activityName}}</div>
         <div>
             <a href="javascript:void(0)" class="float-left card-inverse" (click)="addToFavorite()" [style.visibility]="isFavoriteVisible ? 'visible' : 'hidden'">
                 <span>

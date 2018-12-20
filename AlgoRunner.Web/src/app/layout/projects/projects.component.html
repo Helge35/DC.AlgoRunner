@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xl-6 text-xs-center">
                 <div class="card mb-3">
-                    <div class="projects-section-header">
+                    <div class="projects-section-header fav">
                         FAVORITES
                     </div>
                     <div style="height: 230px">
@@ -17,7 +17,7 @@
 
             <div class="col-xl-6 text-xs-center">
                 <div class="card mb-3">
-                    <div class="projects-section-header" style="color: #C8AC58;">
+                    <div class="projects-section-header reg" >
                         RECENT
                     </div>
                     <div>
@@ -36,31 +36,30 @@
         <div class="row">
             <div class="col-xl-6 text-xs-center">
                 <div class="card mb-3">
-                    <div class="projects-section-header" style="color: #C8AC58;">
+                    <div class="projects-section-header reg" >
                         ALL
                     </div>
-                    <div style="height: 570px">
+                    <div style="height: 52vh">
                         <span *ngFor='let proj of projects' class=" project-ico">
                             <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
                                 [activityName]="proj.activity ? proj.activity.name : ''" [isFavoriteList]="false"
                                 (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
                         </span>
                     </div>
-                    <div style="height:50px;">
+                    <div style="height:53px;">
                         <ngb-pagination class="d-flex justify-content-center" [collectionSize]="progectsTotalItems"
-                            [pageSize]="15" [(page)]="projectsCurrentpage" (pageChange)="loadPage($event)"></ngb-pagination>
+                            [pageSize]="12" [(page)]="projectsCurrentpage" (pageChange)="loadPage($event)"></ngb-pagination>
                     </div>
                 </div>
             </div>
             <div class="col-xl-6 text-xs-center">
                 <div class="card mb-3">
-                    <div class="projects-section-header" style="color: #C8AC58;">
+                    <div class="projects-section-header reg" >
                         Execution
                     </div>
-                    <div style="height: 620px">
+                    <div style="height: 57vh">
 
                     </div>
-
                 </div>
             </div>
         </div>
@@ -71,7 +70,7 @@
                 <div class="projects-section-header" style="color: #125673;">
                     ALGORITHMS
                 </div>
-                <div style="height:870px;">
+                <div style="height:80vh;">
                     <div *ngFor='let alg of algs' class="algo-ico">
                         <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
                     </div>
