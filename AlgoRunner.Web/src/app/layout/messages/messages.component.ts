@@ -21,12 +21,11 @@ export class MessagesComponent implements OnInit {
   }
 
   deleteMessage(id: number) {
-    /* this._service.deleteMessage(id).subscribe();
-     this.messages = this.messages.filter(item => item.id !== id);*/
-    this.sendMessage();
+     this._service.deleteMessage(id).subscribe();
+     this.messages = this.messages.filter(item => item.id !== id);
   }
 
-  public sendMessage(): void {
+  /*public sendMessage(): void {
     const data = `Sent: Oleg + 1`;
 
     let mess: MessageInfo = { id: 111, title: "Finaly", context: data, createDate: new Date() };
@@ -36,7 +35,7 @@ export class MessagesComponent implements OnInit {
       this._hubConnection.invoke('Send', mess);
     }
 
-  }
+  }*/
 
   constructor(private _service: MessagesService, private authService: AuthService) { }
 

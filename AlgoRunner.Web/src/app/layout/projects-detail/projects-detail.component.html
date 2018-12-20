@@ -42,7 +42,7 @@
                         <div class="col-8">
                             <div class="card mb-3">
                                 <div class="card-body">
-                                    <div *ngFor='let alg of project.algorithmsList'>
+                                    <div *ngFor='let alg of project.algorithmsList' class="algo-ico">
                                         <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
                                     </div>
                                 </div>
