@@ -1,9 +1,11 @@
-$topnav-background-color: #222;
+$topnav-background-color: #125673;
 :host {
     .navbar {
         background-color: $topnav-background-color;
         .navbar-brand {
             color: #fff;
+            font-size: 22px;
+            margin-left: 18px;
         }
         .nav-item > a {
             color: #999;
@@ -35,4 +37,35 @@ $topnav-background-color: #222;
             }
         }
     }
+    .header-ico{
+        width: 32px;
+        height: 32px;
+        color-adjust: 90;
+    }
+
+    .header-btn{
+        background: transparent;
+        height: 32px;
+        width: 200px;
+        border: none;
+        font-size: 18px;
+        color: #fff;
+        vertical-align: -webkit-baseline-middle;
+        margin-right: 20px;
+        text-decoration: none;
+        font-family: calibri;
+    }
+
+    .messages-new  {
+        svg {
+          path {
+            fill: red;
+          }
+        }
+      }
+
+      img[style*="color:"] svg [fill] {
+        fill: red;
+    }
+      
 }

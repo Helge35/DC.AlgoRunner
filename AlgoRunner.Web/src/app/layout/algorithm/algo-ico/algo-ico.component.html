@@ -1,16 +1,16 @@
-<div class="card text-white bg-info" style="margin-bottom: 10px">
+<div class="text-white">
 
     <div class="row">
         <div class="col-xl-2">
-            <i class="fa fa-cog fa-2x" ></i>
+                <img src="../../../../assets/images/Ic_algorithm_32.svg" style="height: 32px; width: 32px; margin-left: 5px; fill: #ffffff">
         </div>
         <div class=" col-xl-8 text-left">
-            <div class="d-block" title="{{title}}">{{alg.name | slice:0:15}}</div>
-            <div style="font-size: x-small; color: black; float: left;">{{activityName}}</div>
+            <div class="d-block float-left" title="{{title}}">{{alg.name | slice:0:15}}</div>
+            <div style="font-size: x-small; color: black; float: right;">{{activityName}}</div>
         </div>
         <div class=" col-xl-2 text-center">
             <a href="javascript:void(0)" class="float-center card-inverse" (click)="open(content)">
-                <span><i class="fa fa-arrow-circle-right" style="margin-top: 12px ; color: yellow;"></i></span>
+                    <img src="../../../../assets/images/Ic_start_32.svg" style="height: 32px; width: 32px;margin-right: 3px; fill: #ffffff">
             </a>
         </div>
     </div>

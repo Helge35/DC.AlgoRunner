@@ -1,13 +1,17 @@
 <nav class="navbar navbar-expand-lg fixed-top">
-    <a class="navbar-brand" href="#">Algo-Runner</a>
+    <a class="navbar-brand" href="#">ALGO-RUNNER</a>
     <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
         <i class="fa fa-bars text-muted" aria-hidden="true"></i>
     </button>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <button type="button" class="btn btn-warning" style="margin-right: 30px" [routerLink]="['/project']">+ Project</button>
-                <button type="button" class="btn btn-primary" style="margin-right: 100px" [routerLink]="['/algo']">+ Algorithm</button>
+                    <a href="javascript:void(0)" routerLink="/project" class="header-btn" style="color: #fff" >
+                            <img src="../../../../assets/images/Ic_add_project_32.svg" class="header-ico">&nbsp;New Project</a>
+            </li>
+            <li class="nav-item">
+                    <a href="javascript:void(0)" routerLink="/algo" class="header-btn" style="color: #fff" >
+                            <img src="../../../../assets/images/Ic_add_algorithm_32.svg" class="header-ico">&nbsp;New Algorithm</a>
             </li>
             <!--li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link mt-1"
@@ -18,9 +22,9 @@
                 </a>
             </li-->
             &nbsp;
-            <li class="nav-item dropdown" ngbDropdown>
-                <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
-                    <i class="fa fa-bell"></i> <b class="caret"></b><span class="sr-only">(current)</span>
+            <li class="nav-item dropdown" style="width: 50px" ngbDropdown>
+                <a href="javascript:void(0)" ngbDropdownToggle >
+                    <img src="../../../../assets/images/Ic_warnung_32.svg" class="header-ico messages-new"  style="margin-top:3px; fill: yellow "> 
                 </a>
                 <ul class="dropdown-menu-right messages" ngbDropdownMenu style="max-height:800px;overflow-y: auto;">
                     <messages></messages>
@@ -77,9 +81,9 @@
                     </a>
                 </div>
             </li-->
-            <li class="nav-item dropdown" ngbDropdown *ngIf="user">
-                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                    <i class="fa fa-user"></i> {{user.name}} <b class="caret"></b>
+            <li class="nav-item dropdown" ngbDropdown *ngIf="user" >
+                <a href="javascript:void(0)"  ngbDropdownToggle class="header-btn"  style="color: #fff" >
+                    <img src="../../../../assets/images/Ic_user_32.svg" class="header-ico"> {{user.name}} <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu-right" ngbDropdownMenu>
                     <!--a class="dropdown-item" href="javascript:void(0)">

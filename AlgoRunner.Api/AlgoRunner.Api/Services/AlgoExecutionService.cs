@@ -39,12 +39,12 @@ namespace AlgoRunner.Api.Services
 
         public void Run(Algorithm algo, string executedBy)
         {
+            SendStartExeMessage(executedBy, algo.Name);
             BackgroundJobID = BackgroundJob.Enqueue(() => StartExecution(algo, executedBy));
         }
 
         public void StartExecution(Algorithm algo, string executedBy)
         {
-            SendStartExeMessage(executedBy, algo.Name);
             string rootPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", algo.Id, DateTime.Now.Ticks));
             Directory.CreateDirectory(rootPath);
 
