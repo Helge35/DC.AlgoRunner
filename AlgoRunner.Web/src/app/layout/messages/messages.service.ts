@@ -1,19 +1,19 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MessageInfo } from './models/messageInfo';
 import { AuthService } from '../../shared/services/auth.service';
 
-
 @Injectable({
   providedIn: 'root',
 })
 
-export class MessagesService {
-
+export class MessagesService  {
 
   apiUrl: string = environment.apiUrl + "messages/";
+
+  private _newMessageEvent: EventEmitter<MessageInfo> = new EventEmitter();
 
   getMessages(): Observable<MessageInfo[]> {
     return this._http.get<MessageInfo[]>(this.apiUrl);
@@ -23,6 +23,10 @@ export class MessagesService {
     return this._http.delete(this.apiUrl + id);
   }
 
-  constructor(private _http: HttpClient, private _authServce : AuthService) {
+  subsrcibeToNewMessageEvent() {
+    return this._newMessageEvent;
+  }
+
+  constructor(private _http: HttpClient, private _authServce: AuthService) {
   }
 }

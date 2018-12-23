@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../shared/services/auth.service';
 import { User } from '../../../shared/models/user';
+import { MessagesService } from '../../messages/messages.service';
 
 @Component({
     selector: 'app-header',
@@ -12,8 +13,9 @@ import { User } from '../../../shared/models/user';
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
     user :User;
+    isNewMessage: boolean;
 
-    constructor(private translate: TranslateService, public router: Router, private authService : AuthService) {
+    constructor(private translate: TranslateService, public router: Router, private authService : AuthService, private messageService : MessagesService) {
 
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
@@ -33,6 +35,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
          this.authService.getAuthChangeEmitter().subscribe(u=>this.user = u);
+         this.messageService.subsrcibeToNewMessageEvent().subscribe(u =>  this.isNewMessage = true);
     }
 
     isToggled(): boolean {
@@ -56,5 +59,9 @@ export class HeaderComponent implements OnInit {
 
     changeLang(language: string) {
         this.translate.use(language);
+    }
+
+    openMessagesList(){
+        this.isNewMessage =false;
     }
 }

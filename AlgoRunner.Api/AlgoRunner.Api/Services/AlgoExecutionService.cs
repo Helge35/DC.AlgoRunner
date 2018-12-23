@@ -93,7 +93,7 @@ namespace AlgoRunner.Api.Services
         {
             string link = Path.GetFileName(rootPath);
 
-            var message = MessagesRepository.AddNewMessage("Execution results", $"Argotihm [{algoName}] finished execution. <a href='{ClientUrl}/results/{link}'>Click</a> to see results", executedBy);
+            var message = MessagesRepository.AddNewMessage("Execution results", $"Argotihm [{algoName}] finish execution. Click <a href='{ClientUrl}/results/{link}'>here</a> to see results", executedBy);
             MessageHubContext.Clients.All.Send(message);
         }
     }

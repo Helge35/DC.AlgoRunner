@@ -15,27 +15,10 @@ $topnav-background-color: #125673;
         }
     }
     .messages {
-        width: 300px;
-        .media {
-            border-bottom: 1px solid #ddd;
-            padding: 5px 10px;
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-        .media-body {
-            h5 {
-                font-size: 13px;
-                font-weight: 600;
-            }
-            .small {
-                margin: 0;
-            }
-            .last {
-                font-size: 12px;
-                margin: 0;
-            }
-        }
+        width: 320px;
+        max-height:800px;
+        overflow-y: auto;
+        
     }
     .header-ico{
         width: 32px;
@@ -55,5 +38,9 @@ $topnav-background-color: #125673;
         text-decoration: none;
         font-family: calibri;
     }
-      
+
+   .message-ico .dropdown-toggle::after  {
+        color: white;
+        margin-bottom: 10px;
+    }
 }

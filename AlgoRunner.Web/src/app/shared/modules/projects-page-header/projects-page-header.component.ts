@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProjectsPageHeaderComponent implements OnInit {
 
   @Input() header: string;
+  @Input() staticHeader: string;
   
   constructor() { }
 

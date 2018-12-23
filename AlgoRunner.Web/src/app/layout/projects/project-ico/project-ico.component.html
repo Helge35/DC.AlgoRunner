@@ -11,13 +11,16 @@
         <div style="font-size: 15px; ;height: 10px; text-align: center" [style.color]="isFavoriteList ? '#EC8800' : '#B6A710'">{{activityName}}</div>
         <div>
             <a href="javascript:void(0)" class="float-left card-inverse" (click)="addToFavorite()" [style.visibility]="isFavoriteVisible ? 'visible' : 'hidden'">
-                <span>
-                    <!--i [ngClass]="[isFavorite? 'fa fa-star' : 'fa fa-star-o']"></i-->
-                    <img src="../../../../assets/images/Ic_star_32.svg" style="height: 32px; width: 32px;margin-left: 3px; margin-top: 10px;" >
-                </span>
+                <svg class="project-ico" [style.fill]="isFavoriteList ? '#EC8800' : '#B6A710'">
+                    <polygon points="30.5,13.1 20.8,11.2 16,2.7 11.2,11.3 1.5,13.2 8.3,20.3 7.1,30.2 16,26.5 25,30.1 23.7,20.3 " />
+                </svg>
             </a>
             <a href="javascript:void(0)" class="float-right card-inverse" [routerLink]="['/project', id]">
-                <img src="../../../../assets/images/Ic_start_32.svg" style="height: 32px; width: 32px;margin-right: 3px; margin-top: 10px;">
+                <svg class="project-ico" [style.fill]="isFavoriteList ? '#EC8800' : '#B6A710'">
+                    <path d="M16,3C8.8,3,3,8.8,3,16s5.8,13,13,13s13-5.8,13-13S23.2,3,16,3z M22.8,16.7c0,0-6.8,4.9-8.8,6.5c-0.6,0.5-1.1-0.3-1.1-0.3V9
+	                        c0,0,0.4-0.8,1-0.2c1.9,1.6,8.8,6.5,8.8,6.5S23,15.5,23,16S22.8,16.7,22.8,16.7z" />
+                </svg>
+
             </a>
         </div>
     </div>
