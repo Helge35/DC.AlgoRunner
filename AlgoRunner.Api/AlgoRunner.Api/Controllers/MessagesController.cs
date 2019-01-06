@@ -37,11 +37,11 @@ namespace AlgoRunner.Api.Controllers
             _repository.DeleteMessage(id);
         }
 
-
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpGet("SetAsReaded")]
+        public void SetAsReaded()
         {
+            string userName = _accessor.HttpContext.User.Identity.Name;
+            _repository.SetMessageAsReaded(userName);
         }
     }
 }

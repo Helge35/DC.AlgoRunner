@@ -18,12 +18,18 @@ export class MessagesComponent implements OnInit {
   messageInfo: string;
 
   getMessages() {
-    this._service.getMessages().subscribe(i => this.messages = i);
+    this._service.getMessages().subscribe(i => {
+      this.messages = i;
+
+      if (this.messages.some(m => !m.isReaded)) {
+        this._service.riseNewMessageEvent();
+      }
+    });
   }
 
   deleteMessage(id: number) {
-     this._service.deleteMessage(id).subscribe();
-     this.messages = this.messages.filter(item => item.id !== id);
+    this._service.deleteMessage(id).subscribe();
+    this.messages = this.messages.filter(item => item.id !== id);
   }
 
   /*public sendMessage(): void {
@@ -40,14 +46,14 @@ export class MessagesComponent implements OnInit {
     this.authService.getAuthChangeEmitter().subscribe(u => this.getMessages());
 
     this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(environment.hubsUrl +'message')
+      .withUrl(environment.hubsUrl + 'message')
       .build();
 
     this._hubConnection.start().catch(err => console.error(err.toString()));
 
     this._hubConnection.on('Send', (message: any) => {
       this._service.subsrcibeToNewMessageEvent().emit(message);
-      this.messages.push(message)
+      this.messages.unshift(message)
     });
   }
 }

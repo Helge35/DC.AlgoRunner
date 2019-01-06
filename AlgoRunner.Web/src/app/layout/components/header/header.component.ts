@@ -12,10 +12,10 @@ import { MessagesService } from '../../messages/messages.service';
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
-    user :User;
+    user: User;
     isNewMessage: boolean;
 
-    constructor(private translate: TranslateService, public router: Router, private authService : AuthService, private messageService : MessagesService) {
+    constructor(private translate: TranslateService, public router: Router, private authService: AuthService, private messageService: MessagesService) {
 
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
@@ -34,8 +34,8 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-         this.authService.getAuthChangeEmitter().subscribe(u=>this.user = u);
-         this.messageService.subsrcibeToNewMessageEvent().subscribe(u =>  this.isNewMessage = true);
+        this.authService.getAuthChangeEmitter().subscribe(u => this.user = u);
+        this.messageService.subsrcibeToNewMessageEvent().subscribe(u => this.isNewMessage = true);
     }
 
     isToggled(): boolean {
@@ -61,7 +61,10 @@ export class HeaderComponent implements OnInit {
         this.translate.use(language);
     }
 
-    openMessagesList(){
-        this.isNewMessage =false;
+    openMessagesList() {
+        if (this.isNewMessage) {
+            this.isNewMessage = false;
+            this.messageService.setMessagesAsReaded();
+        }
     }
 }

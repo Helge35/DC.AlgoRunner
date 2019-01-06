@@ -9,5 +9,6 @@ namespace AlgoRunner.Api.Entities
         public string Title { get; set; }
         public string Context { get; set; }
         public DateTime CreateDate { get; set; }
+        public bool isReaded { get; set; }
     }
 }

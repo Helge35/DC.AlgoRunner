@@ -5,6 +5,7 @@ namespace AlgoRunner.Api.Hubs
 {
     public interface IMessageHub
     {
-        Task Send(Message message);
+        Task SendAll(Message message);
+        Task Send( Message message);
     }
 }

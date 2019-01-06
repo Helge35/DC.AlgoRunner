@@ -27,6 +27,14 @@ export class MessagesService  {
     return this._newMessageEvent;
   }
 
+  setMessagesAsReaded(){
+    this._http.get(this.apiUrl+ "SetAsReaded").subscribe();
+  }
+
+  riseNewMessageEvent(){
+    this._newMessageEvent.emit();
+  }
+
   constructor(private _http: HttpClient, private _authServce: AuthService) {
   }
 }

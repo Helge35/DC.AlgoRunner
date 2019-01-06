@@ -3,4 +3,5 @@ export class MessageInfo {
     title: string;
     context: string;
     createDate : Date;
+    isReaded : boolean;
   }
