@@ -1,5 +1,6 @@
 <div *ngIf="project">
-    <projects-page-header [header]="project.name"></projects-page-header>
+    <projects-page-header [header]="project.name" *ngIf="project.id"></projects-page-header>
+    <projects-page-header [header]="'New project'" *ngIf="!project.id"></projects-page-header>
 
     <div class="row">
         <div class="col-xl-6">
@@ -8,51 +9,73 @@
                     <div class="form-group row">
                         <label class="col-3 col-form-label">Name:</label>
                         <div class="col-8">
-                            <input class="form-control" type="text" value="{{project.name}}" readonly>
+                            <input class="form-control" type="text"  [(ngModel)]="project.name" [readonly]="project.id">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-3 col-form-label">Description:</label>
                         <div class="col-8">
-                            <textarea class="form-control" rows="3" value="{{project.desc}}" readonly></textarea>
+                            <textarea class="form-control" rows="3" [(ngModel)]="project.desc" [readonly]="project.id"></textarea>
                         </div>
                     </div>
-                    <div class="form-group row" *ngIf="project.activity">
+                    <div class="form-group row" *ngIf="project.activity && project.id">
                         <label class="col-3 col-form-label">Project:</label>
                         <div class="col-8">
                             <input class="form-control" type="text" value="{{project.activity.name}}" readonly>
                         </div>
                     </div>
+                    <div class="form-group row" *ngIf="!project.id">
+                        <label class="col-3 col-form-label">Project:</label>
+                        <div class="col-8">
+                            <select [(ngModel)]="project.activity" name="projactivity" required #projactivity="ngModel">
+                                <option *ngFor="let activity of activities" [ngValue]="activity">
+                                    {{activity.name}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && algactivity.invalid" style="color:red">
+                                Activity is required
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label class="col-3 col-form-label">Created by:</label>
                         <div class="col-8">
-                            <input class="form-control" type="text" value="{{project.createdBy}}" readonly>
+                            <input class="form-control" type="text" [(ngModel)]="project.createdBy" [readonly]="project.id">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-8 col-form-label"></label>
-                        <div class="col-2">
-                            <button type="button" class="btn btn-lg btn-success">
-                                <span>Execute&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group row" style="margin-top: 100px">
                         <label class="col-3 col-form-label">Algorithms:</label>
                         <div class="col-8">
-                            <div class="card mb-3">
-                                <div class="card-body">
+                            <div class="card mb-4">
+                                <div class="card-body" style="height:30vh; overflow-y: auto; overflow-x: hidden;">
                                     <div *ngFor='let alg of project.algorithmsList' class="algo-ico">
-                                        <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
+                                        <div>
+                                            <button type="button" class="btn" style="float:left" (click)="removeAlgFromProject(alg)"
+                                                *ngIf="!project.id">
+                                                <span><i class="fa fa-arrow-circle-up"></i></span>
+                                            </button>
+                                            <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-9 col-form-label"></label>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-lg btn-success" (click)="execiteProject(project.id)" *ngIf="project.id">
+                                <span>Execute&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></span>
+                            </button>
+                            <button type="button" class="btn btn-lg btn-success" (click)="saveProject(project)" *ngIf="!project.id">
+                                <span>Save&nbsp;&nbsp;<i class="fa fa-arrow-circle-up"></i></span>
+                            </button>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
         </div>
-        <div class="col-xl-6">
+        <div class="col-xl-6" *ngIf="project.id">
             <div class="card mb-3">
                 <div class="card-header">Execution plans</div>
                 <div class="card-body table-responsive" style="height: 80vh">
@@ -78,6 +101,19 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3" *ngIf="!project.id">
+            <div class="card ">
+                <div class="card-header">Available Algorithms</div>
+                <div style="max-height:80vh; overflow-y: auto; overflow-x: hidden;">
+                    <div *ngFor='let alg of algs' class="algo-ico">
+                        <button type="button" class="btn" style="float:left" (click)="addAlgToProject(alg)">
+                            <span><i class="fa fa-arrow-circle-up"></i></span>
+                        </button>
+                        <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
+                    </div>
                 </div>
             </div>
         </div>

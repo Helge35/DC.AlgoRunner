@@ -134,6 +134,18 @@ namespace AlgoRunner.Api.Dal
                };
         }
 
+        internal void AddNewProject(Project proj)
+        {
+            var rand = new Random().Next(1000);
+            proj.Id = rand;
+            _projects.Add(proj);
+        }
+
+        internal List<Algorithm> GetAllAlgs()
+        {
+          return  _algorithms.ToList();
+        }
+
         internal string GetAlgFilePath(int algId)
         {
             return _algorithms.First(x => x.Id == algId).FileServerPath;

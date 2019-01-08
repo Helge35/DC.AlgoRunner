@@ -69,5 +69,25 @@ namespace AlgoRunner.Api.Controllers
             dashboard.AlgorithmsTotalSize = totalSize;
             return Ok(dashboard);
         }
+
+        [HttpGet("LoadAllAlgs")]
+        public ActionResult<Algorithm> LoadAllAlgs()
+        {
+            var list =_repository.GetAllAlgs();
+            return Ok(list);
+        }
+
+        [HttpPost("ExeciteProject")]
+        public ActionResult ExeciteProject()
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        public ActionResult Post([FromBody]Project proj)
+        {
+            _repository.AddNewProject(proj);
+            return Ok();
+        }
     }
 }

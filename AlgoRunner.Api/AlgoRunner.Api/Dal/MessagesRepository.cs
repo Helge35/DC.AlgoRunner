@@ -15,7 +15,7 @@ namespace AlgoRunner.Api.Dal
             {
                 new Message{Id =1, UserName=@"DESKTOP-KM9M96J\Oleg",
                     Context =@"This is probably the last (at least for now) of my posts about push notifications. I've updated the demo project with support for features described here (and there is still couple things on the issues list to come in future).",
-                    CreateDate= new DateTime(2018, 10, 1), Title="Post1",  isReaded= false},
+                    CreateDate= new DateTime(2018, 10, 1), Title="Post1",  isReaded= true},
 
                 new Message{Id =2, UserName=@"DESKTOP-KM9M96J\Boris", isReaded= false,
                     Context =@"This is probably the last (at least for now) of my posts about push notifications. I've updated the demo project with support for features described here (and there is still couple things on the issues list to come in future).",
