@@ -9,6 +9,7 @@ import { ProjectsDetailComponent } from './projects-detail.component';
 import { ProjectsPageHeaderModule } from '../../shared/modules/projects-page-header/projects-page-header.module';
 import {AlgoIcoModule} from '../algorithm/algo-ico/algo-ico.module'
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,9 +17,10 @@ import {AlgoIcoModule} from '../algorithm/algo-ico/algo-ico.module'
     NgbModule.forRoot(),
     ProjectsDetailRoutingModule,
     ProjectsPageHeaderModule,
-    AlgoIcoModule
+    AlgoIcoModule,
+    
   ],
-  declarations: [ProjectsDetailComponent,]
+  declarations: [ProjectsDetailComponent]
 })
 export class ProjectsDetailModule { }
 

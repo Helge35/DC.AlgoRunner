@@ -9,6 +9,7 @@
                 <a href="javascript:void(0)" routerLink="/project" class="header-btn" style="color: #fff">
                     <img src="../../../../assets/images/Ic_add_project_32.svg" class="header-ico">&nbsp;New Project</a>
             </li>
+            <div class="vl"></div>
             <li class="nav-item">
                 <a href="javascript:void(0)" routerLink="/algo" class="header-btn" style="color: #fff">
                     <img src="../../../../assets/images/Ic_add_algorithm_32.svg" class="header-ico">&nbsp;New Algorithm</a>
@@ -21,7 +22,7 @@
                     RTL/LTR
                 </a>
             </li-->
-            &nbsp;
+            <div class="vl"></div>
             <li class="nav-item message-ico" style="width: 50px" ngbDropdown (click)="openMessagesList()">
                 <a href="javascript:void(0)" ngbDropdownToggle>
                     <svg class="header-ico" [style.fill]="isNewMessage ? 'red' : '#fff'">
@@ -85,6 +86,7 @@
                     </a>
                 </div>
             </li-->
+            <div class="vl"></div>
             <li class="nav-item dropdown" ngbDropdown *ngIf="user">
                 <a href="javascript:void(0)" ngbDropdownToggle class="header-btn" style="color: #fff">
                     <img src="../../../../assets/images/Ic_user_32.svg" class="header-ico"> {{user.name}} <b class="caret"></b>

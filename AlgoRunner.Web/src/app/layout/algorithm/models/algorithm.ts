@@ -11,6 +11,7 @@ export class Algorithm {
     resultType : AlgResultType;
     algoParams: AlgoParam[];
     fileServerPath: string;
+    isAttached : boolean;
 
     constructor() {
       this.algoParams=[];

@@ -20,7 +20,7 @@
                     <div class="projects-section-header reg" >
                         RECENT
                     </div>
-                    <div>
+                    <div style="height: 230px">
                         <span *ngFor='let proj of resentProjects' class=" project-ico">
                             <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
                                 [activityName]="proj.activity ? proj.activity.name : ''" [isFavoriteList]="false"
@@ -39,14 +39,14 @@
                     <div class="projects-section-header reg" >
                         ALL
                     </div>
-                    <div style="height: 52vh">
+                    <div style="height: 48vh">
                         <span *ngFor='let proj of projects' class=" project-ico">
                             <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
                                 [activityName]="proj.activity ? proj.activity.name : ''" [isFavoriteList]="false"
                                 (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
                         </span>
                     </div>
-                    <div style="height:53px;">
+                    <div style="height:50px;">
                         <ngb-pagination class="d-flex justify-content-center" [collectionSize]="progectsTotalItems"
                             [pageSize]="12" [(page)]="projectsCurrentpage" (pageChange)="loadPage($event)"></ngb-pagination>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="projects-section-header reg" >
                         Execution
                     </div>
-                    <div style="height: 57vh">
+                    <div style="height: 53vh">
 
                     </div>
                 </div>
@@ -70,14 +70,14 @@
                 <div class="projects-section-header" style="color: #125673;">
                     ALGORITHMS
                 </div>
-                <div style="height:80vh;">
+                <div style="height:78vh;">
                     <div *ngFor='let alg of algs' class="algo-ico">
                         <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
                     </div>
                 </div>
 
-                <div style="height:50px;">
-                    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="algsTotalItems" [pageSize]="16"
+                <div style="height:55px;">
+                    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="algsTotalItems" [pageSize]="14"
                         [(page)]="algsCurrentpage" (pageChange)="loadPageAlgs($event)"></ngb-pagination>
                 </div>
             </div>

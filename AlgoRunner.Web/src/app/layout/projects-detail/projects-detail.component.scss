@@ -10,3 +10,57 @@
     color: #fff;
     background: #125673;
 }
+
+.projects-section-header{
+    font-size: 22px;
+    font-family: calibri;
+    font-size: 22px;
+    margin:10px 0px -10px 20px;
+    height: 50px;
+}
+
+label{
+    color: #125673;
+}
+
+.submit-btn{
+    background: transparent;
+    font-family: calibri;
+    font-size: 22px;
+    color: #fff;
+    border-right: 1px solid rgb(160, 156, 156);
+    border-radius: 0;
+
+}
+
+.btn-footer{
+    height:50px;
+    background: #125673;
+    border: 2px solid  #125673;
+    border-bottom-left-radius:  6px;
+    border-bottom-right-radius:  6px;
+}
+
+td{
+    font-family: calibri;
+    font-size: 16px;
+}
+th{
+    max-width: 80px;
+    text-align: center
+}
+
+.attach-btn{
+    background: transparent;
+    border: transparent;
+    margin-top: 8px;
+}
+
+  
+
+.show-btn{
+    background: #125673;
+    font-family: calibri;
+    font-size: 12px;
+    color: white;
+}
