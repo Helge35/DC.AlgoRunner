@@ -6,6 +6,8 @@ import { ProjectsPageHeaderModule } from '../../shared/modules/projects-page-hea
 
 import { AlgoExeComponent } from './algo-exe.component';
 import { AlgoExeRoutingModule } from './algo-exe-routing.module';
+import { AlgoExeIcoComponent } from './algo-exe-ico/algo-exe-ico.component';
+
 
 @NgModule({
   imports: [
@@ -15,6 +17,6 @@ import { AlgoExeRoutingModule } from './algo-exe-routing.module';
     AlgoExeRoutingModule,
     ProjectsPageHeaderModule,
   ],
-  declarations: [AlgoExeComponent]
+  declarations: [AlgoExeComponent, AlgoExeIcoComponent]
 })
 export class AlgoExeModule { }

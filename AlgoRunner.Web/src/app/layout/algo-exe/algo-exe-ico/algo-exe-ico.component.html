@@ -1,0 +1,28 @@
+
+    <div class="algo-header">
+        <span>&nbsp;&nbsp;{{algo.name}}
+            <span class="text-muted small">
+                <em>[{{algo.activity.name}}]</em>
+            </span>
+        </span>
+    </div>
+    <div class="algo-body">
+        <fieldset>
+            <div *ngFor='let param of algo.algoParams'>
+                <div class="form-group row ">
+                    <label class="col-2 col-form-label param-label">{{param.name}}</label>
+                    <div class="col-9">
+                        <input *ngIf="param.type.key===1" class="form-control" type="number" [(ngModel)]="param.value">
+                        <input *ngIf="param.type.key===2" class="form-control" type="text" [(ngModel)]="param.value">
+                        <input *ngIf="param.type.key===3" class="form-control float-left" type="checkbox" [(ngModel)]="param.value">
+                        <select *ngIf="param.type.key===4" class="form-control" [(ngModel)]="param.value">
+                            <option *ngFor="let enum of param.range" [ngValue]="enum">
+                                {{enum}}
+                            </option>
+                        </select>
+                    </div>
+                    <label class="col-1 col-form-label text-muted type-label">{{param.type.value}}</label>
+                </div>
+            </div>
+        </fieldset>
+    </div>

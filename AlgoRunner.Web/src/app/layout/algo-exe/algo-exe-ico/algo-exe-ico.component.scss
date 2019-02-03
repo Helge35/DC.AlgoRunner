@@ -1,0 +1,46 @@
+.algo-header{
+    height: 50px;
+    font-family: calibri;
+    font-size: 32px;
+    color: #fff;
+    background: #5FA2BF;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-color: #5FA2BF;
+    border-style: solid;
+
+}
+
+.algo-body{
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-color:#5FA2BF;
+    border-style: dashed;
+    border-top-width: 0;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+label{
+    color: #125673;
+}
+
+
+input {
+    border-color:#5FA2BF;
+    font-family: calibri;
+    font-size: 18px;
+    color: black;
+}
+
+.param-label{
+    color:  #125673;;
+    font-family: calibri;
+    font-size: 21px;
+}
+
+.type-label{
+    font-family: calibri;
+    font-size: 14px;
+}
+

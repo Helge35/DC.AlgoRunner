@@ -93,7 +93,7 @@ namespace AlgoRunner.Api.Dal
                     new Project{Id = 7, Name= "Project 7", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = false},
                     new Project{Id = 8, Name= "Project 8", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = false},
                     new Project{Id = 9, Name= "Project 9", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = true , CreatedBy="Big baga boss", ExecutionsList =new List<ProjectExecution>{
-                            new ProjectExecution{Id = 1, ExecutedBy ="User 1", StartDate = new DateTime(2018, 10, 1, 10, 0, 0),  EndDate = new DateTime(2018, 10, 1, 21, 0, 0) },
+                            new ProjectExecution{Id = 1, ExecutedBy ="User 55", StartDate = new DateTime(2018, 10, 1, 10, 0, 0),  EndDate = new DateTime(2018, 10, 1, 21, 0, 0), ResultPath="4_636825340445334012" },
                             new ProjectExecution{Id = 2, ExecutedBy ="User 1", StartDate = new DateTime(2018, 11, 1, 10, 0, 0),  EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
                             new ProjectExecution{Id = 3, ExecutedBy ="User 1", StartDate = new DateTime(2018, 12, 1, 10, 0, 0),  EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
                             new ProjectExecution{Id = 4, ExecutedBy ="User 2", StartDate = new DateTime(2018, 12, 11, 10, 0, 0),  EndDate = new DateTime(2018, 12, 15, 21, 0, 0) },
@@ -103,6 +103,8 @@ namespace AlgoRunner.Api.Dal
                                     _algorithms[0],
                                     _algorithms[1],
                                     _algorithms[2],
+                                    _algorithms[3],
+                                    _algorithms[4],
                             } , Activity = _activities.First()},
                     new Project{Id = 10, Name= "Project 10", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = false},
                     new Project{Id = 11, Name= "Project 11", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = false},
@@ -116,6 +118,16 @@ namespace AlgoRunner.Api.Dal
                     new Project{Id = 19, Name= "Project 19", LastExecutionDate= new DateTime(2018, 1,10), IsFavorite = false},
 
                };
+        }
+
+        internal List<Algorithm> GetAlgorithms(int[] algoIds)
+        {
+            return _algorithms.Where(a => algoIds.Contains(a.Id)).ToList();
+        }
+
+        internal List<Algorithm> GetProjectAlgorithms(int projectId)
+        {
+           return _projects.FirstOrDefault(x => x.Id == projectId)?.AlgorithmsList;
         }
 
         internal void AddNewProject(Project proj)

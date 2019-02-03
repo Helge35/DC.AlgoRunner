@@ -35,7 +35,7 @@ namespace AlgoRunner.Api
             services.AddSingleton<ActivityRepository>();
             services.AddSingleton<MessagesRepository>();
 
-            services.AddSingleton<AlgoExecutionService>();
+            services.AddScoped<AlgoExecutionService>();
             services.AddSingleton<FilesService>();
 
 

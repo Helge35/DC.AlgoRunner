@@ -46,8 +46,8 @@ export class ProjectsDetailComponent implements OnInit {
     this.filterAlgs();
   }
 
-  execiteProject(id : number){
-    this.http.execiteProject(id).subscribe();
+  execiteProject(algs : Algorithm[]){
+   // this.http.execiteProject(id).subscribe();
   }
 
   saveProject(proj : Project){

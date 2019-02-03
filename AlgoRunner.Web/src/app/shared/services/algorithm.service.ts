@@ -27,16 +27,17 @@ export class AlgorithmService {
     return this._http.post<string>(this.apiUrl + "UploadFile", formData)
   }
 
-  getAlg(id: number): Observable<Algorithm> {
-    return this._http.get<Algorithm>(this.apiUrl + id);
+
+  getAlg(projectId: number, id: number): Observable<Algorithm[]> {
+    return this._http.get<Algorithm[]>(this.apiUrl  + projectId + "/"+ id);
   }
 
   checkAccess(activityId: number): Observable<any> {
     return this._http.post<string>(this.apiUrl + "checkAccess", activityId);
   }
 
-  runAlgorithm(algo: Algorithm) {
-    return this._http.post(this.apiUrl + "RunAlgorithm", algo);
+  runAlgorithms(algoIds: number[]) {
+    return this._http.post(this.apiUrl + "RunAlgorithms", algoIds);
   }
 
   constructor(private _http: HttpClient) {

@@ -1,16 +1,22 @@
-.algo-header{
-    height: 50px;
-    width: 103%;
-    font-family: calibri;
-    font-size: 32px;
-    color: #fff;
+
+
+
+.btn-footer{
+    height:50px;
     background: #125673;
-    margin-left: -14px;
-    margin-bottom: 25px;
+    border: 2px solid  #125673;
+    border-bottom-left-radius:  6px;
+    border-bottom-right-radius:  6px;
 }
 
-label{
-    color: #125673;
+.submit-btn{
+    background: transparent;
+    font-family: calibri;
+    font-size: 22px;
+    color: #fff;
+    border-right: 1px solid rgb(160, 156, 156);
+    border-radius: 0;
+
 }
 
 .run-btn{

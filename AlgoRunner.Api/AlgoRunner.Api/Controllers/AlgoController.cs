@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -30,11 +31,21 @@ namespace AlgoRunner.Api.Controllers
             _accessor = accessor;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Algorithm> Get(int id)
+        [HttpGet("{projectId}/{id}")]
+        public ActionResult<List<Algorithm>> Get(int projectId, int id)
         {
-            var alg = _projectsRepository.GetAlgorithm(id);
-            return Ok(alg);
+            if (projectId > 0)
+            {
+                return Ok(_projectsRepository.GetProjectAlgorithms(projectId));
+            }
+            if (id > 0)
+            {
+                var algs = new List<Algorithm>();
+                algs.Add(_projectsRepository.GetAlgorithm(id));
+                return Ok(algs);
+            }
+
+            return BadRequest();
         }
 
         [HttpPost]

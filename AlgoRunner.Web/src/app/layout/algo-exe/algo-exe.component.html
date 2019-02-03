@@ -9,42 +9,18 @@
         <ngb-alert [type]="'warning'">Algorithm file doesn't exist. Contact administrator</ngb-alert>
     </div>
 
-    <div class="col-7" style="background:white" *ngIf="accessStatus===200 && algo">
-        <div class="algo-header">
-            <span>&nbsp;&nbsp;{{algo.name}}
-                <span class="text-muted small">
-                    <em>[{{algo.activity.name}}]</em>
-                </span>
-            </span>
+    <div class="row" style="background:transparent" *ngIf="accessStatus===200 && algos">
+        <div class="col-md-6" *ngFor='let algo of algos; let i = index;'>
+            <algo-exe-ico class="col-md-6" [algo]="algo"></algo-exe-ico>
+        </div>
+    </div>
 
-        </div>
-        <div>
-            <fieldset>
-                <div *ngFor='let param of algo.algoParams'>
-                    <div class="form-group row">
-                        <label class="col-3 col-form-label">{{param.name}}</label>
-                        <div class="col-8">
-                            <input *ngIf="param.type.key===1" class="form-control" type="number" [(ngModel)]="param.value">
-                            <input *ngIf="param.type.key===2" class="form-control" type="text" [(ngModel)]="param.value">
-                            <input *ngIf="param.type.key===3" class="form-control float-left" type="checkbox"
-                                [(ngModel)]="param.value">
-                            <select *ngIf="param.type.key===4" class="form-control" [(ngModel)]="param.value">
-                                <option *ngFor="let enum of param.range" [ngValue]="enum">
-                                    {{enum}}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="text-muted small col-1">
-                            <em>[{{param.type.value}}]</em>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-        <div style="height: 70px">
-            <button type="button" class="run-btn" (click)="runAlgorithm()">
-                <span>Run&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></span>
-            </button>
-        </div>
+
+
+
+    <div class="col-xl-12 btn-footer">
+        <button type="button" class="btn btn-lg submit-btn" (click)="runAlgorithms()">
+            <span><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Run</span>
+        </button>
     </div>
 </div>

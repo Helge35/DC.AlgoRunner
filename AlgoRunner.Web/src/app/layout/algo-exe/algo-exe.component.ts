@@ -12,25 +12,29 @@ import { AlgorithmService } from '../../shared/services/algorithm.service';
 export class AlgoExeComponent implements OnInit {
 
   id: number;
-  algo: Algorithm;
+  projectId: number;
+  algos: Algorithm[];
   accessStatus: number = 0;
 
   getAlg() {
-    this._serviceAlgo.checkAccess(this.id).subscribe(data => {
+    //this._serviceAlgo.checkAccess(this.id).subscribe(data => {
       this.accessStatus = 200;
-      this._serviceAlgo.getAlg(this.id).subscribe(a => this.algo = a);
-    }, 
-    (error) => this.accessStatus =parseInt( error.status));
+      this._serviceAlgo.getAlg(this.projectId, this.id).subscribe(a => {
+      this.algos = a;
+      });
+    //},
+     // (error) => this.accessStatus = parseInt(error.status));
   }
 
-  runAlgorithm(){
-    this._serviceAlgo.runAlgorithm(this.algo).subscribe();
+  runAlgorithms() {
+    this._serviceAlgo.runAlgorithms(this.algos.map(i=>i.id)).subscribe();
     this._router.navigate(['']);
   }
 
   constructor(private _activatedRoute: ActivatedRoute, private _serviceAlgo: AlgorithmService, private _router: Router) { }
 
   ngOnInit() {
+    this._activatedRoute.params.subscribe(params => { this.projectId = +params['projectId']; });
     this._activatedRoute.params.subscribe(params => { this.id = +params['id']; });
     this.getAlg();
   }

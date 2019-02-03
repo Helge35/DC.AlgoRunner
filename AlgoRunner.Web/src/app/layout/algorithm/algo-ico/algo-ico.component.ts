@@ -22,7 +22,7 @@ export class AlgoIcoComponent implements OnInit {
 
     navigateToExe(id: number) {
         this.avtiveModal.dismiss();
-        this._route.navigate(['/algoexe', id]);
+        this._route.navigate(['/algoexe/0', id]);
     }
 
 

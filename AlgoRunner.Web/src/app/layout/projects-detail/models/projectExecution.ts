@@ -3,4 +3,5 @@ export class ProjectExecution {
   executedBy: string;
   startDate: Date;
   endDate: Date;
+  resultPath: string;
 }

@@ -76,7 +76,7 @@
                     <button type="button" class="btn btn-lg submit-btn" (click)="saveProject(project)" *ngIf="!project.id">
                         <span><i class="fa fa-save"></i>&nbsp;&nbsp;Save</span>
                     </button>
-                    <button type="button" class="btn btn-lg submit-btn" (click)="execiteProject(project.id)" *ngIf="project.id">
+                    <button type="button" class="btn btn-lg submit-btn" [routerLink]="['/algoexe', project.id, 0]" *ngIf="project.id">
                         <span><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Execute</span>
                     </button>
                 </div>
@@ -102,7 +102,7 @@
                             <td>{{projExe.startDate | date:'dd/MM/yy HH:mm'}}</td>
                             <td>{{projExe.endDate | date:'dd/MM/yy HH:mm'}}</td>
                             <td>
-                                <button type="button" class="show-btn">Show &nbsp;
+                                <button type="button" class="show-btn" [routerLink]="['/results', projExe.resultPath]">Show &nbsp;
                                     <span><i class="fa fa-arrow-right"></i></span>
                                 </button>
                             </td>
