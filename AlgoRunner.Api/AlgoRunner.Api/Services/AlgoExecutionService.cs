@@ -37,11 +37,22 @@ namespace AlgoRunner.Api.Services
         IHubContext<MessageHub, IMessageHub> MessageHubContext { get; set; }
         MessagesRepository MessagesRepository { get; set; }
 
-        public void Run(List<Algorithm> algos, string executedBy)
+        public void Run(Algorithm[] algos, string executedBy)
         {
-            
-            SendStartExeMessage(executedBy, algo.Name);
-            BackgroundJobID = BackgroundJob.Enqueue(() => StartExecution(algo, executedBy));
+            if (algos.Length == 0)
+                return;
+
+            var firstAlgo = algos.First();
+            SendStartExeMessage(executedBy, firstAlgo.Name);
+            BackgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgo, executedBy));
+
+            if (algos.Length > 1)
+            {
+                for (int i = 1; i < algos.Length; i++)
+                {
+                    BackgroundJob.ContinueWith(BackgroundJobID, () => StartExecution(algos[i], executedBy));
+                }
+            }
         }
 
         public void StartExecution(Algorithm algo, string executedBy)

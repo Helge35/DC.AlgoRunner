@@ -1,4 +1,5 @@
 ﻿using AlgoRunner.Api.Dal;
+using AlgoRunner.Api.Dal.EF;
 using AlgoRunner.Api.Hubs;
 using AlgoRunner.Api.Services;
 using Hangfire;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,6 +28,11 @@ namespace AlgoRunner.Api
         {
             //services.AddCors();
             services.AddMvc();
+
+            var connection = Configuration["ConnectionStrings:AlgoRunnerConnectionString"];
+            services.AddDbContext<AlgoRunnerDbContext>
+                (options => options.UseSqlServer(connection));
+
             services.AddSignalR();
             services.AddAuthentication(Microsoft.AspNetCore.Server.IISIntegration.IISDefaults.AuthenticationScheme);
 

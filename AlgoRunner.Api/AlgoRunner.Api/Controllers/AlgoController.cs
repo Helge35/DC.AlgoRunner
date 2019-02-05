@@ -99,10 +99,10 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpPost("RunAlgorithm")]
-        public ActionResult RunAlgorithm([FromBody]Algorithm algo)
+        public ActionResult RunAlgorithm([FromBody]Algorithm[] algos)
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
-            _algoExecutionService.Run(algo, userName);
+            _algoExecutionService.Run(algos, userName);
             return Ok();
         }
     }
