@@ -98,10 +98,11 @@ namespace AlgoRunner.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("RunAlgorithm")]
-        public ActionResult RunAlgorithm([FromBody]Algorithm[] algos)
+        [HttpPost("RunAlgorithms")]
+        public ActionResult RunAlgorithms([FromBody]Algorithm[] algos)
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
+            //var algos = _projectsRepository.GetAlgorithms(algoIds);
             _algoExecutionService.Run(algos, userName);
             return Ok();
         }

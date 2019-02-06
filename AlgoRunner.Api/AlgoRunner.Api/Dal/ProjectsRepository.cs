@@ -15,6 +15,8 @@ namespace AlgoRunner.Api.Dal
         private List<AlgResultType> _algResultTypes;
         private List<Activity> _activities;
 
+        private List<ExecutionInfo> _executionInfos;
+
         public ProjectsRepository(ActivityRepository activityRepository)
         {
             _activities = activityRepository.GetAllActivities();
@@ -118,6 +120,18 @@ namespace AlgoRunner.Api.Dal
                     new Project{Id = 19, Name= "Project 19", LastExecutionDate= new DateTime(2018, 1,10), IsFavorite = false},
 
                };
+
+            _executionInfos = new List<ExecutionInfo>
+            {
+                new ExecutionInfo{Id= 1001 , AlgoName = "Alg 5", ProjectName= "Finished", ExecutedBy="Big Boss", StartDate = DateTime.Now, EndDate= DateTime.Now.AddDays(1)},
+
+
+                new ExecutionInfo{Id= 1001 , AlgoName = "Alg 3", ProjectName= "Proj 44", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
+                new ExecutionInfo{Id= 1001 , AlgoName = "Alg 4", ProjectName= "Proj 44", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
+                new ExecutionInfo{Id= 1001 , AlgoName = "Alg ", ProjectName= "", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
+                new ExecutionInfo{Id= 1001 , AlgoName = "Alg 6", ProjectName= "", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
+            };
+
         }
 
         internal List<Algorithm> GetAlgorithms(int[] algoIds)
@@ -190,6 +204,11 @@ namespace AlgoRunner.Api.Dal
             totalSize = _projects.Count;
             int from = pageSize * (pageNum - 1);
             return _projects.Skip(from).Take(pageSize);
+        }
+
+        internal IEnumerable<ExecutionInfo> GetExecutions()
+        {
+            return _executionInfos.Where(x => !x.EndDate.HasValue);
         }
     }
 }

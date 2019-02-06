@@ -33,6 +33,7 @@ namespace AlgoRunner.Api.Controllers
             dashboard.ProjectsTotalSize = projectsTotalSize;
             dashboard.AlgorithmsList = _repository.GetAlgsByPage(1, _algsPageSize, out algsTotalSize);
             dashboard.AlgorithmsTotalSize = algsTotalSize;
+            dashboard.ExecutionInfoList = _repository.GetExecutions();
             return Ok(dashboard);
         }
 

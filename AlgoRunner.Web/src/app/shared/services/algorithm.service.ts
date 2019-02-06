@@ -36,8 +36,8 @@ export class AlgorithmService {
     return this._http.post<string>(this.apiUrl + "checkAccess", activityId);
   }
 
-  runAlgorithms(algoIds: number[]) {
-    return this._http.post(this.apiUrl + "RunAlgorithms", algoIds);
+  runAlgorithms(algos: Algorithm[]) {
+    return this._http.post(this.apiUrl + "RunAlgorithms", algos);
   }
 
   constructor(private _http: HttpClient) {

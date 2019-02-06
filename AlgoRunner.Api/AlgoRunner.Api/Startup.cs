@@ -26,8 +26,11 @@ namespace AlgoRunner.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             //services.AddCors();
             services.AddMvc();
+
+            //GlobalConfiguration.Configuration.UseSqlServerStorage("<connection string or its name>");
 
             var connection = Configuration["ConnectionStrings:AlgoRunnerConnectionString"];
             services.AddDbContext<AlgoRunnerDbContext>
@@ -76,6 +79,7 @@ namespace AlgoRunner.Api
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
+
             app.UseHttpsRedirection();
             app.UseMvc();
         }

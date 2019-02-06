@@ -17,17 +17,17 @@ export class AlgoExeComponent implements OnInit {
   accessStatus: number = 0;
 
   getAlg() {
-    //this._serviceAlgo.checkAccess(this.id).subscribe(data => {
+    this._serviceAlgo.checkAccess(this.id).subscribe(data => {
       this.accessStatus = 200;
       this._serviceAlgo.getAlg(this.projectId, this.id).subscribe(a => {
       this.algos = a;
       });
-    //},
-     // (error) => this.accessStatus = parseInt(error.status));
+    },
+     (error) => this.accessStatus = parseInt(error.status));
   }
 
   runAlgorithms() {
-    this._serviceAlgo.runAlgorithms(this.algos.map(i=>i.id)).subscribe();
+    this._serviceAlgo.runAlgorithms(this.algos).subscribe();
     this._router.navigate(['']);
   }
 

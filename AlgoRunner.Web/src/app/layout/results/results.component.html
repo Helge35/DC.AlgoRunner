@@ -1,7 +1,7 @@
 <projects-page-header *ngIf="scatterData" [staticHeader]="'Results: '" [header]='scatterData.algoName'></projects-page-header>
-<div style="height: 86vh;" *ngIf="scatterData">
+<div style="height: 83vh;" *ngIf="scatterData">
   <div style="display: block;" >
-    <canvas baseChart [datasets]="scatterData.categories" [options]="ScatterchartOptions" [legend]="'true'" [colors]="chartColors"
+    <canvas baseChart [datasets]="scatterData.categories" [options]="ScatterchartOptions" [legend]="'true'" [colors]="chartColors" height="100vh"
       [chartType]="'scatter'"></canvas>
   </div>
 </div>

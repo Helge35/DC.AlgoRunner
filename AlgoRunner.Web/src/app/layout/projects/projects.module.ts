@@ -9,7 +9,8 @@ import { ProjectIcoComponent } from './project-ico/project-ico.component';
 import { ProjectsService } from './projects.service';
 
 import { PageHeaderModule } from '../../shared';
-import {AlgoIcoModule} from '../algorithm/algo-ico/algo-ico.module'
+import {AlgoIcoModule} from '../algorithm/algo-ico/algo-ico.module';
+import { ExeIcoComponent } from './exe-ico/exe-ico.component'
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import {AlgoIcoModule} from '../algorithm/algo-ico/algo-ico.module'
     PageHeaderModule,
     AlgoIcoModule,
   ],
-  declarations: [ProjectsComponent, ProjectIcoComponent],
+  declarations: [ProjectsComponent, ProjectIcoComponent, ExeIcoComponent],
   providers:[ProjectsService]
 })
 export class ProjectsModule { }

@@ -64,9 +64,17 @@ namespace AlgoRunner.Api.Services
             string outputFilePath = Path.Combine(rootPath, "Output.csv");
 
             CreateInputCsvFile(algo.AlgoParams, inputFilePath);
-            RunPyton(inputFilePath, outputFilePath, algo.FileServerPath);
 
-            SendEndExeMessage(executedBy, algo.Name, rootPath);
+            try
+            {
+                RunPyton(inputFilePath, outputFilePath, algo.FileServerPath);
+                SendEndExeMessage(executedBy, algo.Name, rootPath);
+            }
+
+            catch (Exception ex)
+            {
+                SendErrorExeMessage(executedBy, algo.Name, rootPath);
+            }
         }
 
         private void CreateInputCsvFile(List<AlgoParam> algoParams, string inputFilePath)
@@ -106,6 +114,12 @@ namespace AlgoRunner.Api.Services
             string link = Path.GetFileName(rootPath);
 
             var message = MessagesRepository.AddNewMessage("Execution results", $"Argotihm [{algoName}] finish execution. Click <a href='{ClientUrl}/results/{link}'>here</a> to see results", executedBy);
+            MessageHubContext.Clients.All.Send(message);
+        }
+
+        private void SendErrorExeMessage(string executedBy, string algoName, string rootPath)
+        {
+            var message = MessagesRepository.AddNewMessage("Error execution", $"Error on execution [{algoName}]" , executedBy);
             MessageHubContext.Clients.All.Send(message);
         }
     }

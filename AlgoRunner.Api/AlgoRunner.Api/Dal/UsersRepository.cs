@@ -18,7 +18,7 @@ namespace AlgoRunner.Api.Dal
                    new User{Id=101, Name="User 10", IsAdmin=false, Activities= new List<Activity>{_activities.First()}},
                    new User{Id=102, Name="User 12",IsAdmin=false,  Activities= new List<Activity>{_activities.Last()}},
                    new User{Id=103, Name="User 14", IsAdmin=true,  Activities= new List<Activity>{_activities.First(), _activities.Last()}},
-                   new User{Id=104, Name=@"DESKTOP-KM9M96J\Oleg",IsAdmin=true,  Activities= new List<Activity>{_activities.Last()}},
+                   new User{Id=104, Name=@"RF\OLEGBR",IsAdmin=true,  Activities= new List<Activity>{_activities.Last()}},
                    
             };
         }

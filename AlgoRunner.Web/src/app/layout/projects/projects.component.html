@@ -58,7 +58,9 @@
                         Execution
                     </div>
                     <div style="height: 53vh">
-
+                        <span *ngFor='let exeInfo of executionInfoItems' >
+                            <exe-ico [exeInfo]="exeInfo" ></exe-ico>
+                        </span>
                     </div>
                 </div>
             </div>

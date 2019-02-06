@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from './models/project';
 import { Algorithm } from '../algorithm/models/algorithm';
 import { ProjectsService } from './projects.service';
+import { ExecutionInfo } from './models/executionInfo';
 
 @Component({
   selector: 'app-projects',
@@ -14,12 +15,14 @@ export class ProjectsComponent implements OnInit {
   resentProjects: Project[]
   projects: Project[]
   algs: Algorithm[]
+  executionInfoItems : ExecutionInfo[]
 
   projectsCurrentpage: number
   progectsTotalItems: number
 
   algsCurrentpage: number
   algsTotalItems: number
+
 
 
 
@@ -58,6 +61,7 @@ export class ProjectsComponent implements OnInit {
       this.progectsTotalItems = info.projectsTotalSize;
       this.algs = info.algorithmsList;
       this.algsTotalItems = info.algorithmsTotalSize;
+      this.executionInfoItems = info.executionInfoList;
     }, error => { console.log('Error: ' + error.message); });
   }
 

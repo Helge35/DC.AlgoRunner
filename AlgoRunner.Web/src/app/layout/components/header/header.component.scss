@@ -16,6 +16,7 @@ $topnav-background-color: #125673;
     }
     .messages {
         width: 320px;
+        margin-left: -250px;
         max-height:800px;
         overflow-y: auto;
         border-radius: 25px;
