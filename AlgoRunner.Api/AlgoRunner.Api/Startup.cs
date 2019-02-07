@@ -75,6 +75,7 @@ namespace AlgoRunner.Api
             app.UseSignalR(routes =>
             {
                 routes.MapHub<MessageHub>("/hubs/message");
+                routes.MapHub<ExecutionHab>("/hubs/execution");
             });
 
             app.UseHangfireDashboard();

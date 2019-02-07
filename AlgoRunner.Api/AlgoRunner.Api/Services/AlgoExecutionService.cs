@@ -17,10 +17,23 @@ namespace AlgoRunner.Api.Services
 {
     public class AlgoExecutionService
     {
-        public AlgoExecutionService(IHostingEnvironment hostingEnvironment, IConfiguration configuration, IHubContext<MessageHub, IMessageHub> messageHubContext, MessagesRepository messagesRepository)
+        string ExecutionPath { get; set; }
+        string PytonExePath { get; set; }
+        string ClientUrl { get; set; }
+        string BackgroundJobID { get; set; }
+        IHubContext<MessageHub, IMessageHub> MessageHubContext { get; set; }
+        IHubContext<ExecutionHab, IExecutionHab> ExecutionHabContext { get; set; }
+        MessagesRepository MessagesRepository { get; set; }
+        ProjectsRepository ProjectsRepository { get; set; }
+
+        public AlgoExecutionService(IHostingEnvironment hostingEnvironment, IConfiguration configuration,
+            IHubContext<MessageHub, IMessageHub> messageHubContext, IHubContext<ExecutionHab, IExecutionHab> executionHabContext,
+            MessagesRepository messagesRepository, ProjectsRepository projectsRepository)
         {
             MessageHubContext = messageHubContext;
+            ExecutionHabContext = executionHabContext;
             MessagesRepository = messagesRepository;
+            ProjectsRepository = projectsRepository;
 
             ExecutionPath = Path.Combine(hostingEnvironment.WebRootPath, configuration.GetSection("AlgoExeDirectoryName").Value);
             if (!Directory.Exists(ExecutionPath))
@@ -30,54 +43,53 @@ namespace AlgoRunner.Api.Services
             ClientUrl = configuration.GetSection("ClientUrl").Value;
         }
 
-        string ExecutionPath { get; set; }
-        string PytonExePath { get; set; }
-        string ClientUrl { get; set; }
-        string BackgroundJobID { get; set; }
-        IHubContext<MessageHub, IMessageHub> MessageHubContext { get; set; }
-        MessagesRepository MessagesRepository { get; set; }
-
-        public void Run(Algorithm[] algos, string executedBy)
+        public void Run(List<ExecutionInfo> algoExecs, string executedBy)
         {
-            if (algos.Length == 0)
+            if (algoExecs.Count == 0)
                 return;
 
-            var firstAlgo = algos.First();
-            SendStartExeMessage(executedBy, firstAlgo.Name);
-            BackgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgo, executedBy));
+            var firstAlgoExe = algoExecs.First();
+            BackgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgoExe, executedBy));
 
-            if (algos.Length > 1)
+            if (algoExecs.Count > 1)
             {
-                for (int i = 1; i < algos.Length; i++)
+                for (int i = 1; i < algoExecs.Count; i++)
                 {
-                    BackgroundJob.ContinueWith(BackgroundJobID, () => StartExecution(algos[i], executedBy));
+                    BackgroundJob.ContinueWith(BackgroundJobID, () => StartExecution(algoExecs[i], executedBy));
                 }
             }
         }
 
-        public void StartExecution(Algorithm algo, string executedBy)
+        public void StartExecution(ExecutionInfo algoExe, string executedBy)
         {
-            string rootPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", algo.Id, DateTime.Now.Ticks));
+            SendStartExeMessage(executedBy, algoExe.AlgoName);
+            ExecutionHabContext.Clients.All.Started(algoExe);
+            string rootPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", algoExe.Id, DateTime.Now.Ticks));
             Directory.CreateDirectory(rootPath);
 
             string inputFilePath = Path.Combine(rootPath, "Input.csv");
             string outputFilePath = Path.Combine(rootPath, "Output.csv");
 
-            CreateInputCsvFile(algo.AlgoParams, inputFilePath);
+            CreateInputCsvFile(algoExe.ExeParams, inputFilePath);
 
             try
             {
-                RunPyton(inputFilePath, outputFilePath, algo.FileServerPath);
-                SendEndExeMessage(executedBy, algo.Name, rootPath);
+                RunPyton(inputFilePath, outputFilePath, algoExe.FileExePath);
+                SendEndExeMessage(executedBy, algoExe.AlgoName, rootPath);
             }
 
             catch (Exception ex)
             {
-                SendErrorExeMessage(executedBy, algo.Name, rootPath);
+                SendErrorExeMessage(executedBy, algoExe.AlgoName, rootPath);
+            }
+            finally
+            {
+                ProjectsRepository.EndAlgoExecution(algoExe.Id);
+                ExecutionHabContext.Clients.All.Finished(algoExe.Id);
             }
         }
 
-        private void CreateInputCsvFile(List<AlgoParam> algoParams, string inputFilePath)
+        private void CreateInputCsvFile(List<AlgoExecutionParams> algoParams, string inputFilePath)
         {
             using (var writer = new StreamWriter(inputFilePath))
             {

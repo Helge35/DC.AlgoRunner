@@ -134,6 +134,27 @@ namespace AlgoRunner.Api.Dal
 
         }
 
+        internal void EndAlgoExecution(int algoExeId)
+        {
+            _executionInfos.First(x => x.Id == algoExeId).EndDate = DateTime.Now;
+        }
+
+        internal List<ExecutionInfo> SetAlgoExecutions(Algorithm[] algos,  string executerName)
+        {
+            List<ExecutionInfo> exeInfoList = new List<ExecutionInfo>();
+            Random rand = new Random();
+            foreach (var algo in algos)
+            {
+                var exe = new ExecutionInfo {Id = rand.Next(), AlgoName = algo.Name, /*ProjectName = projectName,*/
+                    StartDate = DateTime.Now, ExecutedBy = executerName, FileExePath = algo.FileServerPath,
+                    AlgoId = algo.Id, ExeParams = algo.AlgoParams.Select(x=>new AlgoExecutionParams { Name = x.Name, Value = x.Value}).ToList()};
+                exeInfoList.Add(exe);
+                _executionInfos.Add(exe);
+            }
+
+            return exeInfoList;
+        }
+
         internal List<Algorithm> GetAlgorithms(int[] algoIds)
         {
             return _algorithms.Where(a => algoIds.Contains(a.Id)).ToList();
@@ -176,6 +197,11 @@ namespace AlgoRunner.Api.Dal
         internal Algorithm GetAlgorithm(int id)
         {
             return _algorithms.First(x => x.Id == id);
+        }
+
+        internal ExecutionInfo GetExecution(int id)
+        {
+            return _executionInfos.First(x => x.Id == id);
         }
 
         internal Project GetProject(int id)

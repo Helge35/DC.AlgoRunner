@@ -25,8 +25,8 @@ namespace AlgoRunner.Api.Controllers
         public ActionResult<AlgoDotesResult>Get(string path)
         {
             var pathVar = path.Split('_');
-            int algoID;
-            if (pathVar.Length != 2 || !int.TryParse(pathVar[0], out algoID))
+            int algoExeID;
+            if (pathVar.Length != 2 || !int.TryParse(pathVar[0], out algoExeID))
                 return NotFound();
 
             path = _filesService.GetFullPath(path);
@@ -38,7 +38,7 @@ namespace AlgoRunner.Api.Controllers
 
             AlgoDotesResult result = new AlgoDotesResult();
             result.ReadDataFromFile(path);
-            result.AlgoName = _projectsRepository.GetAlgorithm(algoID).Name;
+            result.AlgoName = _projectsRepository.GetExecution(algoExeID).AlgoName;
 
             return Ok(result);
         }

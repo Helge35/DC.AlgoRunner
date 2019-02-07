@@ -3,6 +3,9 @@ import { Project } from './models/project';
 import { Algorithm } from '../algorithm/models/algorithm';
 import { ProjectsService } from './projects.service';
 import { ExecutionInfo } from './models/executionInfo';
+import { HubConnection } from '@aspnet/signalr';
+import * as signalR from '@aspnet/signalr';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-projects',
@@ -11,19 +14,18 @@ import { ExecutionInfo } from './models/executionInfo';
 })
 export class ProjectsComponent implements OnInit {
 
+  private _hubConnection: HubConnection | undefined;
   favoriteProjects: Project[]
   resentProjects: Project[]
   projects: Project[]
   algs: Algorithm[]
-  executionInfoItems : ExecutionInfo[]
+  executionInfoItems: ExecutionInfo[]
 
   projectsCurrentpage: number
   progectsTotalItems: number
 
   algsCurrentpage: number
   algsTotalItems: number
-
-
 
 
   onFavoriteChanged(proj: Project, ) {
@@ -65,6 +67,22 @@ export class ProjectsComponent implements OnInit {
     }, error => { console.log('Error: ' + error.message); });
   }
 
+  registerHub() {
+    this._hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(environment.hubsUrl + 'execution')
+      .build();
+
+    this._hubConnection.start().catch(err => console.error(err.toString()));
+
+    this._hubConnection.on('Finished', (algoExeId: number) => {
+      this.executionInfoItems = this.executionInfoItems.filter(item=> item.id != algoExeId);
+    });
+
+    this._hubConnection.on('Started', (algoExe: ExecutionInfo) => {
+      this.executionInfoItems.push(algoExe);
+    });
+  }
+
   constructor(private _service: ProjectsService) {
     this.projectsCurrentpage = 1;
     this.algsCurrentpage = 1;
@@ -73,6 +91,7 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.getDashboardInfo();
+    this.registerHub();
   }
 
 }

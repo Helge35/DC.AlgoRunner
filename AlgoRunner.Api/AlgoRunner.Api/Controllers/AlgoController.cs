@@ -102,8 +102,8 @@ namespace AlgoRunner.Api.Controllers
         public ActionResult RunAlgorithms([FromBody]Algorithm[] algos)
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
-            //var algos = _projectsRepository.GetAlgorithms(algoIds);
-            _algoExecutionService.Run(algos, userName);
+            List<ExecutionInfo> algoExecutions = _projectsRepository.SetAlgoExecutions(algos, userName);
+            _algoExecutionService.Run(algoExecutions, userName);
             return Ok();
         }
     }
