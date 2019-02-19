@@ -3,5 +3,7 @@ export class ProjectExecution {
   executedBy: string;
   startDate: Date;
   endDate: Date;
+  projectId: number;
+  projectExecutionId: number;
   resultPath: string;
 }

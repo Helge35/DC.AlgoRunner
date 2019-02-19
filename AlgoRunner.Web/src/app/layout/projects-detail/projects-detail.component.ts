@@ -25,6 +25,9 @@ export class ProjectsDetailComponent implements OnInit {
   getProject() {
     this.http.getProject(this.id).subscribe(info => {
       this.project = info;
+      this.project.executionsList.forEach(exe => {
+        exe.resultPath = exe.projectId.toString()+ '_' +exe.projectExecutionId.toString();
+      });
     },
       error => { console.log('Error: ' + error.message); }
     );

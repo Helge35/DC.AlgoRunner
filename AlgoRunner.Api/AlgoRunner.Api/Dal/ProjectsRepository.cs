@@ -31,10 +31,10 @@ namespace AlgoRunner.Api.Dal
             };
 
             _algorithms = new List<Algorithm> {
-                    new Algorithm{Id=1,
-                        Name ="Alg 1",
+                    new Algorithm{Id=110011,
+                        Name ="Text Alg",
                         CreatedBy ="developer a1",
-                        Desc ="1 Alg.............end",
+                        Desc ="Text Alg",
                         Activity = _activities.First() ,
                         ResultType = _algResultTypes.First(x=>x.Id == 1),
                         FileServerPath = @"C:\AlgoRunnerProjects\Bp\cacbb170-b2e1-4594-b46d-c2f439a3a5a4.py",
@@ -44,6 +44,17 @@ namespace AlgoRunner.Api.Dal
                             new AlgoParam { Id = 503, Name="Demo Boll", Type = new KeyValuePair<int, string>(3, "Boolean"), },
                             new AlgoParam { Id = 504, Name="Demo Enum", Type = new KeyValuePair<int, string>(4, "Enum"), Range=new List<string>{ "First", "Second", "Third" } },
                         }
+                    },
+
+                    new Algorithm{Id=1002,
+                        Name ="Table Alg",
+                        CreatedBy ="developer a1",
+                        Desc ="1 Alg.............end",
+                        Activity = _activities.First() ,
+                        ResultType = _algResultTypes.First(x=>x.Id == 2),
+                        FileServerPath = @"C:\AlgoRunnerProjects\Bp\6792778d-221d-4e81-8c36-b00ee12416a1.py",
+                        AlgoParams = new List<AlgoParam>{
+                        new AlgoParam { Id = 6011, Name="Num of rows", Type = new KeyValuePair<int, string>(1, "Number"), Range = new List<string>()}, }
                     },
 
 
@@ -57,7 +68,7 @@ namespace AlgoRunner.Api.Dal
                         Desc ="3 Alg.............end",Activity = _activities.First(x=>x.Id==3), ResultType = _algResultTypes.First(x=>x.Id == 4)},
 
                     new Algorithm{Id=4,
-                        Name ="Tester 1",
+                        Name ="Scatter Alg",
                         CreatedBy ="developer a1",
                         Desc ="1 Alg.............end",
                         Activity = _activities.First(),
@@ -81,7 +92,7 @@ namespace AlgoRunner.Api.Dal
                     new Algorithm{Id=15, Name="Alg 9 common", CreatedBy="user a1", Desc="3 Alg.............end"},
                      new Algorithm{Id=16, Name="Alg 8 common", CreatedBy="user a1", Desc="2 Alg.............end"},
                     new Algorithm{Id=17, Name="Alg 9 common", CreatedBy="user a1", Desc="3 Alg.............end"},
-                    
+
             };
 
             _projects = new List<Project>
@@ -94,19 +105,21 @@ namespace AlgoRunner.Api.Dal
                     new Project{Id = 6, Name= "Project 6", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = true},
                     new Project{Id = 7, Name= "Project 7", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = false},
                     new Project{Id = 8, Name= "Project 8", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = false},
-                    new Project{Id = 9, Name= "Project 9", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = true , CreatedBy="Big baga boss", ExecutionsList =new List<ProjectExecution>{
-                            new ProjectExecution{Id = 1, ExecutedBy ="User 55", StartDate = new DateTime(2018, 10, 1, 10, 0, 0),  EndDate = new DateTime(2018, 10, 1, 21, 0, 0), ResultPath="4_636825340445334012" },
-                            new ProjectExecution{Id = 2, ExecutedBy ="User 1", StartDate = new DateTime(2018, 11, 1, 10, 0, 0),  EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
-                            new ProjectExecution{Id = 3, ExecutedBy ="User 1", StartDate = new DateTime(2018, 12, 1, 10, 0, 0),  EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
-                            new ProjectExecution{Id = 4, ExecutedBy ="User 2", StartDate = new DateTime(2018, 12, 11, 10, 0, 0),  EndDate = new DateTime(2018, 12, 15, 21, 0, 0) },
-                            new ProjectExecution{Id = 5, ExecutedBy ="User 2", StartDate = new DateTime(2018, 12, 12, 10, 0, 0),  EndDate = new DateTime(2018, 12, 17, 21, 0, 0) },
-                        } , Desc="Text start ...............................................................................................................................end",
+                    new Project{Id = 9, Name= "Project 9", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = true , CreatedBy="Big baga boss",
+
+                        //ExecutionsList =new List<ProjectExecution>{
+                        //    new ProjectExecution{Id = 1, ExecutedBy ="User 55", StartDate = new DateTime(2018, 10, 1, 10, 0, 0),  EndDate = new DateTime(2018, 10, 1, 21, 0, 0), ResultPath="4_636825340445334012" },
+                        //    new ProjectExecution{Id = 2, ExecutedBy ="User 1", StartDate = new DateTime(2018, 11, 1, 10, 0, 0),  EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
+                        //    new ProjectExecution{Id = 3, ExecutedBy ="User 1", StartDate = new DateTime(2018, 12, 1, 10, 0, 0),  EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
+                        //    new ProjectExecution{Id = 4, ExecutedBy ="User 2", StartDate = new DateTime(2018, 12, 11, 10, 0, 0),  EndDate = new DateTime(2018, 12, 15, 21, 0, 0) },
+                        //    new ProjectExecution{Id = 5, ExecutedBy ="User 2", StartDate = new DateTime(2018, 12, 12, 10, 0, 0),  EndDate = new DateTime(2018, 12, 17, 21, 0, 0) },
+                        //} ,
+
+                        Desc ="Text start ...............................................................................................................................end",
                             AlgorithmsList = new List<Algorithm>{
-                                    _algorithms[0],
-                                    _algorithms[1],
-                                    _algorithms[2],
-                                    _algorithms[3],
-                                    _algorithms[4],
+                                    _algorithms.FirstOrDefault(x=>x.Id==110011),
+                                    _algorithms.FirstOrDefault(x=>x.Id==1002),
+                                    _algorithms.FirstOrDefault(x=>x.Id==4)
                             } , Activity = _activities.First()},
                     new Project{Id = 10, Name= "Project 10", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = false},
                     new Project{Id = 11, Name= "Project 11", LastExecutionDate= new DateTime(2018, 1,1), IsFavorite = false},
@@ -123,33 +136,75 @@ namespace AlgoRunner.Api.Dal
 
             _executionInfos = new List<ExecutionInfo>
             {
-                new ExecutionInfo{Id= 1001 , AlgoName = "Alg 5", ProjectName= "Finished", ExecutedBy="Big Boss", StartDate = DateTime.Now, EndDate= DateTime.Now.AddDays(1)},
+
+                 new ExecutionInfo{Id = 1, ExecutedBy ="User 55", ProjectId=9, StartDate = new DateTime(2018, 10, 1, 10, 0, 0),  EndDate = new DateTime(2018, 10, 1, 21, 0, 0),  },
+                            new ExecutionInfo{Id = 2, ExecutedBy ="User 1", StartDate = new DateTime(2018, 11, 1, 10, 0, 0),  EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
+                            new ExecutionInfo{Id = 3, ExecutedBy ="User 1", StartDate = new DateTime(2018, 12, 1, 10, 0, 0),  EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
+                            new ExecutionInfo{Id = 4, ExecutedBy ="User 2", StartDate = new DateTime(2018, 12, 11, 10, 0, 0),  EndDate = new DateTime(2018, 12, 15, 21, 0, 0) },
+                            new ExecutionInfo{Id = 5, ExecutedBy ="User 2", StartDate = new DateTime(2018, 12, 12, 10, 0, 0),  EndDate = new DateTime(2018, 12, 17, 21, 0, 0) },
+
+                //new ExecutionInfo{Id= 1001 , AlgoName = "Alg 5", ProjectName= "Finished", ExecutedBy="Big Boss", StartDate = DateTime.Now, EndDate= DateTime.Now.AddDays(1)},
 
 
-                new ExecutionInfo{Id= 1001 , AlgoName = "Alg 3", ProjectName= "Proj 44", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
-                new ExecutionInfo{Id= 1001 , AlgoName = "Alg 4", ProjectName= "Proj 44", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
-                new ExecutionInfo{Id= 1001 , AlgoName = "Alg ", ProjectName= "", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
-                new ExecutionInfo{Id= 1001 , AlgoName = "Alg 6", ProjectName= "", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
+                //new ExecutionInfo{Id= 35736970 , AlgoName = "Tester 1", AlgoId=4, ExecutedBy="Big Boss", StartDate = DateTime.Now, },
+                //new ExecutionInfo{Id= 1001 , AlgoName = "Alg 4", ProjectName= "Proj 44", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
+                //new ExecutionInfo{Id= 1001 , AlgoName = "Alg ", ProjectName= "", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
+                //new ExecutionInfo{Id= 1001 , AlgoName = "Alg 6", ProjectName= "", ExecutedBy="Big Boss", StartDate = DateTime.Now, },
             };
 
         }
 
-        internal void EndAlgoExecution(int algoExeId)
+        internal Algorithm GetAlgorithmByAlgoExeId(int exeID)
         {
-            _executionInfos.First(x => x.Id == algoExeId).EndDate = DateTime.Now;
+            return _algorithms.FirstOrDefault(a => _executionInfos.FirstOrDefault(x => x.Id == exeID).AlgoId == a.Id);
         }
 
-        internal List<ExecutionInfo> SetAlgoExecutions(Algorithm[] algos,  string executerName)
+        internal List<Algorithm> GetAlgorithmsByExecution(int projeExeID)
+        {
+            return _algorithms.Where(a => _executionInfos.Where(x => x.ProjectExecutionId == projeExeID).Select(x => x.AlgoId).Contains(a.Id)).ToList();
+        }
+
+        internal void EndAlgoExecution(int algoExeId, int projectExeID)
+        {
+            var execution = _executionInfos.First(x => x.Id == algoExeId);
+            execution.EndDate = DateTime.Now;
+            execution.ProjectExecutionId = projectExeID;
+        }
+
+        internal List<ExecutionInfo> SetAlgoExecutions(ProjectAlgoList projectAlg, string executerName)
         {
             List<ExecutionInfo> exeInfoList = new List<ExecutionInfo>();
             Random rand = new Random();
-            foreach (var algo in algos)
+
+            int projectID = 0;
+            string projectName = string.Empty;
+
+            if (projectAlg.ProjectId > 0)
             {
-                var exe = new ExecutionInfo {Id = rand.Next(), AlgoName = algo.Name, /*ProjectName = projectName,*/
-                    StartDate = DateTime.Now, ExecutedBy = executerName, FileExePath = algo.FileServerPath,
-                    AlgoId = algo.Id, ExeParams = algo.AlgoParams.Select(x=>new AlgoExecutionParams { Name = x.Name, Value = x.Value}).ToList()};
+                projectID = projectAlg.ProjectId;
+                projectName = _projects.First(x => x.Id == projectAlg.ProjectId).Name;
+            }
+
+            foreach (var algo in projectAlg.Algos)
+            {
+                var exe = new ExecutionInfo
+                {
+                    Id = rand.Next(),
+                    AlgoName = algo.Name,
+                    ProjectId = projectID,
+                    ProjectName = projectName,
+                    StartDate = DateTime.Now,
+                    ExecutedBy = executerName,
+                    FileExePath = algo.FileServerPath,
+                    AlgoId = algo.Id,
+                    ExeParams = algo.AlgoParams.Select(x => new AlgoExecutionParams { Name = x.Name, Value = x.Value }).ToList()
+                };
                 exeInfoList.Add(exe);
+
+
+                //AddNewAlg to db
                 _executionInfos.Add(exe);
+
             }
 
             return exeInfoList;
@@ -162,7 +217,7 @@ namespace AlgoRunner.Api.Dal
 
         internal List<Algorithm> GetProjectAlgorithms(int projectId)
         {
-           return _projects.FirstOrDefault(x => x.Id == projectId)?.AlgorithmsList;
+            return _projects.FirstOrDefault(x => x.Id == projectId)?.AlgorithmsList;
         }
 
         internal void AddNewProject(Project proj)
@@ -174,12 +229,15 @@ namespace AlgoRunner.Api.Dal
 
         internal List<Algorithm> GetAllAlgs()
         {
-          return  _algorithms.ToList();
+            return _algorithms.ToList();
         }
 
-        internal string GetAlgFilePath(int algId)
+        internal string[] GetAlgFilePath(ProjectAlgo projectAlgo)
         {
-            return _algorithms.First(x => x.Id == algId).FileServerPath;
+            if (projectAlgo.ProjectId == 0)
+                return new string[1] { _algorithms.First(x => x.Id == projectAlgo.AlgoId).FileServerPath };
+            else
+                return _projects.First(x => x.Id == projectAlgo.ProjectId).AlgorithmsList.Select(y => y.FileServerPath).Distinct().ToArray();
         }
 
         internal void AddNewAlg(Algorithm algo)
@@ -206,7 +264,20 @@ namespace AlgoRunner.Api.Dal
 
         internal Project GetProject(int id)
         {
-            return _projects.First(x => x.Id == id);
+            var proj = _projects.First(x => x.Id == id);
+
+            var execs = _executionInfos.Where(x => x.ProjectId == id).GroupBy(y => y.ProjectExecutionId);
+            proj.ExecutionsList = new List<ExecutionInfo>();
+            foreach (var exe in execs)
+            {
+                var projectExe = exe.FirstOrDefault();
+                projectExe.StartDate = exe.Min(x => x.StartDate);
+                projectExe.EndDate = exe.Max(x => x.EndDate);
+                proj.ExecutionsList.Add(projectExe);
+            }
+
+            //proj.ExecutionsList = _executionInfos.Where(x => x.ProjectId == id).GroupBy(y=>y.ProjectExecutionId).Select(x=>x.FirstOrDefault()).ToList();
+            return proj;
         }
 
         internal void AddToFavorite(int projectID)

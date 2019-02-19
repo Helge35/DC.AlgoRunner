@@ -6,6 +6,7 @@ import { ExecutionInfo } from './models/executionInfo';
 import { HubConnection } from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
 import { environment } from '../../../environments/environment';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-projects',

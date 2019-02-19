@@ -20,7 +20,6 @@ namespace AlgoRunner.Api.Services
         string ExecutionPath { get; set; }
         string PytonExePath { get; set; }
         string ClientUrl { get; set; }
-        string BackgroundJobID { get; set; }
         IHubContext<MessageHub, IMessageHub> MessageHubContext { get; set; }
         IHubContext<ExecutionHab, IExecutionHab> ExecutionHabContext { get; set; }
         MessagesRepository MessagesRepository { get; set; }
@@ -43,48 +42,63 @@ namespace AlgoRunner.Api.Services
             ClientUrl = configuration.GetSection("ClientUrl").Value;
         }
 
-        public void Run(List<ExecutionInfo> algoExecs, string executedBy)
+        public void Run(ProjectAlgoList projectAlg, string executedBy)
         {
-            if (algoExecs.Count == 0)
+            if (projectAlg == null || (projectAlg.ProjectId == 0 && projectAlg.Algos.Count == 0))
                 return;
 
-            var firstAlgoExe = algoExecs.First();
-            BackgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgoExe, executedBy));
+            List<ExecutionInfo> algoExecs = new List<ExecutionInfo>();
+            ExecutionInfo firstAlgoExe;
+
+            algoExecs = ProjectsRepository.SetAlgoExecutions(projectAlg, executedBy);
+            firstAlgoExe = algoExecs.First();
+
+            string resultPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", firstAlgoExe.ProjectId, firstAlgoExe.Id));
+            Directory.CreateDirectory(resultPath);
+
+            string backgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgoExe, executedBy, resultPath, firstAlgoExe.Id));
 
             if (algoExecs.Count > 1)
             {
                 for (int i = 1; i < algoExecs.Count; i++)
                 {
-                    BackgroundJob.ContinueWith(BackgroundJobID, () => StartExecution(algoExecs[i], executedBy));
+                    backgroundJobID= BackgroundJob.ContinueWith(backgroundJobID, () => StartExecution(algoExecs[i], executedBy, resultPath, firstAlgoExe.Id));
                 }
+
+                BackgroundJob.ContinueWith(backgroundJobID, () => FinishProjectExecution(executedBy, firstAlgoExe));
             }
         }
 
-        public void StartExecution(ExecutionInfo algoExe, string executedBy)
+        public void StartExecution(ExecutionInfo algoExe, string executedBy, string resultPath, int projectExeutionID)
         {
+            algoExe.ProjectExecutionId = projectExeutionID;
             SendStartExeMessage(executedBy, algoExe.AlgoName);
             ExecutionHabContext.Clients.All.Started(algoExe);
-            string rootPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", algoExe.Id, DateTime.Now.Ticks));
-            Directory.CreateDirectory(rootPath);
 
-            string inputFilePath = Path.Combine(rootPath, "Input.csv");
-            string outputFilePath = Path.Combine(rootPath, "Output.csv");
+            if (algoExe.ProjectId != 0)
+            {
+                resultPath = Path.Combine(resultPath, string.Format("{0}_{1}", algoExe.Id, algoExe.AlgoId));
+                Directory.CreateDirectory(resultPath);
+            }
+
+            string inputFilePath = Path.Combine(resultPath, "Input.csv");
+            string outputFilePath = Path.Combine(resultPath, "Output.csv");
 
             CreateInputCsvFile(algoExe.ExeParams, inputFilePath);
 
             try
             {
                 RunPyton(inputFilePath, outputFilePath, algoExe.FileExePath);
-                SendEndExeMessage(executedBy, algoExe.AlgoName, rootPath);
+                SendEndExeMessage(executedBy, algoExe.AlgoName, algoExe.ProjectId > 0, resultPath);
             }
 
             catch (Exception ex)
             {
-                SendErrorExeMessage(executedBy, algoExe.AlgoName, rootPath);
+                SendErrorExeMessage(executedBy, algoExe.AlgoName, resultPath);
             }
             finally
             {
-                ProjectsRepository.EndAlgoExecution(algoExe.Id);
+                ProjectsRepository.EndAlgoExecution(algoExe.Id, algoExe.ProjectExecutionId);
                 ExecutionHabContext.Clients.All.Finished(algoExe.Id);
             }
         }
@@ -121,17 +135,28 @@ namespace AlgoRunner.Api.Services
             MessageHubContext.Clients.All.Send(message);
         }
 
-        private void SendEndExeMessage(string executedBy, string algoName, string rootPath)
+        private void SendEndExeMessage(string executedBy, string algoName, bool isProjectExe, string rootPath)
         {
-            string link = Path.GetFileName(rootPath);
+            string dirName = Path.GetFileName(rootPath);
+            string link = string.Empty;
 
-            var message = MessagesRepository.AddNewMessage("Execution results", $"Argotihm [{algoName}] finish execution. Click <a href='{ClientUrl}/results/{link}'>here</a> to see results", executedBy);
+            if (!isProjectExe)
+                link = $"Click <a href='{ClientUrl}/results/{dirName}'>here</a> to see results";
+
+            var message = MessagesRepository.AddNewMessage("Execution results", $"Argotihm [{algoName}] finish execution. " + link, executedBy);
             MessageHubContext.Clients.All.Send(message);
         }
 
         private void SendErrorExeMessage(string executedBy, string algoName, string rootPath)
         {
-            var message = MessagesRepository.AddNewMessage("Error execution", $"Error on execution [{algoName}]" , executedBy);
+            var message = MessagesRepository.AddNewMessage("Error execution", $"Error on execution [{algoName}]", executedBy);
+            MessageHubContext.Clients.All.Send(message);
+        }
+
+        private void FinishProjectExecution(string executedBy, ExecutionInfo firstAlgoExe)
+        {
+
+            var message = MessagesRepository.AddNewMessage("Execution results", $"Project [{firstAlgoExe.ProjectName}] finish execution.", executedBy);
             MessageHubContext.Clients.All.Send(message);
         }
     }

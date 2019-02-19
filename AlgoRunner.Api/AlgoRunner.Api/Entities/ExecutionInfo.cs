@@ -8,6 +8,7 @@ namespace AlgoRunner.Api.Entities
     public class ExecutionInfo
     {
         public int Id { get; set; }
+        public int ProjectExecutionId { get; set; }
         public int AlgoId { get; set; }
         public int ProjectId { get; set; }
         public string AlgoName { get; set; }

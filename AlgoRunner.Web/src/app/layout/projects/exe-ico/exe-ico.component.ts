@@ -10,13 +10,24 @@ export class ExeIcoComponent implements OnInit {
 
   @Input() exeInfo: ExecutionInfo;
 
-  timeOver: number;
+  timeOver: string;
   interval;
 
 
   startTimer() {
+    this.timeOver = "00 : 00";
     this.interval = setInterval(() => {
-      this.timeOver = new Date().getTime() - new Date(this.exeInfo.startDate).getTime();
+      var minutes = Math.round( Math.abs(new Date().getTime() - new Date(this.exeInfo.startDate).getTime())/60000);
+      var hr= Math.floor( minutes / 60).toString();
+      if(hr.length ==1 ){
+        hr = "0"+hr;
+      }
+      var min = Math.floor( minutes % 60).toString();
+      if(min.length ==1 ){
+        min = "0"+min;
+      }
+
+      this.timeOver = hr + " : "  + min;
     }, 1000)
   }
 

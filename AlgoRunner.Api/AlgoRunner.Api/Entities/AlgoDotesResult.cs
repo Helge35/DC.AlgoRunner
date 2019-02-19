@@ -4,13 +4,14 @@ using System.IO;
 
 namespace AlgoRunner.Api.Entities
 {
-    public class AlgoDotesResult
+    public class AlgoDotesResult: IAlgoResult
     {
         public string AlgoName { get; set; }
         public int TypeId { get; set; }
+
         public List<ResultCategory> Categories { get; set; }
 
-        internal void ReadDataFromFile(string path)
+        public void ReadData(string path)
         {
             Categories = new List<ResultCategory>();
             using (var reader = new StreamReader(path))

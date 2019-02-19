@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlgoResultDotesGraph } from './models/algoResultDotesGraph';
+import { AlgoResult } from './models/algoResult';
 import { ResultsService } from './results.service';
 
 
@@ -12,7 +12,10 @@ import { ResultsService } from './results.service';
 export class ResultsComponent implements OnInit {
 
   public algoName: string;
-  public scatterData: AlgoResultDotesGraph;
+  public algsResultData: AlgoResult[];
+  tabType: string;
+
+
   public chartColors: Array<any> = [
     {
       backgroundColor: 'rgba(0,128,0,1)',
@@ -50,8 +53,8 @@ export class ResultsComponent implements OnInit {
   };
 
   getGraphData(path: string) {
-    this._service.getResultByPath(path).subscribe(res=>{
-      this.scatterData = res;
+    this._service.getResultByPath(path).subscribe(res => {
+      this.algsResultData = res;
     });
   }
 
@@ -63,5 +66,4 @@ export class ResultsComponent implements OnInit {
       this.getGraphData(path);
     });
   }
-
 }

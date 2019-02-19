@@ -20,7 +20,7 @@ namespace AlgoRunner.Api.Services
 
         public string GetFullPath(string dirName)
         {
-            return Path.Combine(_executionPath , dirName + @"\Output.csv");
+            return Path.Combine(_executionPath , dirName/* + @"\Output.csv"*/);
         }
 
         public bool IsFolderAlowed(string path)
@@ -28,8 +28,8 @@ namespace AlgoRunner.Api.Services
             DirectorySecurity dbSecurity;
             try
             {
-                string dirPath = new FileInfo(path).Directory.FullName;
-                DirectoryInfo dInfo = new DirectoryInfo(dirPath);
+                //string dirPath = new FileInfo(path);//.Directory.FullName;
+                DirectoryInfo dInfo = new DirectoryInfo(path);
                 dbSecurity = dInfo.GetAccessControl();
             }
             catch (System.UnauthorizedAccessException)

@@ -17,7 +17,7 @@ export class AlgoExeComponent implements OnInit {
   accessStatus: number = 0;
 
   getAlg() {
-    this._serviceAlgo.checkAccess(this.id).subscribe(data => {
+    this._serviceAlgo.checkAccess(this.projectId, this.id).subscribe(data => {
       this.accessStatus = 200;
       this._serviceAlgo.getAlg(this.projectId, this.id).subscribe(a => {
       this.algos = a;
@@ -27,7 +27,7 @@ export class AlgoExeComponent implements OnInit {
   }
 
   runAlgorithms() {
-    this._serviceAlgo.runAlgorithms(this.algos).subscribe();
+    this._serviceAlgo.runAlgorithms(this.projectId, this.algos).subscribe();
     this._router.navigate(['']);
   }
 

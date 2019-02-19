@@ -14,7 +14,7 @@ namespace AlgoRunner.Api.Entities
         public string CreatedBy { get; set; }
         public bool IsFavorite { get; set; }
         public DateTime LastExecutionDate { get; set; }
-        public List<ProjectExecution> ExecutionsList { get; set; }
+        public List<ExecutionInfo> ExecutionsList { get; set; }
         public List<Algorithm> AlgorithmsList { get; set; }
     }
 }

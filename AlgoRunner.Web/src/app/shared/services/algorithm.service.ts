@@ -3,6 +3,8 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Algorithm } from '../../layout/algorithm/models/algorithm';
+import { ProjectAlgo } from '../models/projectAlgo';
+import { projectAlgoList } from '../models/projectAlgoList';
 
 
 @Injectable({
@@ -32,12 +34,19 @@ export class AlgorithmService {
     return this._http.get<Algorithm[]>(this.apiUrl  + projectId + "/"+ id);
   }
 
-  checkAccess(activityId: number): Observable<any> {
-    return this._http.post<string>(this.apiUrl + "checkAccess", activityId);
+  checkAccess(projectId:number, activityId: number): Observable<any> {
+    let projectAlgo = new ProjectAlgo();
+    projectAlgo.algoId = activityId;
+    projectAlgo.projectId = projectId;
+    
+    return this._http.post<string>(this.apiUrl + "checkAccess", projectAlgo);
   }
 
-  runAlgorithms(algos: Algorithm[]) {
-    return this._http.post(this.apiUrl + "RunAlgorithms",algos);
+  runAlgorithms(projectId:number,algos: Algorithm[]) {
+    let projectAlgo = new projectAlgoList();
+    projectAlgo.algos = algos;
+    projectAlgo.projectId = projectId;
+    return this._http.post(this.apiUrl + "RunAlgorithms",projectAlgo);
   }
 
   constructor(private _http: HttpClient) {

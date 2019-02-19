@@ -86,24 +86,26 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpPost("CheckAccess")]
-        public ActionResult CheckAccess([FromBody]int algId)
+        public ActionResult CheckAccess([FromBody]ProjectAlgo projectAlgo)
         {
-            string path = _projectsRepository.GetAlgFilePath(algId);
-            if (!_filesService.IsFolderAlowed(path))
-                return Forbid();
+            string[] paths = _projectsRepository.GetAlgFilePath(projectAlgo);
+            foreach (var path in paths)
+            {
+                if (!_filesService.IsFolderAlowed(path))
+                    return Forbid();
 
-            if (!System.IO.File.Exists(path))
-                return NotFound();
+                if (!System.IO.File.Exists(path))
+                    return NotFound();
+            }
 
             return Ok();
         }
 
         [HttpPost("RunAlgorithms")]
-        public ActionResult RunAlgorithms([FromBody]Algorithm[] algos)
+        public ActionResult RunAlgorithms([FromBody]ProjectAlgoList data)
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
-            List<ExecutionInfo> algoExecutions = _projectsRepository.SetAlgoExecutions(algos, userName);
-            _algoExecutionService.Run(algoExecutions, userName);
+            _algoExecutionService.Run(data, userName);
             return Ok();
         }
     }
