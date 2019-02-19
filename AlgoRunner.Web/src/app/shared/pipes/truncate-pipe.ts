@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+/*import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'truncate'
@@ -10,4 +10,4 @@ export class TruncatePipe implements PipeTransform {
     }
     return `${value.substr(0, limit)}${ellipsis}`;
   }
-}
+}*/
