@@ -26,7 +26,7 @@ export class AlgorithmService {
 
     formData.append(file.name, file);
     formData.append(activityId.toString(), '');
-    return this._http.post<string>(this.apiUrl + "UploadFile", formData)
+    return this._http.post(this.apiUrl + "UploadFile", formData, {responseType: 'text'})
   }
 
 
