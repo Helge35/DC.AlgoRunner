@@ -17,7 +17,6 @@ C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\b
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Debug\netcoreapp2.2\AlgoRunner.Api.runtimeconfig.dev.json
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Debug\netcoreapp2.2\AlgoRunner.Api.dll
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Debug\netcoreapp2.2\AlgoRunner.Api.pdb
-C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.csprojAssemblyReference.cache
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.csproj.CoreCompileInputs.cache
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.RazorAssemblyInfo.cache
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.RazorAssemblyInfo.cs

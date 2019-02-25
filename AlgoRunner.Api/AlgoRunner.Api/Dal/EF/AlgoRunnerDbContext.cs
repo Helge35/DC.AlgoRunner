@@ -1,6 +1,7 @@
 ﻿using AlgoRunner.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,10 +19,16 @@ namespace AlgoRunner.Api.Dal.EF
 
     public class AlgoRunnerDbContextFactory : IDesignTimeDbContextFactory<AlgoRunnerDbContext>
     {
+        IConfiguration Configuration { get; }
+        public AlgoRunnerDbContextFactory(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public AlgoRunnerDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<AlgoRunnerDbContext>();
-            builder.UseSqlServer("Server=D-2-235-STUD-2\\MSSQLSERVER01;Database=AlgoRunner;Trusted_Connection=True;MultipleActiveResultSets=true");
+            builder.UseSqlServer(Configuration["ConnectionStrings:AlgoRunnerConnectionString"]);
             return new AlgoRunnerDbContext(builder.Options);
         }
     }

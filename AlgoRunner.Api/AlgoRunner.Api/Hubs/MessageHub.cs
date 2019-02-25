@@ -6,12 +6,12 @@ namespace AlgoRunner.Api.Hubs
 {
     public class MessageHub : Hub<IMessageHub>
     {
-        public Task SendAll(Message message)
+        public Task SendAll(MessageEntity message)
         {
             return Clients.All.SendAll(message);
         }
 
-        public Task Send(string user, Message message)
+        public Task Send(string user, MessageEntity message)
         {
             return Clients.User(user).Send(message);
         }

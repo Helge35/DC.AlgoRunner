@@ -24,7 +24,7 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Message> Get()
+        public IEnumerable<MessageEntity> Get()
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
             return _repository.GetMessages(userName);
