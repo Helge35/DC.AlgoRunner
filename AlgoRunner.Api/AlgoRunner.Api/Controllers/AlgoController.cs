@@ -32,7 +32,7 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpGet("{projectId}/{id}")]
-        public ActionResult<List<Algorithm>> Get(int projectId, int id)
+        public ActionResult<List<AlgorithmEntity>> Get(int projectId, int id)
         {
             if (projectId > 0)
             {
@@ -40,7 +40,7 @@ namespace AlgoRunner.Api.Controllers
             }
             if (id > 0)
             {
-                var algs = new List<Algorithm>();
+                var algs = new List<AlgorithmEntity>();
                 algs.Add(_projectsRepository.GetAlgorithm(id));
                 return Ok(algs);
             }
@@ -49,7 +49,7 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<bool> Post([FromBody] Algorithm algo)
+        public ActionResult<bool> Post([FromBody] AlgorithmEntity algo)
         {
             _projectsRepository.AddNewAlg(algo);
             return Ok(true);
@@ -86,7 +86,7 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpPost("CheckAccess")]
-        public ActionResult CheckAccess([FromBody]ProjectAlgo projectAlgo)
+        public ActionResult CheckAccess([FromBody]ProjectAlgoEntity projectAlgo)
         {
             string[] paths = _projectsRepository.GetAlgFilePath(projectAlgo);
             foreach (var path in paths)
@@ -102,7 +102,7 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpPost("RunAlgorithms")]
-        public ActionResult RunAlgorithms([FromBody]ProjectAlgoList data)
+        public ActionResult RunAlgorithms([FromBody]ProjectAlgoListEntity data)
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
             _algoExecutionService.Run(data, userName);

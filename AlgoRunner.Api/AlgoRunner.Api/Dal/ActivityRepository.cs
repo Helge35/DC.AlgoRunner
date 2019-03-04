@@ -8,26 +8,26 @@ namespace AlgoRunner.Api.Dal
 {
     public class ActivityRepository
     {
-        private List<Activity> _activities;
+        private List<ActivityEntity> _activities;
 
         public ActivityRepository()
         {
-            _activities = new List<Activity> {
-                new Activity{Id= -1, Name="Common", ServerPath=@"C:\\AlgoRunnerProjects\Common"},
-                new Activity{Id= 1, Name="Big company project", ServerPath=@"C:\\AlgoRunnerProjects\Bp"},
-                new Activity{Id= 2, Name="Small company project",ServerPath=@"C:\\AlgoRunnerProjects\Sp"},
-                new Activity{Id= 3, Name="Restricted project",ServerPath=@"C:\Users\admin"},
+            _activities = new List<ActivityEntity> {
+                new ActivityEntity{Id= -1, Name="Common", ServerPath=@"C:\\AlgoRunnerProjects\Common"},
+                new ActivityEntity{Id= 1, Name="Big company project", ServerPath=@"C:\\AlgoRunnerProjects\Bp"},
+                new ActivityEntity{Id= 2, Name="Small company project",ServerPath=@"C:\\AlgoRunnerProjects\Sp"},
+                new ActivityEntity{Id= 3, Name="Restricted project",ServerPath=@"C:\Users\admin"},
             };
 
         }
 
-        internal List<Activity> GetAllActivities()
+        internal List<ActivityEntity> GetAllActivities()
         {
             return _activities;
         }
 
 
-        internal Activity AddActivity(Activity newActivity)
+        internal ActivityEntity AddActivity(ActivityEntity newActivity)
         {
             newActivity.Id = 1000;
             _activities.Add(newActivity);

@@ -2,6 +2,32 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "AutoMapper/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.dll": {}
+        }
+      },
+      "AutoMapper.Extensions.Microsoft.DependencyInjection/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "AutoMapper": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
       "Dapper/1.50.1": {
         "type": "package",
         "dependencies": {
@@ -4653,8 +4679,38 @@
     }
   },
   "libraries": {
+    "AutoMapper/8.0.0": {
+      "sha512": "px8ZMtIq84dxciB29V+ZYOtsRLZP4JlflDDMW13LyeRdwsnIInzlcSHSxpWmVD6U3bbOl2FeLlgomnVtm0jvXw==",
+      "type": "package",
+      "path": "automapper/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "automapper.8.0.0.nupkg.sha512",
+        "automapper.nuspec",
+        "lib/net461/AutoMapper.dll",
+        "lib/net461/AutoMapper.pdb",
+        "lib/net461/AutoMapper.xml",
+        "lib/netstandard2.0/AutoMapper.dll",
+        "lib/netstandard2.0/AutoMapper.pdb",
+        "lib/netstandard2.0/AutoMapper.xml"
+      ]
+    },
+    "AutoMapper.Extensions.Microsoft.DependencyInjection/6.0.0": {
+      "sha512": "njWYKGM3FokOlo9nj8kVLYyvJrGbLItmNA2A00lDXJnxybfP7TuZEYjQRt8ne+Cp0OF4W0ZzgdgxMioHfDEpdA==",
+      "type": "package",
+      "path": "automapper.extensions.microsoft.dependencyinjection/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "automapper.extensions.microsoft.dependencyinjection.6.0.0.nupkg.sha512",
+        "automapper.extensions.microsoft.dependencyinjection.nuspec",
+        "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll",
+        "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.pdb"
+      ]
+    },
     "Dapper/1.50.1": {
-      "sha512": "d00Wvqd5xsMwSdNuzLYtmxxTrI8etG02P1rzGYRPZNBKMc7PdxyrU4/sRhEffDCCfLqqJ2wyha7pghPI0I3vHQ==",
+      "sha512": "NIE9+9/Dqh0SF1MWBvuMGg0A8bgTdu8S0HMRrpFvlpnpIO/WklVVcaLS4ZtdI3dvxMmYiJoKBn7se3mgndUV9A==",
       "type": "package",
       "path": "dapper/1.50.1",
       "files": [
@@ -4673,7 +4729,7 @@
       ]
     },
     "Hangfire/1.6.21": {
-      "sha512": "kmqOovHxbF6L2X4Mev7x4LnuQ8o5mGTsYPfBrHjNm5vDqzFSBqetVPLKrE37MkzxFJL8+M2YxdkypQsbtbBg1w==",
+      "sha512": "fZZNf3Q7YRqSaImjBUFANRpFxrTxFeK6FvXzw0fzU0rmzrjauTNSSsTlG5orG9Y8VkDW91rqZlJOdI6yUySbww==",
       "type": "package",
       "path": "hangfire/1.6.21",
       "files": [
@@ -4685,7 +4741,7 @@
       ]
     },
     "Hangfire.AspNetCore/1.6.21": {
-      "sha512": "iUtpJ6lnGexKy1L0f6CxjIHM9CKYJIz9KV/V5yPYC3+TOisbSFiWRu0NPZ6krrATjML4UuvxrjGVFTSUgf1UuA==",
+      "sha512": "4gcxFHzZEAC0Bd1WTZ7JwFIQth3Z6OFoyQERZoutwS6lJju4xslePDBCWu8+dzsQLO5F+pfcJrMg5m7wHAkJDA==",
       "type": "package",
       "path": "hangfire.aspnetcore/1.6.21",
       "files": [
@@ -4706,7 +4762,7 @@
       ]
     },
     "Hangfire.Core/1.6.21": {
-      "sha512": "Jr4EnUAQ9AedOVkS9iR5lUxc7KLDnPmkyHPaowJ3x4KYOxmpFO9WXDtEzXaIyQLxrJ0k30+tVwxjB/5IA3c6wg==",
+      "sha512": "/TXpaj+ccCpQs06PmOJfV13St+UksLpQuvis6OsMd1jee5JhPOVmaERG2CcG/ClTMjjNxf6msfapu4sMCaVVZQ==",
       "type": "package",
       "path": "hangfire.core/1.6.21",
       "files": [
@@ -4733,7 +4789,7 @@
       ]
     },
     "Hangfire.MemoryStorage.Core/1.4.0": {
-      "sha512": "C9RAcD/Uv3Cu0Ww/FnUxBDHsjXrPj1jhacW4g+2uEncy3XbbHm7wBbPc9g2ObpnMIENFqCfFeyb+JCMNSjcg2g==",
+      "sha512": "zQzoeVh1E1CDijSBZicEJebfxqPp/nitLgrzGZIlw5VaftRaic2Jk0V++vkV22IrkqhLLZnSK/jisQnbJ/06NA==",
       "type": "package",
       "path": "hangfire.memorystorage.core/1.4.0",
       "files": [
@@ -4746,7 +4802,7 @@
       ]
     },
     "Hangfire.SqlServer/1.6.21": {
-      "sha512": "IzfGTNtpeGRKmDeP8NuRUAiI4tpyrLR/CWjlQo0zXx13ioZKZZERLbsnGr+0miRaEQg3l89TfPe2Nw5lKvOxog==",
+      "sha512": "eWZ88hOpJbJKzywW0XEbx+vVwHEmAH9CCVuiigshIsHCWuIm3jv0v8GDWGbmgL0ttN4xrLgo8CXV81qJxoAYQA==",
       "type": "package",
       "path": "hangfire.sqlserver/1.6.21",
       "hasTools": true,
@@ -9515,7 +9571,7 @@
       ]
     },
     "System.IO.FileSystem.AccessControl/4.5.0": {
-      "sha512": "68J+hlFnwqcYwciiCoYnQHIN03kqaEP3eyNYnnGIsIP/QJdFKLqsGd615VeKz6YY2eoejO6BbnLvBE1ZIKuZRw==",
+      "sha512": "TYe6xstoqT5MlTly0OtPU6u9zWuNScLVMEx6sTCjjx+Hqdp0wCXoG6fnzMpTPMQACXQzi9pd2N5Tloow+5jQdQ==",
       "type": "package",
       "path": "system.io.filesystem.accesscontrol/4.5.0",
       "files": [
@@ -12564,6 +12620,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "AutoMapper >= 8.0.0",
+      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 6.0.0",
       "Hangfire >= 1.6.21",
       "Hangfire.MemoryStorage.Core >= 1.4.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
@@ -12575,23 +12633,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\olegbr\\.nuget\\packages\\": {},
+    "C:\\Users\\amirca\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\olegbr\\Documents\\Projects\\DC.AlgoRunner\\AlgoRunner.Api\\AlgoRunner.Api\\AlgoRunner.Api.csproj",
+      "projectUniqueName": "C:\\Users\\amirca\\Documents\\Visual Studio 2017\\Projects\\DC.AlgoRunner\\AlgoRunner.Api\\AlgoRunner.Api\\AlgoRunner.Api.csproj",
       "projectName": "AlgoRunner.Api",
-      "projectPath": "C:\\Users\\olegbr\\Documents\\Projects\\DC.AlgoRunner\\AlgoRunner.Api\\AlgoRunner.Api\\AlgoRunner.Api.csproj",
-      "packagesPath": "C:\\Users\\olegbr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\olegbr\\Documents\\Projects\\DC.AlgoRunner\\AlgoRunner.Api\\AlgoRunner.Api\\obj\\",
+      "projectPath": "C:\\Users\\amirca\\Documents\\Visual Studio 2017\\Projects\\DC.AlgoRunner\\AlgoRunner.Api\\AlgoRunner.Api\\AlgoRunner.Api.csproj",
+      "packagesPath": "C:\\Users\\amirca\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\amirca\\Documents\\Visual Studio 2017\\Projects\\DC.AlgoRunner\\AlgoRunner.Api\\AlgoRunner.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\olegbr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\amirca\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12615,6 +12673,14 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
+          "AutoMapper": {
+            "target": "Package",
+            "version": "[8.0.0, )"
+          },
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+            "target": "Package",
+            "version": "[6.0.0, )"
+          },
           "Hangfire": {
             "target": "Package",
             "version": "[1.6.21, )"

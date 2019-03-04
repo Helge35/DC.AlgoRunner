@@ -2,12 +2,12 @@
 using AlgoRunner.Api.Dal.EF;
 using AlgoRunner.Api.Hubs;
 using AlgoRunner.Api.Services;
+using AutoMapper;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +28,7 @@ namespace AlgoRunner.Api
         {
 
             //services.AddCors();
+            services.AddAutoMapper();
             services.AddMvc();
 
             //GlobalConfiguration.Configuration.UseSqlServerStorage("<connection string or its name>");

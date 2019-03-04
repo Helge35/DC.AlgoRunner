@@ -42,13 +42,13 @@ namespace AlgoRunner.Api.Services
             ClientUrl = configuration.GetSection("ClientUrl").Value;
         }
 
-        public void Run(ProjectAlgoList projectAlg, string executedBy)
+        public void Run(ProjectAlgoListEntity projectAlg, string executedBy)
         {
             if (projectAlg == null || (projectAlg.ProjectId == 0 && projectAlg.Algos.Count == 0))
                 return;
 
-            List<ExecutionInfo> algoExecs = new List<ExecutionInfo>();
-            ExecutionInfo firstAlgoExe;
+            List<ExecutionInfoEntity> algoExecs = new List<ExecutionInfoEntity>();
+            ExecutionInfoEntity firstAlgoExe;
 
             algoExecs = ProjectsRepository.SetAlgoExecutions(projectAlg, executedBy);
             firstAlgoExe = algoExecs.First();
@@ -69,7 +69,7 @@ namespace AlgoRunner.Api.Services
             }
         }
 
-        public void StartExecution(ExecutionInfo algoExe, string executedBy, string resultPath, int projectExeutionID)
+        public void StartExecution(ExecutionInfoEntity algoExe, string executedBy, string resultPath, int projectExeutionID)
         {
             algoExe.ProjectExecutionId = projectExeutionID;
             SendStartExeMessage(executedBy, algoExe.AlgoName);
@@ -103,7 +103,7 @@ namespace AlgoRunner.Api.Services
             }
         }
 
-        private void CreateInputCsvFile(List<AlgoExecutionParams> algoParams, string inputFilePath)
+        private void CreateInputCsvFile(List<AlgoExecutionParamEntity> algoParams, string inputFilePath)
         {
             using (var writer = new StreamWriter(inputFilePath))
             {
@@ -153,7 +153,7 @@ namespace AlgoRunner.Api.Services
             MessageHubContext.Clients.All.Send(message);
         }
 
-        private void FinishProjectExecution(string executedBy, ExecutionInfo firstAlgoExe)
+        private void FinishProjectExecution(string executedBy, ExecutionInfoEntity firstAlgoExe)
         {
 
             var message = MessagesRepository.AddNewMessage("Execution results", $"Project [{firstAlgoExe.ProjectName}] finish execution.", executedBy);

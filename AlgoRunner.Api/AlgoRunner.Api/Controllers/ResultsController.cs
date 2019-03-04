@@ -23,12 +23,12 @@ namespace AlgoRunner.Api.Controllers
 
 
         [HttpGet("{path}")]
-        public ActionResult<List<IAlgoResult>> Get(string path)
+        public ActionResult<List<IAlgoResultEntity>> Get(string path)
         {
             var pathVar = path.Split('_');
             int exeID;
             int projectID;
-            List<Algorithm> algos = new List<Algorithm>();
+            List<AlgorithmEntity> algos = new List<AlgorithmEntity>();
             path = _filesService.GetFullPath(path);
 
             if (!System.IO.Directory.Exists(path))
@@ -45,7 +45,7 @@ namespace AlgoRunner.Api.Controllers
             else
                 algos.Add(_projectsRepository.GetAlgorithmByAlgoExeId(exeID));
 
-            List<IAlgoResult> results = ResultsFactory.GetResults(algos, path);
+            List<IAlgoResultEntity> results = ResultsFactory.GetResults(algos, path);
 
             return Ok(results);
         }

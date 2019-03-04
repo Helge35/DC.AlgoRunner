@@ -6,6 +6,6 @@ namespace AlgoRunner.Api.Hubs
     public interface IMessageHub
     {
         Task SendAll(MessageEntity message);
-        Task Send( MessageEntity message);
+        Task Send(MessageEntity message);
     }
 }

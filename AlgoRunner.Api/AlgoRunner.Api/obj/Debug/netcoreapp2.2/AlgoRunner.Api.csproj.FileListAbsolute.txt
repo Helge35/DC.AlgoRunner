@@ -25,3 +25,16 @@ C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\o
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.RazorTargetAssemblyInfo.cache
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.dll
 C:\Users\olegbr\Documents\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.pdb
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.csproj.CoreCompileInputs.cache
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.RazorAssemblyInfo.cache
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.RazorAssemblyInfo.cs
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.AssemblyInfoInputs.cache
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.AssemblyInfo.cs
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.dll
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.pdb
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Debug\netcoreapp2.2\AlgoRunner.Api.deps.json
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Debug\netcoreapp2.2\AlgoRunner.Api.runtimeconfig.json
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Debug\netcoreapp2.2\AlgoRunner.Api.runtimeconfig.dev.json
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Debug\netcoreapp2.2\AlgoRunner.Api.dll
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\bin\Debug\netcoreapp2.2\AlgoRunner.Api.pdb
+C:\Users\amirca\Documents\Visual Studio 2017\Projects\DC.AlgoRunner\AlgoRunner.Api\AlgoRunner.Api\obj\Debug\netcoreapp2.2\AlgoRunner.Api.RazorTargetAssemblyInfo.cache

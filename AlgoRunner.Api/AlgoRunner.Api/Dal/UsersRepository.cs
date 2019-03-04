@@ -8,27 +8,27 @@ namespace AlgoRunner.Api.Dal
 {
     public class UsersRepository
     {
-        private List<User> _members;
-        private List<Activity> _activities;
+        private List<UserEntity> _members;
+        private List<ActivityEntity> _activities;
 
         public UsersRepository(ActivityRepository activityRepository)
         {
             _activities = activityRepository.GetAllActivities();
-            _members = new List<User> {
-                   new User{Id=101, Name="User 10", IsAdmin=false, Activities= new List<Activity>{_activities.First()}},
-                   new User{Id=102, Name="User 12",IsAdmin=false,  Activities= new List<Activity>{_activities.Last()}},
-                   new User{Id=103, Name="User 14", IsAdmin=true,  Activities= new List<Activity>{_activities.First(), _activities.Last()}},
-                   new User{Id=104, Name=@"RF\OLEGBR",IsAdmin=true,  Activities= new List<Activity>{_activities.Last()}},
+            _members = new List<UserEntity> {
+                   new UserEntity{Id=101, Name="User 10", IsAdmin=false, Activities= new List<ActivityEntity>{_activities.First()}},
+                   new UserEntity{Id=102, Name="User 12",IsAdmin=false,  Activities= new List<ActivityEntity>{_activities.Last()}},
+                   new UserEntity{Id=103, Name="User 14", IsAdmin=true,  Activities= new List<ActivityEntity>{_activities.First(), _activities.Last()}},
+                   new UserEntity{Id=104, Name=@"RF\OLEGBR",IsAdmin=true,  Activities= new List<ActivityEntity>{_activities.Last()}},
                    
             };
         }
 
-        internal User GetUserInfo(string userName)
+        internal UserEntity GetUserInfo(string userName)
         {
             return _members.FirstOrDefault(x => x.Name == userName);
         }
 
-        internal List<User> GetAllMembers()
+        internal List<UserEntity> GetAllMembers()
         {
             return _members;
         }
