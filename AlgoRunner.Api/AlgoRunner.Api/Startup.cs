@@ -42,9 +42,13 @@ namespace AlgoRunner.Api
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<ProjectsRepository>();
+            services.AddScoped<ProjectsRepository>();
             services.AddSingleton<UsersRepository>();
+            services.AddScoped<UsersRepository>();
             services.AddSingleton<ActivityRepository>();
+            services.AddScoped<ActivityRepository>();
             services.AddSingleton<MessagesRepository>();
+            services.AddScoped<MessagesRepository>();
 
             services.AddScoped<AlgoExecutionService>();//must be NOT singletone
             services.AddSingleton<FilesService>();

@@ -1,55 +1,52 @@
-﻿using AlgoRunner.Api.Entities;
+﻿using AlgoRunner.Api.Dal.EF;
+using AlgoRunner.Api.Dal.EF.Entities;
+using AlgoRunner.Api.Entities;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AlgoRunner.Api.Dal
 {
     public class MessagesRepository
     {
+        private readonly IMapper _mapper;
+        private readonly AlgoRunnerDbContext _dbContext;
 
-        public MessagesRepository()
+        public MessagesRepository(AlgoRunnerDbContext dbContext, IMapper mapper)
         {
-            _messages = new List<MessageEntity>
-            {
-                new MessageEntity{Id =1, UserName=@"DESKTOP-KM9M96J\Oleg",
-                    Context =@"This is probably the last (at least for now) of my posts about push notifications. I've updated the demo project with support for features described here (and there is still couple things on the issues list to come in future).",
-                    CreateDate= new DateTime(2018, 10, 1), Title="Post1",  isReaded= true},
-
-                new MessageEntity{Id =2, UserName=@"DESKTOP-KM9M96J\Boris", isReaded= false,
-                    Context =@"This is probably the last (at least for now) of my posts about push notifications. I've updated the demo project with support for features described here (and there is still couple things on the issues list to come in future).",
-                CreateDate= new DateTime(2018, 10, 2), Title="Post 2"},
-                new MessageEntity{Id =3, UserName=@"DESKTOP-KM9M96J\Boris", isReaded= true,
-                    Context =@"This is probably the last (at least for now) of my posts about push notifications. I've updated the demo project with support for features described here (and there is still couple things on the issues list to come in future).",
-                    CreateDate= new DateTime(2018, 10, 3), Title="Post 3"},
-            };
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
-
-        List<MessageEntity> _messages;
 
         public List<MessageEntity> GetMessages(string userName)
         {
-            return _messages.Where(x => x.UserName == userName).OrderByDescending(x => x.CreateDate).ToList();
+            return _dbContext.Messages
+                .Where(x => x.UserName == userName)
+                .OrderByDescending(x => x.CreateDate)
+                .Select(x => _mapper.Map<MessageEntity>(x)).ToList();
         }
 
         public MessageEntity AddNewMessage(string messageTitle, string messageText, string userName)
         {
             MessageEntity message = new MessageEntity { CreateDate = DateTime.Now, Title = messageTitle, Context = messageText, UserName = userName };
-            _messages.Add(message);
+            _dbContext.Messages.Add(_mapper.Map<Message>(message));
+            _dbContext.SaveChanges();
             return message;
         }
 
         public void SetMessageAsReaded(string userName)
         {
-            _messages.Where(x => x.UserName == userName && !x.isReaded).ToList().ForEach(x => x.isReaded = true);
+            _dbContext.Messages.Where(x => x.UserName == userName && !x.isReaded).ToList().ForEach(x => x.isReaded = true);
+            _dbContext.SaveChanges();
         }
 
         public bool DeleteMessage(int id)
         {
             try
             {
-                _messages.Remove(_messages.First(x => x.Id == id));
+                _dbContext.Messages.Remove(_dbContext.Messages.First(x => x.Id == id));
+                _dbContext.SaveChanges();
                 return true;
             }
             catch (Exception)
