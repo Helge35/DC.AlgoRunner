@@ -33,36 +33,7 @@ namespace AlgoRunner.Api.Dal.EF
         public DbSet<ResultCategory> ResultCategories { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
-
-        //internal IEnumerable<Project> GetFavoritesProjects()
-        //{           
-        //    return Projects.Include("Activity").Where(x => x.IsFavorite);
-        //}
-
-        //internal IEnumerable<Project> GetResentProjects()
-        //{
-        //    return Projects.Include("Activity").Where(x => x.LastExecutionDate > new DateTime(2018, 1, 1));
-        //}
-
-        //internal IEnumerable<Project> GetProjectsByPage(int pageNum, int pageSize, out int totalSize)
-        //{
-        //    totalSize = Projects.Count();
-        //    int from = pageSize * (pageNum - 1);
-        //    return Projects.Include("Activity").Skip(from).Take(pageSize);
-        //}
-
-        //internal List<Algorithm> GetAlgsByPage(int pageNum, int algsPageSize, out int algsTotalSize)
-        //{
-        //    algsTotalSize = Algorithms.Count();
-        //    int from = algsPageSize * (pageNum - 1);
-        //    return Algorithms.Include("Activity").Include("ResultType").Skip(from).Take(algsPageSize).ToList();
-        //}
-
-        //internal IEnumerable<ExecutionInfo> GetExecutions()
-        //{
-        //    return ExecutionInfos.Where(x => !x.EndDate.HasValue);
-        //}
-
+        
         private void InitDB()
         {
             if (!AlgResultTypes.Any())
