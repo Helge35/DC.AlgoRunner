@@ -15,22 +15,16 @@ namespace AlgoRunner.Api.Dal.EF
 
         public DbSet<Activity> Activities { get; set; }
         public DbSet<AdminInfo> AdminInfos { get; set; }
-        public DbSet<AlgoDotesResult> AlgoDotesResults { get; set; }
         public DbSet<AlgoExecutionParam> AlgoExecutionParams { get; set; }
         public DbSet<AlgoParam> AlgoParams { get; set; }
         public DbSet<Algorithm> Algorithms { get; set; }
-        public DbSet<AlgoTableResult> AlgoTableResults { get; set; }
-        public DbSet<AlgoTextResult> AlgoTextResults { get; set; }
         public DbSet<AlgResultType> AlgResultTypes { get; set; }
-        //public DbSet<DashboardInfo> DashboardInfos { get; set; }
         public DbSet<ExecutionInfo> ExecutionInfos { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<Point> Points { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectAlgo> ProjectAlgos { get; set; }
         public DbSet<ProjectAlgoList> ProjectAlgoLists { get; set; }
         public DbSet<ProjectExecution> ProjectExecutions { get; set; }
-        public DbSet<ResultCategory> ResultCategories { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         
@@ -271,6 +265,18 @@ namespace AlgoRunner.Api.Dal.EF
                 SaveChanges();
             }
 
+            if (!ProjectExecutions.Any())
+            {
+                ProjectExecutions.Add(new ProjectExecution
+                {
+                    ExecutedBy = "amir",
+                    StartDate = new DateTime(2018, 1, 1),
+                    EndDate = new DateTime(2018, 1, 2),
+                    ResultPath = $@"C:\"
+                });
+                SaveChanges();
+            }
+
             if (!Projects.Any())
             {
                 Add(new Project { Name = "Project 1", LastExecutionDate = new DateTime(2018, 1, 1), IsFavorite = false, Activity = Activities.First() });
@@ -296,8 +302,22 @@ namespace AlgoRunner.Api.Dal.EF
                     Activity = Activities.First(),
                     ExecutionsList = new List<ExecutionInfo>
                     {
-                        new ExecutionInfo { ExecutedBy = "User 55", StartDate = new DateTime(2018, 10, 1, 10, 0, 0), EndDate = new DateTime(2018, 10, 1, 21, 0, 0) },
-                        new ExecutionInfo { ExecutedBy = "User 1", StartDate = new DateTime(2018, 11, 1, 10, 0, 0), EndDate = new DateTime(2018, 12, 1, 21, 0, 0) }
+                        new ExecutionInfo
+                        {
+                            ExecutedBy = "User 55",
+                            StartDate = new DateTime(2018, 10, 1, 10, 0, 0),
+                            EndDate = new DateTime(2018, 10, 1, 21, 0, 0),
+                            Algorithm = Algorithms.First(),
+                            ProjectExecution = ProjectExecutions.First()
+                        },
+                        new ExecutionInfo
+                        {
+                            ExecutedBy = "User 1",
+                            StartDate = new DateTime(2018, 11, 1, 10, 0, 0),
+                            EndDate = new DateTime(2018, 12, 1, 21, 0, 0),
+                            Algorithm = Algorithms.First(),
+                            ProjectExecution = ProjectExecutions.First()
+                        }
                     }
                 });
                 Add(new Project
@@ -306,10 +326,29 @@ namespace AlgoRunner.Api.Dal.EF
                     LastExecutionDate = new DateTime(2018, 1, 1),
                     IsFavorite = false,
                     Activity = Activities.Last(),
+                    AlgorithmsList = new List<Algorithm>
+                    {
+                        Algorithms.First(),
+                        Algorithms.Last()
+                    },
                     ExecutionsList = new List<ExecutionInfo>
                     {
-                        new ExecutionInfo { ExecutedBy = "User 1", StartDate = new DateTime(2018, 12, 1, 10, 0, 0), EndDate = new DateTime(2018, 12, 1, 21, 0, 0) },
-                        new ExecutionInfo { ExecutedBy = "User 2", StartDate = new DateTime(2018, 12, 11, 10, 0, 0), EndDate = new DateTime(2018, 12, 15, 21, 0, 0) }
+                        new ExecutionInfo
+                        {
+                            ExecutedBy = "User 1",
+                            StartDate = new DateTime(2018, 12, 1, 10, 0, 0),
+                            EndDate = new DateTime(2018, 12, 1, 21, 0, 0),
+                            Algorithm = Algorithms.First(),
+                            ProjectExecution = ProjectExecutions.First()
+                        },
+                        new ExecutionInfo
+                        {
+                            ExecutedBy = "User 2",
+                            StartDate = new DateTime(2018, 12, 11, 10, 0, 0),
+                            EndDate = new DateTime(2018, 12, 15, 21, 0, 0),
+                            Algorithm = Algorithms.Last(),
+                            ProjectExecution = ProjectExecutions.First()
+                        }
                     }
                 });
                 Add(new Project
@@ -318,9 +357,21 @@ namespace AlgoRunner.Api.Dal.EF
                     LastExecutionDate = new DateTime(2018, 1, 1),
                     IsFavorite = false,
                     Activity = Activities.First(),
+                    AlgorithmsList = new List<Algorithm>
+                    {
+                        Algorithms.First(),
+                        Algorithms.Last()
+                    },
                     ExecutionsList = new List<ExecutionInfo>
                     {
-                        new ExecutionInfo { ExecutedBy = "User 2", StartDate = new DateTime(2018, 12, 12, 10, 0, 0), EndDate = new DateTime(2018, 12, 17, 21, 0, 0) }
+                        new ExecutionInfo
+                        {
+                            ExecutedBy = "User 2",
+                            StartDate = new DateTime(2018, 12, 12, 10, 0, 0),
+                            EndDate = new DateTime(2018, 12, 17, 21, 0, 0),
+                            Algorithm = Algorithms.First(),
+                            ProjectExecution = ProjectExecutions.First()
+                        }
                     }
                 });
                 Add(new Project { Name = "Project 12", LastExecutionDate = new DateTime(2018, 1, 1), IsFavorite = false, Activity = Activities.Last() });

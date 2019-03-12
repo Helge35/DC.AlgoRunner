@@ -33,13 +33,13 @@ namespace AlgoRunner.Api.Controllers
             var dashboard = new DashboardInfoEntity();
             int projectsTotalSize = 0;
             int algsTotalSize = 0;
-            dashboard.FavoriteList = _repository.GetFavoritesProjects().Select(x => _mapper.Map<ProjectEntity>(x));
-            dashboard.ResentList = _repository.GetResentProjects().Select(x => _mapper.Map<ProjectEntity>(x));
-            dashboard.AllList = _repository.GetProjectsByPage(1, _projectPageSize, out projectsTotalSize).Select(x => _mapper.Map<ProjectEntity>(x));
+            dashboard.FavoriteList = _repository.GetFavoritesProjects();
+            dashboard.ResentList = _repository.GetResentProjects();
+            dashboard.AllList = _repository.GetProjectsByPage(1, _projectPageSize, out projectsTotalSize);
             dashboard.ProjectsTotalSize = projectsTotalSize;
-            dashboard.AlgorithmsList = _repository.GetAlgsByPage(1, _algsPageSize, out algsTotalSize).Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
+            dashboard.AlgorithmsList = _repository.GetAlgsByPage(1, _algsPageSize, out algsTotalSize);
             dashboard.AlgorithmsTotalSize = algsTotalSize;
-            dashboard.ExecutionInfoList = _repository.GetExecutions().Select(x => _mapper.Map<ExecutionInfoEntity>(x));
+            dashboard.ExecutionInfoList = _repository.GetExecutions();
             return Ok(dashboard);
         }
 

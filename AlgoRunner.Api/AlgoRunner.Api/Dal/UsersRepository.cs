@@ -24,7 +24,8 @@ namespace AlgoRunner.Api.Dal
 
         internal List<UserEntity> GetAllMembers()
         {
-            return _dbContext.Users.Select(x => _mapper.Map<UserEntity>(x)).ToList();
+            return _dbContext.Users
+                .Select(x => _mapper.Map<UserEntity>(x)).ToList();
         }
     }
 }

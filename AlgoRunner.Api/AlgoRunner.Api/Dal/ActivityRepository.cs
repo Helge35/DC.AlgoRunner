@@ -20,7 +20,8 @@ namespace AlgoRunner.Api.Dal
 
         internal List<ActivityEntity> GetAllActivities()
         {
-            return _dbContext.Activities.Select(x => _mapper.Map<ActivityEntity>(x)).ToList();
+            return _dbContext.Activities
+                .Select(x => _mapper.Map<ActivityEntity>(x)).ToList();
         }
 
 

@@ -68,21 +68,6 @@ namespace AlgoRunner.Api.Migrations
                     b.ToTable("AlgResultTypes");
                 });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AlgoDotesResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AlgoName");
-
-                    b.Property<int>("TypeId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AlgoDotesResults");
-                });
-
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AlgoExecutionParam", b =>
                 {
                     b.Property<int>("Id")
@@ -93,6 +78,9 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<string>("Name")
                         .HasMaxLength(250);
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(1000);
 
                     b.HasKey("Id");
 
@@ -112,6 +100,12 @@ namespace AlgoRunner.Api.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(250);
 
+                    b.Property<string>("RangeJSON")
+                        .HasColumnName("Range");
+
+                    b.Property<string>("TypeJSON")
+                        .HasColumnName("Type");
+
                     b.Property<string>("Value")
                         .HasMaxLength(1000);
 
@@ -120,36 +114,6 @@ namespace AlgoRunner.Api.Migrations
                     b.HasIndex("AlgorithmId");
 
                     b.ToTable("AlgoParams");
-                });
-
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AlgoTableResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AlgoName");
-
-                    b.Property<int>("TypeId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AlgoTableResults");
-                });
-
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AlgoTextResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AlgoName");
-
-                    b.Property<int>("TypeId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AlgoTextResults");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Algorithm", b =>
@@ -170,7 +134,7 @@ namespace AlgoRunner.Api.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(250);
 
-                    b.Property<int?>("ProjectAlgoListProjectId");
+                    b.Property<int?>("ProjectAlgoListId");
 
                     b.Property<int?>("ProjectId");
 
@@ -180,7 +144,7 @@ namespace AlgoRunner.Api.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.HasIndex("ProjectAlgoListProjectId");
+                    b.HasIndex("ProjectAlgoListId");
 
                     b.HasIndex("ProjectId");
 
@@ -197,8 +161,6 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<int>("AlgoId");
 
-                    b.Property<string>("AlgoName");
-
                     b.Property<DateTime?>("EndDate");
 
                     b.Property<string>("ExecutedBy")
@@ -209,15 +171,17 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<int>("ProjectExecutionId");
 
-                    b.Property<int>("ProjectId");
-
-                    b.Property<string>("ProjectName");
+                    b.Property<int?>("ProjectId1");
 
                     b.Property<DateTime?>("StartDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("AlgoId");
+
+                    b.HasIndex("ProjectExecutionId");
+
+                    b.HasIndex("ProjectId1");
 
                     b.ToTable("ExecutionInfos");
                 });
@@ -241,25 +205,6 @@ namespace AlgoRunner.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Point", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ResultCategoryLabel");
-
-                    b.Property<float>("X");
-
-                    b.Property<float>("Y");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResultCategoryLabel");
-
-                    b.ToTable("Points");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Project", b =>
@@ -297,20 +242,28 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<int>("AlgoId");
 
-                    b.Property<int>("ProjectId");
+                    b.Property<int?>("ProjectId1");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AlgoId");
+
+                    b.HasIndex("ProjectId1");
 
                     b.ToTable("ProjectAlgos");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgoList", b =>
                 {
-                    b.Property<int>("ProjectId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasKey("ProjectId");
+                    b.Property<int>("ProjectId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectAlgoLists");
                 });
@@ -333,21 +286,6 @@ namespace AlgoRunner.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProjectExecutions");
-                });
-
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ResultCategory", b =>
-                {
-                    b.Property<string>("Label")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(250);
-
-                    b.Property<int?>("AlgoDotesResultId");
-
-                    b.HasKey("Label");
-
-                    b.HasIndex("AlgoDotesResultId");
-
-                    b.ToTable("ResultCategories");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Role", b =>
@@ -418,7 +356,7 @@ namespace AlgoRunner.Api.Migrations
 
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgoList")
                         .WithMany("Algos")
-                        .HasForeignKey("ProjectAlgoListProjectId");
+                        .HasForeignKey("ProjectAlgoListId");
 
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project")
                         .WithMany("AlgorithmsList")
@@ -432,17 +370,19 @@ namespace AlgoRunner.Api.Migrations
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ExecutionInfo", b =>
                 {
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project")
-                        .WithMany("ExecutionsList")
-                        .HasForeignKey("ProjectId")
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Algorithm", "Algorithm")
+                        .WithMany()
+                        .HasForeignKey("AlgoId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Point", b =>
-                {
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.ResultCategory")
-                        .WithMany("Data")
-                        .HasForeignKey("ResultCategoryLabel");
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.ProjectExecution", "ProjectExecution")
+                        .WithMany()
+                        .HasForeignKey("ProjectExecutionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
+                        .WithMany("ExecutionsList")
+                        .HasForeignKey("ProjectId1");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Project", b =>
@@ -453,11 +393,24 @@ namespace AlgoRunner.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ResultCategory", b =>
+            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgo", b =>
                 {
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.AlgoDotesResult")
-                        .WithMany("Categories")
-                        .HasForeignKey("AlgoDotesResultId");
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Algorithm", "Algorithm")
+                        .WithMany()
+                        .HasForeignKey("AlgoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId1");
+                });
+
+            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgoList", b =>
+                {
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.User", b =>

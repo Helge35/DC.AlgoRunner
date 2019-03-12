@@ -72,7 +72,6 @@ namespace AlgoRunner.Api.Dal
                 };
                 exeInfoList.Add(exe);
 
-
                 //AddNewAlg to db
                 _dbContext.ExecutionInfos.Add(_mapper.Map<ExecutionInfo>(exe));
 
@@ -83,12 +82,17 @@ namespace AlgoRunner.Api.Dal
 
         internal List<AlgorithmEntity> GetAlgorithms(int[] algoIds)
         {
-            return _dbContext.Algorithms.Where(a => algoIds.Contains(a.Id)).Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
+            return _dbContext.Algorithms
+                .Where(a => algoIds.Contains(a.Id))
+                .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
         }
 
         internal List<AlgorithmEntity> GetProjectAlgorithms(int projectId)
         {
-            return _dbContext.Projects.Include("AlgorithmsList").FirstOrDefault(x => x.Id == projectId)?.AlgorithmsList.Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
+            return _dbContext.Projects
+                .Include("AlgorithmsList")
+                .FirstOrDefault(x => x.Id == projectId)?.AlgorithmsList
+                .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
         }
 
         internal void AddNewProject(ProjectEntity proj)
@@ -100,7 +104,8 @@ namespace AlgoRunner.Api.Dal
 
         internal List<AlgorithmEntity> GetAllAlgs()
         {
-            return _dbContext.Algorithms.Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
+            return _dbContext.Algorithms
+                .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
         }
 
         internal string[] GetAlgFilePath(ProjectAlgoEntity projectAlgo)
@@ -108,7 +113,10 @@ namespace AlgoRunner.Api.Dal
             if (projectAlgo.ProjectId == 0)
                 return new string[1] { _dbContext.Algorithms.First(x => x.Id == projectAlgo.AlgoId).FileServerPath };
             else
-                return _dbContext.Projects.First(x => x.Id == projectAlgo.ProjectId).AlgorithmsList.Select(y => y.FileServerPath).Distinct().ToArray();
+                return _dbContext.Projects
+                    .First(x => x.Id == projectAlgo.ProjectId)
+                    .AlgorithmsList
+                    .Select(y => y.FileServerPath).Distinct().ToArray();
         }
 
         internal void AddNewAlg(AlgorithmEntity algo)
@@ -121,7 +129,11 @@ namespace AlgoRunner.Api.Dal
         {
             algsTotalSize = _dbContext.Algorithms.Count();
             int from = algsPageSize * (pageNum - 1);
-            return _dbContext.Algorithms.Skip(from).Take(algsPageSize).Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
+            return _dbContext.Algorithms
+                .Include("AlgoParams")
+                .Skip(from)
+                .Take(algsPageSize)
+                .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
         }
 
         internal AlgorithmEntity GetAlgorithm(int id)
@@ -137,7 +149,9 @@ namespace AlgoRunner.Api.Dal
         internal ProjectEntity GetProject(int id)
         {
             var proj = _dbContext.Projects.First(x => x.Id == id);
-            var execs = _dbContext.ExecutionInfos.Where(x => x.ProjectId == id).GroupBy(y => y.ProjectExecutionId);
+            var execs = _dbContext.ExecutionInfos
+                .Where(x => x.ProjectId == id)
+                .GroupBy(y => y.ProjectExecutionId);
             proj.ExecutionsList = new List<ExecutionInfo>();
             foreach (var exe in execs)
             {
@@ -159,24 +173,37 @@ namespace AlgoRunner.Api.Dal
 
         internal IEnumerable<ProjectEntity> GetFavoritesProjects()
         {
-            return _dbContext.Projects.Include("Activity").Where(x => x.IsFavorite).Select(x => _mapper.Map<ProjectEntity>(x));
+            return _dbContext.Projects
+                .Include("Activity")
+                .Where(x => x.IsFavorite)
+                .Select(x => _mapper.Map<ProjectEntity>(x));
         }
 
         internal IEnumerable<ProjectEntity> GetResentProjects()
         {
-            return _dbContext.Projects.Where(x => x.LastExecutionDate > new DateTime(2018, 1, 1)).Select(x => _mapper.Map<ProjectEntity>(x));
+            return _dbContext.Projects
+                .Where(x => x.LastExecutionDate > new DateTime(2018, 1, 1))
+                .Select(x => _mapper.Map<ProjectEntity>(x));
         }
 
         internal IEnumerable<ProjectEntity> GetProjectsByPage(int pageNum, int pageSize, out int totalSize)
         {
             totalSize = _dbContext.Projects.Count();
             int from = pageSize * (pageNum - 1);
-            return _dbContext.Projects.Skip(from).Take(pageSize).Select(x => _mapper.Map<ProjectEntity>(x));           
+            return _dbContext.Projects
+                .Skip(from)
+                .Take(pageSize)
+                .Select(x => _mapper.Map<ProjectEntity>(x));           
         }
 
         internal IEnumerable<ExecutionInfoEntity> GetExecutions()
         {
-            return _dbContext.ExecutionInfos.Where(x => !x.EndDate.HasValue).Select(x => _mapper.Map<ExecutionInfoEntity>(x));
+            return _dbContext.ExecutionInfos
+                .Include("ProjectExecution")
+                .Include("Project")
+                .Include("Algorithm")                 
+                .Where(x => !x.EndDate.HasValue)
+                .Select(x => _mapper.Map<ExecutionInfoEntity>(x));
         }
     }
 }
