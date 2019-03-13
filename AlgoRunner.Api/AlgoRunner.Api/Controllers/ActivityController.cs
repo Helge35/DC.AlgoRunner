@@ -19,13 +19,13 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Activity>> Get()
+        public ActionResult<List<ActivityEntity>> Get()
         {
             return Ok(_repository.GetAllActivities());
         }
 
         [HttpPost]
-        public ActionResult<Activity> Post(Activity newActivity)
+        public ActionResult<ActivityEntity> Post(ActivityEntity newActivity)
         {
             var activitiy = _repository.AddActivity( newActivity);
             return Ok(activitiy);
@@ -38,7 +38,7 @@ namespace AlgoRunner.Api.Controllers
         }
 
         [HttpPost("SaveCommonPath")]
-        public void SaveCommonPath(Activity common)
+        public void SaveCommonPath(ActivityEntity common)
         {
             _repository.UpdateCommonPath(common.ServerPath);
         }

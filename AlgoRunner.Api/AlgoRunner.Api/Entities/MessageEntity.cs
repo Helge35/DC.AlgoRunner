@@ -2,7 +2,7 @@
 
 namespace AlgoRunner.Api.Entities
 {
-    public class Message
+    public class MessageEntity
     {
         public int Id { get; set; }
         public string UserName { get; set; }

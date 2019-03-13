@@ -2,6 +2,7 @@
 using AlgoRunner.Api.Entities;
 using AlgoRunner.Api.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -14,21 +15,23 @@ namespace AlgoRunner.Api.Controllers
     {
         private FilesService _filesService;
         private ProjectsRepository _projectsRepository;
+        private IHttpContextAccessor _accessor;
 
-        public ResultsController(FilesService filesService, ProjectsRepository projectsRepository)
+        public ResultsController(FilesService filesService, ProjectsRepository projectsRepository, IHttpContextAccessor accessor)
         {
             _filesService = filesService;
             _projectsRepository = projectsRepository;
+            _accessor = accessor;
         }
 
 
         [HttpGet("{path}")]
-        public ActionResult<List<IAlgoResult>> Get(string path)
+        public ActionResult<List<IAlgoResultEntity>> Get(string path)
         {
             var pathVar = path.Split('_');
             int exeID;
             int projectID;
-            List<Algorithm> algos = new List<Algorithm>();
+            List<AlgorithmEntity> algos = new List<AlgorithmEntity>();
             path = _filesService.GetFullPath(path);
 
             if (!System.IO.Directory.Exists(path))
@@ -37,7 +40,7 @@ namespace AlgoRunner.Api.Controllers
             if (pathVar.Length != 2 || !int.TryParse(pathVar[1], out exeID) || !int.TryParse(pathVar[0], out projectID))
                 return NotFound();
 
-            if (!_filesService.IsFolderAlowed(path))
+            if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
                 return Forbid();
 
             if (projectID > 0)
@@ -45,7 +48,7 @@ namespace AlgoRunner.Api.Controllers
             else
                 algos.Add(_projectsRepository.GetAlgorithmByAlgoExeId(exeID));
 
-            List<IAlgoResult> results = ResultsFactory.GetResults(algos, path);
+            List<IAlgoResultEntity> results = ResultsFactory.GetResults(algos, path);
 
             return Ok(results);
         }

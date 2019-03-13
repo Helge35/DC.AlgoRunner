@@ -1,52 +1,53 @@
-﻿using AlgoRunner.Api.Entities;
-using System;
+﻿using AlgoRunner.Api.Dal.EF;
+using AlgoRunner.Api.Dal.EF.Entities;
+using AlgoRunner.Api.Entities;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AlgoRunner.Api.Dal
 {
     public class ActivityRepository
     {
-        private List<Activity> _activities;
+        private readonly IMapper _mapper;
+        private readonly AlgoRunnerDbContext _dbContext;
 
-        public ActivityRepository()
+        public ActivityRepository(AlgoRunnerDbContext dbContext, IMapper mapper)
         {
-            _activities = new List<Activity> {
-                new Activity{Id= -1, Name="Common", ServerPath=@"C:\\AlgoRunnerProjects\Common"},
-                new Activity{Id= 1, Name="Big company project", ServerPath=@"C:\\AlgoRunnerProjects\Bp"},
-                new Activity{Id= 2, Name="Small company project",ServerPath=@"C:\\AlgoRunnerProjects\Sp"},
-                new Activity{Id= 3, Name="Restricted project",ServerPath=@"C:\Users\admin"},
-            };
-
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        internal List<Activity> GetAllActivities()
+        internal List<ActivityEntity> GetAllActivities()
         {
-            return _activities;
+            return _dbContext.Activities
+                .Select(x => _mapper.Map<ActivityEntity>(x)).ToList();
         }
 
 
-        internal Activity AddActivity(Activity newActivity)
+        internal ActivityEntity AddActivity(ActivityEntity newActivity)
         {
             newActivity.Id = 1000;
-            _activities.Add(newActivity);
+            _dbContext.Activities.Add(_mapper.Map<Activity>(newActivity));
+            _dbContext.SaveChanges();
             return newActivity;
         }
 
         internal void RemoveActivity(int id)
         {
-            _activities.Remove(_activities.FirstOrDefault(x => x.Id == id));
+            _dbContext.Activities.Remove(_dbContext.Activities.FirstOrDefault(x => x.Id == id));
+            _dbContext.SaveChanges();
         }
 
         internal void UpdateCommonPath(string path)
         {
-            _activities.First(x => x.Id < 0).ServerPath = path;
+            _dbContext.Activities.First(x => x.Id < 0).ServerPath = path;
+            _dbContext.SaveChanges();
         }
 
         internal string GetActivityPath(int activityID)
         {
-           return _activities.First(x => x.Id == activityID).ServerPath;
+           return _dbContext.Activities.First(x => x.Id == activityID).ServerPath;
         }
     }
 }

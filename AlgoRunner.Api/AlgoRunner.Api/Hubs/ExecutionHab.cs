@@ -12,7 +12,7 @@ namespace AlgoRunner.Api.Hubs
             return Clients.All.Finished(id);
         }
 
-        public Task Started(ExecutionInfo exeInfo)
+        public Task Started(ExecutionInfoEntity exeInfo)
         {
             return Clients.All.Started(exeInfo);
         }

@@ -7,6 +7,6 @@ namespace AlgoRunner.Api.Hubs
     public interface IExecutionHab
     {
         Task Finished(int exeID);
-        Task Started(ExecutionInfo exeInfo);
+        Task Started(ExecutionInfoEntity exeInfo);
     }
 }

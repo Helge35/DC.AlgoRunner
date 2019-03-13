@@ -1,38 +1,31 @@
-﻿using AlgoRunner.Api.Entities;
-using System;
+﻿using AlgoRunner.Api.Dal.EF;
+using AlgoRunner.Api.Entities;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AlgoRunner.Api.Dal
 {
     public class UsersRepository
     {
-        private List<User> _members;
-        private List<Activity> _activities;
+        private readonly IMapper _mapper;
+        private readonly AlgoRunnerDbContext _dbContext;
 
-        public UsersRepository(ActivityRepository activityRepository)
+        public UsersRepository(AlgoRunnerDbContext dbContext, IMapper mapper)
         {
-            _activities = activityRepository.GetAllActivities();
-            _members = new List<User> {
-                   new User{Id=101, Name="User 10", IsAdmin=false, Activities= new List<Activity>{_activities.First()}},
-                   new User{Id=102, Name="User 12",IsAdmin=false,  Activities= new List<Activity>{_activities.Last()}},
-                   new User{Id=103, Name="User 14", IsAdmin=true,  Activities= new List<Activity>{_activities.First(), _activities.Last()}},
-                   new User{Id=104, Name=@"RF\OLEGBR",IsAdmin=true,  Activities= new List<Activity>{_activities.Last()}},
-                   
-            };
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        internal User GetUserInfo(string userName)
+        internal UserEntity GetUserInfo(string userName)
         {
-            return _members.FirstOrDefault(x => x.Name == userName);
+            return _mapper.Map<UserEntity>(_dbContext.Users.FirstOrDefault(x => x.Name == userName));
         }
 
-        internal List<User> GetAllMembers()
+        internal List<UserEntity> GetAllMembers()
         {
-            return _members;
+            return _dbContext.Users
+                .Select(x => _mapper.Map<UserEntity>(x)).ToList();
         }
-
-
     }
 }

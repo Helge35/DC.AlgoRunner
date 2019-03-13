@@ -13,15 +13,30 @@ namespace AlgoRunner.Api
 {
     public class Program
     {
+        //public static void Main(string[] args)
+        //{
+        //    CreateWebHostBuilder(args).Build().Run();
+        //}
+
+        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        //    WebHost.CreateDefaultBuilder(args)
+        //           .UseStartup<Startup>()
+        //           .UseIISIntegration()
+        //           .Build();
+
+        //public static IWebHost CreateWebHostBuilder(string[] args) =>
+        //    WebHost.CreateDefaultBuilder(args)
+        //        .UseStartup<Startup>()
+        //        .UseIISIntegration()
+        //        .Build();
+
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseIISIntegration()
-                .Build();
+                .UseStartup<Startup>().UseIISIntegration();
     }
 }

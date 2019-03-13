@@ -5,38 +5,61 @@ namespace AlgoRunner.Api.Dal.EF.Entities
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("ExecutionInfos")]
     public partial class ExecutionInfo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ExecutionInfo()
-        {
-            AlgoExecutionParams = new HashSet<AlgoExecutionParam>();
-        }
-
-        public int ID { get; set; }
-
-        public int? ProjectID { get; set; }
-
-        public int? AlgoID { get; set; }
-
-        public int? ProjectExecutionID { get; set; }
-
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public int ProjectExecutionId { get; set; }
+        [ForeignKey("ProjectExecutionId")]
+        public ProjectExecution ProjectExecution { get; set; }
+        public int AlgoId { get; set; }
+        [ForeignKey("AlgoId")]
+        public Algorithm Algorithm { get; set; }          
+        public Project Project { get; set; }                
         public DateTime? StartDate { get; set; }
-
         public DateTime? EndDate { get; set; }
-
         [StringLength(250)]
         public string ExecutedBy { get; set; }
-
+        public List<AlgoExecutionParam> ExeParams { get; set; }
         [StringLength(1000)]
-        public string FileExePath { get; set; }
+        public string FileExePath { get; set; }        
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlgoExecutionParam> AlgoExecutionParams { get; set; }
+        [NotMapped]
+        public string AlgoName
+        {
+            get
+            {
+                return Algorithm?.Name;
+            }
+            set
+            {
+                if (Algorithm != null)
+                    Algorithm.Name = value;
+            }
+        }
 
-        public virtual Algorithm Algorithm { get; set; }
+        [NotMapped]
+        public int ProjectId
+        {
+            get
+            {
+                return Project != null ? Project.Id : int.MinValue;
+            }            
+        }
 
-        public virtual Project Project { get; set; }
+        [NotMapped]
+        public string ProjectName
+        {
+            get
+            {
+                return Project?.Name;
+            }
+            set
+            {
+                if (Project != null)
+                    Project.Name = value;
+            }
+        }
     }
 }

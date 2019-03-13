@@ -25,7 +25,7 @@ namespace AlgoRunner.Api.Controllers
         // GET: api/<controller>
 
         [HttpGet]
-        public ActionResult<User> Get()
+        public ActionResult<UserEntity> Get()
         {
             string userName = _accessor.HttpContext.User.Identity.Name;
             var user = _repository.GetUserInfo(userName);
@@ -33,7 +33,7 @@ namespace AlgoRunner.Api.Controllers
             if (user != null)
                 return Ok(user);
             else
-                return Ok(new User { Id = -1, Name = userName, IsAdmin = false });
+                return Ok(new UserEntity { Id = -1, Name = userName, IsAdmin = false });
         }
 
 

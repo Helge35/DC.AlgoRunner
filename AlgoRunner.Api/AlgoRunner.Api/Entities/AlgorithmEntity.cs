@@ -10,10 +10,10 @@ namespace AlgoRunner.Api.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; }
-        public Activity Activity { get; set; }
+        public ActivityEntity Activity { get; set; }
         public string CreatedBy { get; set; }
-        public AlgResultType ResultType { get; set; }
-        public List<AlgoParam> AlgoParams { get; set; }
+        public AlgResultTypeEntity ResultType { get; set; }
+        public List<AlgoParamEntity> AlgoParams { get; set; }
         public string FileServerPath { get; set; }
     }
 }

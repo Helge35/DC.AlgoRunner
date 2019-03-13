@@ -17,9 +17,9 @@ namespace AlgoRunner.Api.Services
                 new AlgResultType{Id = 6, Name="Dotes Graph"},
              
              */
-        internal static List<IAlgoResult> GetResults(List<Algorithm> algos, string path)
+        internal static List<IAlgoResultEntity> GetResults(List<AlgorithmEntity> algos, string path)
         {
-            var results = new List<IAlgoResult>();
+            var results = new List<IAlgoResultEntity>();
             foreach (var algo in algos)
             {
                 results.Add(GetResult(algo, path));
@@ -27,17 +27,17 @@ namespace AlgoRunner.Api.Services
             return results;
         }
 
-        internal static IAlgoResult GetResult(Algorithm algo, string path)
+        internal static IAlgoResultEntity GetResult(AlgorithmEntity algo, string path)
         {
-            IAlgoResult result;
-            result = new AlgoTextResult();
+            IAlgoResultEntity result;
+            result = new AlgoTextResultEntity();
             switch (algo.ResultType.Id)
             {
                 case 1:
-                    result = new AlgoTextResult();
+                    result = new AlgoTextResultEntity();
                     break;
                 case 2:
-                    result = new AlgoTableResult();
+                    result = new AlgoTableResultEntity();
                     break;
                 //case 3:
                 //    break;
@@ -46,7 +46,7 @@ namespace AlgoRunner.Api.Services
                 //case 5:
                 //    break;
                 case 6:
-                    result = new AlgoDotesResult();
+                    result = new AlgoDotesResultEntity();
                     break;
                 default:
                     return null;

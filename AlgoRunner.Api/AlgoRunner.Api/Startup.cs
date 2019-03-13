@@ -2,12 +2,12 @@
 using AlgoRunner.Api.Dal.EF;
 using AlgoRunner.Api.Hubs;
 using AlgoRunner.Api.Services;
+using AutoMapper;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +28,7 @@ namespace AlgoRunner.Api
         {
 
             //services.AddCors();
+            services.AddAutoMapper();
             services.AddMvc();
 
             //GlobalConfiguration.Configuration.UseSqlServerStorage("<connection string or its name>");
@@ -41,9 +42,13 @@ namespace AlgoRunner.Api
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<ProjectsRepository>();
+            services.AddScoped<ProjectsRepository>();
             services.AddSingleton<UsersRepository>();
+            services.AddScoped<UsersRepository>();
             services.AddSingleton<ActivityRepository>();
+            services.AddScoped<ActivityRepository>();
             services.AddSingleton<MessagesRepository>();
+            services.AddScoped<MessagesRepository>();
 
             services.AddScoped<AlgoExecutionService>();//must be NOT singletone
             services.AddSingleton<FilesService>();
