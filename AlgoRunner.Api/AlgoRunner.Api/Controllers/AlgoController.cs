@@ -8,6 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
+using System.Security.Principal;
+using System.DirectoryServices.AccountManagement;
+using System.Security;
+using System.Security.Permissions;
 
 namespace AlgoRunner.Api.Controllers
 {
@@ -35,15 +40,10 @@ namespace AlgoRunner.Api.Controllers
         public ActionResult<List<AlgorithmEntity>> Get(int projectId, int id)
         {
             if (projectId > 0)
-            {
                 return Ok(_projectsRepository.GetProjectAlgorithms(projectId));
-            }
+
             if (id > 0)
-            {
-                var algs = new List<AlgorithmEntity>();
-                algs.Add(_projectsRepository.GetAlgorithm(id));
-                return Ok(algs);
-            }
+                return Ok(new List<AlgorithmEntity> { _projectsRepository.GetAlgorithm(id) });
 
             return BadRequest();
         }
@@ -88,16 +88,15 @@ namespace AlgoRunner.Api.Controllers
         [HttpPost("CheckAccess")]
         public ActionResult CheckAccess([FromBody]ProjectAlgoEntity projectAlgo)
         {
-            string[] paths = _projectsRepository.GetAlgFilePath(projectAlgo);
+            var paths = _projectsRepository.GetAlgFilePath(projectAlgo);
             foreach (var path in paths)
             {
-                if (!_filesService.IsFolderAlowed(path))
+                if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
                     return Forbid();
 
                 if (!System.IO.File.Exists(path))
                     return NotFound();
             }
-
             return Ok();
         }
 
@@ -110,3 +109,5 @@ namespace AlgoRunner.Api.Controllers
         }
     }
 }
+        
+

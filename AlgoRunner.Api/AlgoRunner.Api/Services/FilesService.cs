@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
-using System.Threading.Tasks;
+using System.Security.Principal;
 
 namespace AlgoRunner.Api.Services
 {
@@ -23,29 +22,29 @@ namespace AlgoRunner.Api.Services
             return Path.Combine(_executionPath , dirName/* + @"\Output.csv"*/);
         }
 
-        public bool IsFolderAlowed(string path)
+        public bool IsFolderAllowed(string path, string userPrincipalName)
         {
-            DirectorySecurity dbSecurity;
             try
             {
-                //string dirPath = new FileInfo(path);//.Directory.FullName;
-                DirectoryInfo dInfo = new DirectoryInfo(path);
-                dbSecurity = dInfo.GetAccessControl();
-            }
-            catch (System.UnauthorizedAccessException)
-            {
+                var windowsIdentity = new WindowsIdentity(userPrincipalName.Split("\\").Last());
+                var windowsPrincipal = new WindowsPrincipal(windowsIdentity);
+
+                var rules = new DirectoryInfo(path)
+                    .GetAccessControl(AccessControlSections.Access)
+                    .GetAccessRules(true, true, typeof(NTAccount));
+
+                foreach (AuthorizationRule rule in rules)
+                {
+                    if (!windowsPrincipal.IsInRole(rule.IdentityReference.Value))
+                        continue;
+
+                    var filesystemAccessRule = (FileSystemAccessRule)rule;
+                    return (filesystemAccessRule.FileSystemRights & FileSystemRights.ReadData) > 0 &&
+                        filesystemAccessRule.AccessControlType != AccessControlType.Deny;
+                }
                 return false;
             }
-
-            var acl = dbSecurity.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
-
-            foreach (FileSystemAccessRule far in acl)
-            {
-                if (far.AccessControlType == AccessControlType.Allow && far.FileSystemRights >= FileSystemRights.ReadPermissions)
-                    return true;
-            }
-
-            return false;
+            catch (Exception exp) { return false; }
         }
     }
 }

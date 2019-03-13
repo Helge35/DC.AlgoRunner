@@ -83,6 +83,9 @@ namespace AlgoRunner.Api.Dal
         internal List<AlgorithmEntity> GetAlgorithms(int[] algoIds)
         {
             return _dbContext.Algorithms
+                .Include("Activity")
+                .Include("ResultType")
+                .Include("AlgoParams")
                 .Where(a => algoIds.Contains(a.Id))
                 .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
         }
@@ -91,6 +94,9 @@ namespace AlgoRunner.Api.Dal
         {
             return _dbContext.Projects
                 .Include("AlgorithmsList")
+                .Include("AlgorithmsList.Activity")
+                .Include("AlgorithmsList.ResultType")
+                .Include("AlgorithmsList.AlgoParams")                
                 .FirstOrDefault(x => x.Id == projectId)?.AlgorithmsList
                 .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
         }
@@ -105,6 +111,9 @@ namespace AlgoRunner.Api.Dal
         internal List<AlgorithmEntity> GetAllAlgs()
         {
             return _dbContext.Algorithms
+                .Include("Activity")
+                .Include("ResultType")
+                .Include("AlgoParams")
                 .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
         }
 
@@ -130,6 +139,8 @@ namespace AlgoRunner.Api.Dal
             algsTotalSize = _dbContext.Algorithms.Count();
             int from = algsPageSize * (pageNum - 1);
             return _dbContext.Algorithms
+                .Include("Activity")
+                .Include("ResultType")
                 .Include("AlgoParams")
                 .Skip(from)
                 .Take(algsPageSize)
@@ -138,7 +149,10 @@ namespace AlgoRunner.Api.Dal
 
         internal AlgorithmEntity GetAlgorithm(int id)
         {
-            return _mapper.Map<AlgorithmEntity>(_dbContext.Algorithms.First(x => x.Id == id));
+            return _mapper.Map<AlgorithmEntity>(_dbContext.Algorithms
+                .Include("Activity")
+                .Include("ResultType")
+                .Include("AlgoParams").First(x => x.Id == id));
         }
 
         internal ExecutionInfoEntity GetExecution(int id)
@@ -148,20 +162,11 @@ namespace AlgoRunner.Api.Dal
 
         internal ProjectEntity GetProject(int id)
         {
-            var proj = _dbContext.Projects.First(x => x.Id == id);
-            var execs = _dbContext.ExecutionInfos
-                .Where(x => x.ProjectId == id)
-                .GroupBy(y => y.ProjectExecutionId);
-            proj.ExecutionsList = new List<ExecutionInfo>();
-            foreach (var exe in execs)
-            {
-                var projectExe = exe.FirstOrDefault();
-                projectExe.StartDate = exe.Min(x => x.StartDate);
-                projectExe.EndDate = exe.Max(x => x.EndDate);
-                proj.ExecutionsList.Add(projectExe);
-            }
-
-            return _mapper.Map<ProjectEntity>(proj);
+            return _mapper.Map<ProjectEntity>(_dbContext.Projects
+                .Include("ExecutionsList")
+                .Include("AlgorithmsList")
+                .Include("Activity")
+                .First(x => x.Id == id));                      
         }
 
         internal void AddToFavorite(int projectID)

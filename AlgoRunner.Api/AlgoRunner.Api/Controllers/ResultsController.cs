@@ -2,6 +2,7 @@
 using AlgoRunner.Api.Entities;
 using AlgoRunner.Api.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -14,11 +15,13 @@ namespace AlgoRunner.Api.Controllers
     {
         private FilesService _filesService;
         private ProjectsRepository _projectsRepository;
+        private IHttpContextAccessor _accessor;
 
-        public ResultsController(FilesService filesService, ProjectsRepository projectsRepository)
+        public ResultsController(FilesService filesService, ProjectsRepository projectsRepository, IHttpContextAccessor accessor)
         {
             _filesService = filesService;
             _projectsRepository = projectsRepository;
+            _accessor = accessor;
         }
 
 
@@ -37,7 +40,7 @@ namespace AlgoRunner.Api.Controllers
             if (pathVar.Length != 2 || !int.TryParse(pathVar[1], out exeID) || !int.TryParse(pathVar[0], out projectID))
                 return NotFound();
 
-            if (!_filesService.IsFolderAlowed(path))
+            if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
                 return Forbid();
 
             if (projectID > 0)
