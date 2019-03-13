@@ -1,12 +1,15 @@
 ﻿namespace AlgoRunner.Api.Dal.EF.Entities
 {
+    using AutoMapper;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Message
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [IgnoreMap]
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Title { get; set; }

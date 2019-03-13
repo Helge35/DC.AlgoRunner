@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlgoRunner.Api.Migrations
 {
     [DbContext(typeof(AlgoRunnerDbContext))]
-    [Migration("20190312115210_InitialCreate")]
+    [Migration("20190313141509_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,6 @@ namespace AlgoRunner.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AdminInfoId");
-
                     b.Property<string>("Name")
                         .HasMaxLength(250);
 
@@ -38,22 +36,9 @@ namespace AlgoRunner.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdminInfoId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Activities");
-                });
-
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AdminInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AdminInfos");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AlgResultType", b =>
@@ -236,25 +221,6 @@ namespace AlgoRunner.Api.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AlgoId");
-
-                    b.Property<int?>("ProjectId1");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AlgoId");
-
-                    b.HasIndex("ProjectId1");
-
-                    b.ToTable("ProjectAlgos");
-                });
-
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgoList", b =>
                 {
                     b.Property<int>("Id")
@@ -310,8 +276,6 @@ namespace AlgoRunner.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AdminInfoId");
-
                     b.Property<bool>("IsAdmin");
 
                     b.Property<string>("Name")
@@ -319,17 +283,11 @@ namespace AlgoRunner.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdminInfoId");
-
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Activity", b =>
                 {
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.AdminInfo")
-                        .WithMany("Activities")
-                        .HasForeignKey("AdminInfoId");
-
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.User")
                         .WithMany("Activities")
                         .HasForeignKey("UserId");
@@ -395,31 +353,12 @@ namespace AlgoRunner.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgo", b =>
-                {
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Algorithm", "Algorithm")
-                        .WithMany()
-                        .HasForeignKey("AlgoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId1");
-                });
-
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgoList", b =>
                 {
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.User", b =>
-                {
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.AdminInfo")
-                        .WithMany("Members")
-                        .HasForeignKey("AdminInfoId");
                 });
 #pragma warning restore 612, 618
         }

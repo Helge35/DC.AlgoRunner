@@ -14,10 +14,9 @@ namespace AlgoRunner.Api
         public DomainProfile()
         {            
             CreateMap<ActivityEntity, Activity>();
-            CreateMap<AdminInfoEntity, AdminInfo>();
             CreateMap<AlgoExecutionParamEntity, AlgoExecutionParam>();
             CreateMap<AlgoParamEntity, AlgoParam>();
-            CreateMap<AlgorithmEntity, Algorithm>();           
+            CreateMap<AlgorithmEntity, Algorithm>();
             CreateMap<AlgResultTypeEntity, AlgResultType>();
             CreateMap<ExecutionInfoEntity, ExecutionInfo>();
             CreateMap<MessageEntity, ExecutionInfo>();

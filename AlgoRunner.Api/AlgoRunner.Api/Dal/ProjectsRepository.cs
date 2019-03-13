@@ -74,8 +74,8 @@ namespace AlgoRunner.Api.Dal
 
                 //AddNewAlg to db
                 _dbContext.ExecutionInfos.Add(_mapper.Map<ExecutionInfo>(exe));
-
             }
+            _dbContext.SaveChanges();
 
             return exeInfoList;
         }
@@ -106,6 +106,7 @@ namespace AlgoRunner.Api.Dal
             var rand = new Random().Next(1000);
             proj.Id = rand;
             _dbContext.Projects.Add(_mapper.Map<Project>(proj));
+            _dbContext.SaveChanges();
         }
 
         internal List<AlgorithmEntity> GetAllAlgs()

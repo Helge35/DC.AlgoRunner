@@ -9,18 +9,6 @@ namespace AlgoRunner.Api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AdminInfos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AdminInfos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AlgResultTypes",
                 columns: table => new
                 {
@@ -86,18 +74,11 @@ namespace AlgoRunner.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 250, nullable: true),
-                    IsAdmin = table.Column<bool>(nullable: false),
-                    AdminInfoId = table.Column<int>(nullable: true)
+                    IsAdmin = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_AdminInfos_AdminInfoId",
-                        column: x => x.AdminInfoId,
-                        principalTable: "AdminInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,18 +89,11 @@ namespace AlgoRunner.Api.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 250, nullable: true),
                     ServerPath = table.Column<string>(nullable: true),
-                    AdminInfoId = table.Column<int>(nullable: true),
                     UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Activities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Activities_AdminInfos_AdminInfoId",
-                        column: x => x.AdminInfoId,
-                        principalTable: "AdminInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Activities_Users_UserId",
                         column: x => x.UserId,
@@ -276,32 +250,6 @@ namespace AlgoRunner.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectAlgos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProjectId1 = table.Column<int>(nullable: true),
-                    AlgoId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectAlgos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProjectAlgos_Algorithms_AlgoId",
-                        column: x => x.AlgoId,
-                        principalTable: "Algorithms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectAlgos_Projects_ProjectId1",
-                        column: x => x.ProjectId1,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AlgoExecutionParams",
                 columns: table => new
                 {
@@ -321,11 +269,6 @@ namespace AlgoRunner.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Activities_AdminInfoId",
-                table: "Activities",
-                column: "AdminInfoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Activities_UserId",
@@ -383,24 +326,9 @@ namespace AlgoRunner.Api.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectAlgos_AlgoId",
-                table: "ProjectAlgos",
-                column: "AlgoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectAlgos_ProjectId1",
-                table: "ProjectAlgos",
-                column: "ProjectId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projects_ActivityId",
                 table: "Projects",
                 column: "ActivityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_AdminInfoId",
-                table: "Users",
-                column: "AdminInfoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -413,9 +341,6 @@ namespace AlgoRunner.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Messages");
-
-            migrationBuilder.DropTable(
-                name: "ProjectAlgos");
 
             migrationBuilder.DropTable(
                 name: "Roles");
@@ -443,9 +368,6 @@ namespace AlgoRunner.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "AdminInfos");
         }
     }
 }
