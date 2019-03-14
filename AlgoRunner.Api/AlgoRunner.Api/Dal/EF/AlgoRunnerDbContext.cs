@@ -12,11 +12,11 @@ namespace AlgoRunner.Api.Dal.EF
 
         public AlgoRunnerDbContext(DbContextOptions<AlgoRunnerDbContext> options) : base(options)
         {
-            //if (_isFirstTime)
-            //{
-            //    _isFirstTime = false;
-            //    InitDB();
-            //}
+            if (_isFirstTime)
+            {
+                _isFirstTime = false;
+                InitDB();
+            }
         }
 
         public DbSet<Activity> Activities { get; set; }
@@ -27,9 +27,8 @@ namespace AlgoRunner.Api.Dal.EF
         public DbSet<ExecutionInfo> ExecutionInfos { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<ProjectAlgoList> ProjectAlgoLists { get; set; }
+        public DbSet<ProjectAlgo> ProjectAlgos { get; set; }
         public DbSet<ProjectExecution> ProjectExecutions { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         
         private void InitDB()
@@ -52,14 +51,7 @@ namespace AlgoRunner.Api.Dal.EF
                 Add(new Activity { Name = "Small company project", ServerPath = @"C:\\AlgoRunnerProjects\Sp" });
                 Add(new Activity { Name = "Restricted project", ServerPath = @"C:\Users\admin" });
                 SaveChanges();
-            }
-            
-            if (!Users.Any())
-            {                
-                Add(new User { Name = @"RF\AMIRCA", IsAdmin = true, Activities = new List<Activity> { Activities.First(), Activities.Last() } });
-                Add(new User { Name = @"RF\OLEGBR", IsAdmin = true, Activities = new List<Activity> { Activities.First(), Activities.Last() } });
-                SaveChanges();
-            }
+            }                        
         }
     }
 }

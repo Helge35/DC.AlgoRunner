@@ -16,6 +16,9 @@ namespace AlgoRunner.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private IHttpContextAccessor _accessor;
+        private UsersRepository _repository;
+
         public UsersController(IHttpContextAccessor accessor, UsersRepository repository)
         {
             _accessor = accessor;
@@ -35,10 +38,5 @@ namespace AlgoRunner.Api.Controllers
             else
                 return Ok(new UserEntity { Id = -1, Name = userName, IsAdmin = false });
         }
-
-
-
-        private IHttpContextAccessor _accessor;
-        private UsersRepository _repository;
     }
 }

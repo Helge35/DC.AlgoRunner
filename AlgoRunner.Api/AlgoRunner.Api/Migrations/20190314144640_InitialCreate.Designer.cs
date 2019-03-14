@@ -4,14 +4,16 @@ using AlgoRunner.Api.Dal.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlgoRunner.Api.Migrations
 {
     [DbContext(typeof(AlgoRunnerDbContext))]
-    partial class AlgoRunnerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190314144640_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

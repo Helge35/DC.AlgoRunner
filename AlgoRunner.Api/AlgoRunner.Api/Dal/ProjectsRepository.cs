@@ -6,20 +6,14 @@ using AlgoRunner.Api.Dal.EF;
 using AlgoRunner.Api.Dal.EF.Entities;
 using AlgoRunner.Api.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlgoRunner.Api.Dal
 {
-    public class ProjectsRepository
+    public class ProjectsRepository : RepositoryBase
     {
-        private readonly IMapper _mapper;
-        private readonly AlgoRunnerDbContext _dbContext;
-
-        public ProjectsRepository(AlgoRunnerDbContext dbContext, IMapper mapper)
-        {
-            _dbContext = dbContext;
-            _mapper = mapper;
-        }
+        public ProjectsRepository(AlgoRunnerDbContext dbContext, IMapper mapper, IHttpContextAccessor accessor) : base(dbContext, mapper, accessor) { }
 
         internal AlgorithmEntity GetAlgorithmByAlgoExeId(int exeID)
         {
@@ -34,50 +28,46 @@ namespace AlgoRunner.Api.Dal
                 .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
         }
 
-        internal void EndAlgoExecution(int algoExeId, int projectExeID)
+        internal void StartAlgoExecution(int algoExeId)
         {
-            var execution = _dbContext.ExecutionInfos.First(x => x.Id == algoExeId);
-            execution.EndDate = DateTime.Now;
-            execution.ProjectExecutionId = projectExeID;
+            var execution = _dbContext.ExecutionInfos
+                .Include("ProjectExecution")
+                .First(x => x.Id == algoExeId);
+            execution.ProjectExecution.StartDate = DateTime.Now;
+            _dbContext.SaveChanges();
+        }
+
+        internal void EndAlgoExecution(int algoExeId, string resultPath)
+        {
+            var endTime = DateTime.Now;
+            var execution = _dbContext.ExecutionInfos
+                .Include("ProjectExecution")
+                .First(x => x.Id == algoExeId);
+            execution.EndDate = endTime;
+            execution.ProjectExecution.EndDate = endTime;
+            execution.ProjectExecution.ResultPath = resultPath;
             _dbContext.SaveChanges();
         }
 
         internal List<ExecutionInfoEntity> SetAlgoExecutions(ProjectAlgoListEntity projectAlg, string executerName)
         {
-            List<ExecutionInfoEntity> exeInfoList = new List<ExecutionInfoEntity>();
-            Random rand = new Random();
-
-            int projectID = 0;
-            string projectName = string.Empty;
-
-            if (projectAlg.ProjectId > 0)
-            {
-                projectID = projectAlg.ProjectId;
-                projectName = _dbContext.Projects.First(x => x.Id == projectAlg.ProjectId).Name;
-            }
-
+            var project = _dbContext.Projects.First(x => x.Id == projectAlg.ProjectId);
             foreach (var algo in projectAlg.Algos)
             {
-                var exe = new ExecutionInfoEntity
+                project.ExecutionsList.Add(new ExecutionInfo
                 {
-                    Id = rand.Next(),
-                    AlgoName = algo.Name,
-                    ProjectId = projectID,
-                    ProjectName = projectName,
+                    Project = project,
+                    Algorithm = _dbContext.Algorithms.FirstOrDefault(x => x.Id == algo.Id),
                     StartDate = DateTime.Now,
                     ExecutedBy = executerName,
                     FileExePath = algo.FileServerPath,
-                    AlgoId = algo.Id,
-                    ExeParams = algo.AlgoParams.Select(x => new AlgoExecutionParamEntity { Name = x.Name, Value = x.Value }).ToList()
-                };
-                exeInfoList.Add(exe);
-
-                //AddNewAlg to db
-                _dbContext.ExecutionInfos.Add(_mapper.Map<ExecutionInfo>(exe));
+                    ExeParams = algo.AlgoParams.Select(x => new AlgoExecutionParam { Name = x.Name, Value = x.Value }).ToList(),
+                    ProjectExecution = new ProjectExecution { ExecutedBy = executerName }
+                });                
             }
             _dbContext.SaveChanges();
 
-            return exeInfoList;
+            return project.ExecutionsList.Select(x => _mapper.Map<ExecutionInfoEntity>(x)).ToList();
         }
 
         internal List<AlgorithmEntity> GetAlgorithms(int[] algoIds)
@@ -93,19 +83,32 @@ namespace AlgoRunner.Api.Dal
         internal List<AlgorithmEntity> GetProjectAlgorithms(int projectId)
         {
             return _dbContext.Projects
-                .Include("AlgorithmsList")
-                .Include("AlgorithmsList.Activity")
-                .Include("AlgorithmsList.ResultType")
-                .Include("AlgorithmsList.AlgoParams")                
-                .FirstOrDefault(x => x.Id == projectId)?.AlgorithmsList
-                .Select(x => _mapper.Map<AlgorithmEntity>(x)).ToList();
+                .Include("ProjectAlgoList")
+                .Include("ProjectAlgoList.Algorithm")
+                .Include("ProjectAlgoList.Algorithm.Activity")
+                .Include("ProjectAlgoList.Algorithm.ResultType")
+                .Include("ProjectAlgoList.Algorithm.AlgoParams")                
+                .FirstOrDefault(x => x.Id == projectId)?.ProjectAlgoList
+                .Select(x => _mapper.Map<AlgorithmEntity>(x.Algorithm)).ToList();
         }
 
-        internal void AddNewProject(ProjectEntity proj)
+        internal void AddNewProject(ProjectEntity projectEntity)
         {
-            var rand = new Random().Next(1000);
-            proj.Id = rand;
-            _dbContext.Projects.Add(_mapper.Map<Project>(proj));
+            var project = _mapper.Map<Project>(projectEntity);
+            project.Activity = _dbContext.Activities.FirstOrDefault(x => x.Id == projectEntity.Activity.Id);
+            project.ProjectAlgoList.Clear();
+            var algorithms = _dbContext.Algorithms
+                .Where(x => projectEntity.AlgorithmsList
+                .Select(y => y.Id).Contains(x.Id));
+            foreach (var algorithm in algorithms)
+            {
+                project.ProjectAlgoList.Add(new ProjectAlgo
+                {
+                    Project = project,
+                    Algorithm = algorithm
+                });
+            }
+            _dbContext.Projects.Add(project);
             _dbContext.SaveChanges();
         }
 
@@ -129,9 +132,12 @@ namespace AlgoRunner.Api.Dal
                     .Select(y => y.FileServerPath).Distinct().ToArray();
         }
 
-        internal void AddNewAlg(AlgorithmEntity algo)
+        internal void AddNewAlg(AlgorithmEntity algorithmEntity)
         {
-            _dbContext.Algorithms.Add(_mapper.Map<Algorithm>(algo));
+            var algorithm = _mapper.Map<Algorithm>(algorithmEntity);
+            algorithm.ResultType = _dbContext.AlgResultTypes.FirstOrDefault(x => x.Name == algorithmEntity.ResultType.Name);
+            algorithm.Activity = _dbContext.Activities.FirstOrDefault(x => x.Id == algorithmEntity.Activity.Id);
+            _dbContext.Algorithms.Add(algorithm);
             _dbContext.SaveChanges();
         }
 
@@ -165,7 +171,8 @@ namespace AlgoRunner.Api.Dal
         {
             return _mapper.Map<ProjectEntity>(_dbContext.Projects
                 .Include("ExecutionsList")
-                .Include("AlgorithmsList")
+                .Include("ProjectAlgoList")
+                .Include("ProjectAlgoList.Algorithm")
                 .Include("Activity")
                 .First(x => x.Id == id));                      
         }

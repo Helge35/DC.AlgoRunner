@@ -53,25 +53,25 @@ namespace AlgoRunner.Api.Services
             algoExecs = ProjectsRepository.SetAlgoExecutions(projectAlg, executedBy);
             firstAlgoExe = algoExecs.First();
 
-            string resultPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", firstAlgoExe.ProjectId, firstAlgoExe.Id));
+            string resultPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", firstAlgoExe.ProjectId, firstAlgoExe.ProjectId));
             Directory.CreateDirectory(resultPath);
 
-            string backgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgoExe, executedBy, resultPath, firstAlgoExe.Id));
+            string backgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgoExe, executedBy, resultPath));
 
             if (algoExecs.Count > 1)
             {
                 for (int i = 1; i < algoExecs.Count; i++)
                 {
-                    backgroundJobID= BackgroundJob.ContinueWith(backgroundJobID, () => StartExecution(algoExecs[i], executedBy, resultPath, firstAlgoExe.Id));
+                    backgroundJobID= BackgroundJob.ContinueWith(backgroundJobID, () => StartExecution(algoExecs[i], executedBy, resultPath));
                 }
 
                 BackgroundJob.ContinueWith(backgroundJobID, () => FinishProjectExecution(executedBy, firstAlgoExe));
             }
         }
 
-        public void StartExecution(ExecutionInfoEntity algoExe, string executedBy, string resultPath, int projectExeutionID)
+        public void StartExecution(ExecutionInfoEntity algoExe, string executedBy, string resultPath)
         {
-            algoExe.ProjectExecutionId = projectExeutionID;
+            ProjectsRepository.StartAlgoExecution(algoExe.Id);
             SendStartExeMessage(executedBy, algoExe.AlgoName);
             ExecutionHabContext.Clients.All.Started(algoExe);
 
@@ -98,7 +98,7 @@ namespace AlgoRunner.Api.Services
             }
             finally
             {
-                ProjectsRepository.EndAlgoExecution(algoExe.Id, algoExe.ProjectExecutionId);
+                ProjectsRepository.EndAlgoExecution(algoExe.Id, resultPath);
                 ExecutionHabContext.Clients.All.Finished(algoExe.Id);
             }
         }
@@ -153,7 +153,7 @@ namespace AlgoRunner.Api.Services
             MessageHubContext.Clients.All.Send(message);
         }
 
-        private void FinishProjectExecution(string executedBy, ExecutionInfoEntity firstAlgoExe)
+        public void FinishProjectExecution(string executedBy, ExecutionInfoEntity firstAlgoExe)
         {
 
             var message = MessagesRepository.AddNewMessage("Execution results", $"Project [{firstAlgoExe.ProjectName}] finish execution.", executedBy);
