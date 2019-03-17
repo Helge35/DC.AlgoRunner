@@ -11,10 +11,7 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [IgnoreMap]
-        public int Id { get; set; }
-        public int ProjectExecutionId { get; set; }
-        [ForeignKey("ProjectExecutionId")]
-        public ProjectExecution ProjectExecution { get; set; }
+        public int Id { get; set; }        
         public int AlgoId { get; set; }
         [ForeignKey("AlgoId")]
         public Algorithm Algorithm { get; set; }          
@@ -25,7 +22,10 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         public string ExecutedBy { get; set; }
         public List<AlgoExecutionParam> ExeParams { get; set; }
         [StringLength(1000)]
-        public string FileExePath { get; set; }        
+        public string FileExePath { get; set; }
+
+        [NotMapped]
+        public int ProjectExecutionId { get { return Id; } }
 
         [NotMapped]
         public string AlgoName

@@ -4,6 +4,7 @@ using AlgoRunner.Api.Dal.EF.Entities;
 using AlgoRunner.Api.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -18,13 +19,15 @@ namespace AlgoRunner.Api.Controllers
     {
         private readonly ProjectsRepository _repository;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _accessor;
         private const int _projectPageSize = 12;
         private const int _algsPageSize = 14;        
 
-        public ProjectsController(ProjectsRepository projectsRepository, IMapper mapper)
+        public ProjectsController(IHttpContextAccessor accessor, ProjectsRepository projectsRepository, IMapper mapper)
         {
             _repository = projectsRepository;
             _mapper = mapper;
+            _accessor = accessor;
         }
 
         [HttpGet]
@@ -33,7 +36,7 @@ namespace AlgoRunner.Api.Controllers
             var dashboard = new DashboardInfoEntity();
             int projectsTotalSize = 0;
             int algsTotalSize = 0;
-            dashboard.FavoriteList = _repository.GetFavoritesProjects();
+            dashboard.FavoriteList = _repository.GetFavoritesProjects(_accessor.HttpContext.User.Identity.Name);
             dashboard.ResentList = _repository.GetResentProjects();
             dashboard.AllList = _repository.GetProjectsByPage(1, _projectPageSize, out projectsTotalSize);
             dashboard.ProjectsTotalSize = projectsTotalSize;
@@ -54,7 +57,7 @@ namespace AlgoRunner.Api.Controllers
         [HttpGet("AddToFavorite/{id}")]
         public ActionResult<bool> AddToFavorite(int id)
         {
-            _repository.AddToFavorite(id);
+            _repository.AddToFavorite(id, _accessor.HttpContext.User.Identity.Name);
             return Ok(true);
         }
 

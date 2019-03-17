@@ -8,11 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using System.DirectoryServices.AccountManagement;
-using System.Security;
-using System.Security.Permissions;
 
 namespace AlgoRunner.Api.Controllers
 {
@@ -88,8 +83,7 @@ namespace AlgoRunner.Api.Controllers
         [HttpPost("CheckAccess")]
         public ActionResult CheckAccess([FromBody]ProjectAlgoEntity projectAlgo)
         {
-            var paths = _projectsRepository.GetAlgFilePath(projectAlgo);
-            foreach (var path in paths)
+            foreach (var path in _projectsRepository.GetAlgFilePath(projectAlgo))
             {
                 if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
                     return Forbid();
@@ -97,16 +91,25 @@ namespace AlgoRunner.Api.Controllers
                 if (!System.IO.File.Exists(path))
                     return NotFound();
             }
-            return Ok();
+
+            return Ok();            
         }
 
         [HttpPost("RunAlgorithms")]
         public ActionResult RunAlgorithms([FromBody]ProjectAlgoListEntity data)
         {
-            string userName = _accessor.HttpContext.User.Identity.Name;
-            _algoExecutionService.Run(data, userName);
+            foreach (var path in _projectsRepository.GetAlgosFilePath(data))
+            {
+                if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
+                    return Forbid();
+
+                if (!System.IO.File.Exists(path))
+                    return NotFound();
+            }
+                             
+            _algoExecutionService.Run(data, _accessor.HttpContext.User.Identity.Name);
             return Ok();
-        }
+        }        
     }
 }
         

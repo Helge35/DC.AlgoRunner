@@ -12,11 +12,11 @@ namespace AlgoRunner.Api.Dal.EF
 
         public AlgoRunnerDbContext(DbContextOptions<AlgoRunnerDbContext> options) : base(options)
         {
-            if (_isFirstTime)
-            {
-                _isFirstTime = false;
-                InitDB();
-            }
+            //if (_isFirstTime)
+            //{
+            //    _isFirstTime = false;
+            //    InitDB();
+            //}
         }
 
         public DbSet<Activity> Activities { get; set; }
@@ -28,7 +28,7 @@ namespace AlgoRunner.Api.Dal.EF
         public DbSet<Message> Messages { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectAlgo> ProjectAlgos { get; set; }
-        public DbSet<ProjectExecution> ProjectExecutions { get; set; }
+        public DbSet<UserFavoriteProject> UserFavoriteProjects { get; set; }
         public DbSet<User> Users { get; set; }
         
         private void InitDB()

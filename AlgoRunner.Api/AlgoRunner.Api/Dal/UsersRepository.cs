@@ -16,7 +16,6 @@ namespace AlgoRunner.Api.Dal
         {
             var userEntity = _mapper.Map<UserEntity>(_dbContext.Users                
                 .FirstOrDefault(x => x.Name == userName));
-            userEntity.Activities = _dbContext.Activities.Select(x => _mapper.Map<ActivityEntity>(x)).ToList();
 
             return userEntity;
         }

@@ -17,7 +17,6 @@ namespace AlgoRunner.Api
             CreateMap<MessageEntity, ExecutionInfo>();
             CreateMap<ProjectAlgoEntity, ProjectAlgo>();
             CreateMap<ProjectEntity, Project>();
-            CreateMap<ProjectExecutionEntity, ProjectExecution>();
             CreateMap<UserEntity, User>();           
         }
     }

@@ -12,8 +12,8 @@
         [IgnoreMap]
         public int Id { get; set; }
         [StringLength(250)]
-        public string Name { get; set; }
-        public List<Activity> Activities { get; set; }
+        public string Name { get; set; }        
         public bool IsAdmin { get; set; }
+        public List<UserFavoriteProject> UserFavoriteProjectList { get; set; }
     }
 }

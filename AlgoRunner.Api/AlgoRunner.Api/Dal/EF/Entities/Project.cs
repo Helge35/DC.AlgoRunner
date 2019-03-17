@@ -20,8 +20,7 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         public string Name { get; set; }
         public string Desc { get; set; }
         [StringLength(250)]
-        public string CreatedBy { get; set; }
-        public bool IsFavorite { get; set; }
+        public string CreatedBy { get; set; }        
         public DateTime LastExecutionDate { get; set; }
         public List<ExecutionInfo> ExecutionsList { get; set; }        
         public List<ProjectAlgo> ProjectAlgoList { get; set; }
@@ -46,6 +45,9 @@ namespace AlgoRunner.Api.Dal.EF.Entities
                 }                    
             }
         }
+
+        [NotMapped]
+        public bool IsFavorite { get; set; }
 
         public Project()
         {

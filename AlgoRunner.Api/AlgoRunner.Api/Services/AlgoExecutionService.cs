@@ -53,7 +53,7 @@ namespace AlgoRunner.Api.Services
             algoExecs = ProjectsRepository.SetAlgoExecutions(projectAlg, executedBy);
             firstAlgoExe = algoExecs.First();
 
-            string resultPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", firstAlgoExe.ProjectId, firstAlgoExe.ProjectId));
+            string resultPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", firstAlgoExe.ProjectId, firstAlgoExe.Id));
             Directory.CreateDirectory(resultPath);
 
             string backgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgoExe, executedBy, resultPath));
@@ -116,7 +116,7 @@ namespace AlgoRunner.Api.Services
         {
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = PytonExePath;
-            start.Arguments = string.Format("{0} {1} {2}", commandPath, inputFilePath, outputFilePath);
+            start.Arguments = string.Format("\"{0}\" \"{1}\" \"{2}\"", commandPath, inputFilePath, outputFilePath);
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
 
