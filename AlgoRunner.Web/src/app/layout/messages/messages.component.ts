@@ -40,6 +40,9 @@ export class MessagesComponent implements OnInit {
     this._hubConnection.start().catch(err => console.error(err.toString()));
 
     this._hubConnection.on('Send', (message: any) => {
+      if (this.authService.user.name != message.userName)
+        return;
+      console.log('Current User: ' + this.authService.user.name + " Message user: " + message.userName);
       this._service.subsrcibeToNewMessageEvent().emit(message);
       this.messages.unshift(message)
     });
