@@ -20,7 +20,7 @@
         {
             get
             {
-                return Project != null ? Project.Id : int.MinValue;
+                return Project != null ? Project.Id : 0;
             }
         }
     }

@@ -20,7 +20,7 @@
         {
             get
             {
-                return User != null ? User.Id : int.MinValue;
+                return User != null ? User.Id : 0;
             }
         }
     }

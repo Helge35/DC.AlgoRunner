@@ -46,7 +46,7 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         {
             get
             {
-                return Project != null ? Project.Id : int.MinValue;
+                return Project != null ? Project.Id : 0;
             }            
         }
 
