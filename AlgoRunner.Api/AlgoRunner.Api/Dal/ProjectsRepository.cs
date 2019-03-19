@@ -39,16 +39,29 @@ namespace AlgoRunner.Api.Dal
 
         internal void EndAlgoExecution(int algoExeId, string resultPath, bool isLastExecution)
         {
-            var execution = _dbContext.ExecutionInfos
+            var executionInfo = _dbContext.ExecutionInfos
                 .Include("ProjectExecution")
                 .First(x => x.Id == algoExeId);
-            execution.EndDate = DateTime.Now;
+            executionInfo.EndDate = DateTime.Now;
             if (isLastExecution)
-                execution.ProjectExecution.EndDate = execution.EndDate.Value;
+            {
+                executionInfo.ProjectExecution.EndDate = executionInfo.EndDate.Value;
+                executionInfo.ProjectExecution.ResultPath = resultPath;
+            }
 
-            if (isLastExecution)
-                execution.ProjectExecution.ResultPath = resultPath;   
-            
+            if (executionInfo.ExecutionResult == EF.Entities.ExecutionResult.Pending)
+                executionInfo.ExecutionResult = EF.Entities.ExecutionResult.Success;
+
+            _dbContext.SaveChanges();
+        }
+
+        internal void SetExecutionFailure(int executionInfoId, string failureMessage)
+        {
+            var executionInfo = _dbContext.ExecutionInfos
+                .First(x => x.Id == executionInfoId);
+            executionInfo.FailureReason = failureMessage;
+            executionInfo.ExecutionResult = EF.Entities.ExecutionResult.Failure;
+
             _dbContext.SaveChanges();
         }
 
@@ -73,7 +86,8 @@ namespace AlgoRunner.Api.Dal
                     ExecutedBy = executerName,
                     FileExePath = Path.Combine(algorithm.Activity.ServerPath, algo.FileServerPath),
                     ExeParams = algo.AlgoParams.Select(x => new AlgoExecutionParam { Name = x.Name, Value = x.Value }).ToList(),
-                    ProjectExecution = projectExecution
+                    ProjectExecution = projectExecution,
+                    ExecutionResult = EF.Entities.ExecutionResult.Pending
                 });
             }
 
@@ -214,19 +228,36 @@ namespace AlgoRunner.Api.Dal
                 .First(x => x.Id == id);
 
             var projectEntity = _mapper.Map<ProjectEntity>(project);
-            projectEntity.ExecutionsList = project.ExecutionsList
+            var projectExecutions = project.ExecutionsList
                 .Select(x => x.ProjectExecution)
-                .Distinct()
-                .Select(x => new ExecutionInfoEntity
-                {
-                    Id = x.Id,
-                    StartDate = x.StartDate,
-                    EndDate = x.EndDate,
-                    ExecutedBy = x.ExecutedBy,
-                    ProjectId = project.Id,
-                    ProjectExecutionId = x.Id
-                }).ToList();
+                .Distinct();
 
+            var executionInfoList = new List<ExecutionInfoEntity>();
+            foreach (var projectExecution in projectExecutions)
+            {
+                var executionInfoResultList = project.ExecutionsList
+                    .Where(x => x.ProjectExecutionId == projectExecution.Id)
+                    .Select(x => x.ExecutionResult);
+
+                var executionInfoResult = Entities.ExecutionResult.PartialSuccess;
+                if (executionInfoResultList.All(x=>x == EF.Entities.ExecutionResult.Failure))
+                    executionInfoResult = Entities.ExecutionResult.Failure;
+                else if (executionInfoResultList.All(x => x == EF.Entities.ExecutionResult.Success))
+                    executionInfoResult = Entities.ExecutionResult.Success;
+
+                executionInfoList.Add(new ExecutionInfoEntity
+                {
+                    Id = projectExecution.Id,
+                    StartDate = projectExecution.StartDate,
+                    EndDate = projectExecution.EndDate,
+                    ExecutedBy = projectExecution.ExecutedBy,
+                    ProjectId = project.Id,
+                    ProjectExecutionId = projectExecution.Id,
+                    ExecutionResult = executionInfoResult
+                });
+            }
+
+            projectEntity.ExecutionsList = executionInfoList;
             return projectEntity;
         }
 

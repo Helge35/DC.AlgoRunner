@@ -196,7 +196,9 @@ namespace AlgoRunner.Api.Migrations
                     StartDate = table.Column<DateTime>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true),
                     ExecutedBy = table.Column<string>(maxLength: 250, nullable: true),
-                    FileExePath = table.Column<string>(maxLength: 1000, nullable: true)
+                    FileExePath = table.Column<string>(maxLength: 1000, nullable: true),
+                    ExecutionResult = table.Column<int>(nullable: false),
+                    FailureReason = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

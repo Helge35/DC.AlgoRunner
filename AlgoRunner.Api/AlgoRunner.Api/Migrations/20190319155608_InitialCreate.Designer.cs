@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlgoRunner.Api.Migrations
 {
     [DbContext(typeof(AlgoRunnerDbContext))]
-    [Migration("20190319121415_InitialCreate")]
+    [Migration("20190319155608_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,10 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<string>("ExecutedBy")
                         .HasMaxLength(250);
+
+                    b.Property<int>("ExecutionResult");
+
+                    b.Property<string>("FailureReason");
 
                     b.Property<string>("FileExePath")
                         .HasMaxLength(1000);

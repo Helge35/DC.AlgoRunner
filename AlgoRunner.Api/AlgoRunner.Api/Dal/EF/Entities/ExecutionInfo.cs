@@ -25,7 +25,9 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         public string ExecutedBy { get; set; }
         public List<AlgoExecutionParam> ExeParams { get; set; }
         [StringLength(1000)]
-        public string FileExePath { get; set; }        
+        public string FileExePath { get; set; }
+        public ExecutionResult ExecutionResult { get; set; }
+        public string FailureReason { get; set; }
 
         [NotMapped]
         public string AlgoName
@@ -63,5 +65,13 @@ namespace AlgoRunner.Api.Dal.EF.Entities
                     Project.Name = value;
             }
         }
+    }
+
+    public enum ExecutionResult
+    {
+        Success,
+        PartialSuccess,
+        Failure,
+        Pending
     }
 }

@@ -89,13 +89,21 @@ namespace AlgoRunner.Api.Services
 
             try
             {
-                RunPyton(inputFilePath, outputFilePath, algoExe.FileExePath);
+                RunPyton(inputFilePath, outputFilePath, algoExe);
                 SendEndExeMessage(executedBy, algoExe.AlgoName, algoExe.ProjectId > 0, resultPath);
             }
 
-            catch (Exception ex)
+            catch(FileNotFoundException exp)
             {
-                SendErrorExeMessage(executedBy, algoExe.AlgoName, resultPath);
+                SendErrorExeMessage(algoExe, exp.Message, executedBy);
+            }
+            catch(AlgorithmExecutionException exp)
+            {
+                SendErrorExeMessage(algoExe, exp.Message, executedBy);
+            }
+            catch (Exception exp)
+            {               
+                SendErrorExeMessage(algoExe, $"General error on algorithm '{algoExe.AlgoName}' execution", executedBy);
             }
             finally
             {
@@ -113,13 +121,18 @@ namespace AlgoRunner.Api.Services
             }
         }
 
-        private void RunPyton(string inputFilePath, string outputFilePath, string commandPath)
+        private void RunPyton(string inputFilePath, string outputFilePath, ExecutionInfoEntity algoExe)
         {
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = PytonExePath;
-            start.Arguments = string.Format("\"{0}\" \"{1}\" \"{2}\"", commandPath, inputFilePath, outputFilePath);
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
+            var start = new ProcessStartInfo
+            {
+                FileName = PytonExePath,
+                Arguments = string.Format("\"{0}\" \"{1}\" \"{2}\"", algoExe.FileExePath, inputFilePath, outputFilePath),
+                UseShellExecute = false,
+                RedirectStandardOutput = true
+            };
+
+            if (!File.Exists(inputFilePath))
+                throw new FileNotFoundException($@"Algorithm '{algoExe.AlgoName}' input file '{inputFilePath}' doesn't exist");
 
             using (Process process = Process.Start(start))
             {
@@ -127,7 +140,12 @@ namespace AlgoRunner.Api.Services
                 {
                     string result = reader.ReadToEnd();
                 }
+                if (process.ExitCode != 0)
+                    throw new AlgorithmExecutionException(algoExe.AlgoName, process.ExitCode);
             }
+
+            if (!File.Exists(outputFilePath))
+                throw new FileNotFoundException($@"Algorithm '{algoExe.AlgoName}' output file '{outputFilePath}' doesn't exist");
         }
 
         private void SendStartExeMessage(string executedBy, string algoName)
@@ -148,9 +166,10 @@ namespace AlgoRunner.Api.Services
             MessageHubContext.Clients.All.Send(message);
         }
 
-        private void SendErrorExeMessage(string executedBy, string algoName, string rootPath)
+        private void SendErrorExeMessage(ExecutionInfoEntity executionInfo, string errorMessage, string executedBy)
         {
-            var message = MessagesRepository.AddNewMessage("Error execution", $"Error on execution [{algoName}]", executedBy);
+            ProjectsRepository.SetExecutionFailure(executionInfo.Id, errorMessage);
+            var message = MessagesRepository.AddNewMessage("Execution error", errorMessage, executedBy);
             MessageHubContext.Clients.All.Send(message);
         }
 
@@ -159,6 +178,19 @@ namespace AlgoRunner.Api.Services
 
             var message = MessagesRepository.AddNewMessage("Execution results", $"Project [{firstAlgoExe.ProjectName}] finish execution.", executedBy);
             MessageHubContext.Clients.All.Send(message);
+        }
+    }
+
+    public class AlgorithmExecutionException : Exception
+    {
+        public int ExitCode { get; }
+        public string AlgorithmName { get; }
+
+        public AlgorithmExecutionException(string algorithmName, int exitCode) 
+            : base($@"Algorithm '{algorithmName}' execution failed. Exit code {exitCode}")
+        {
+            ExitCode = exitCode;
+            AlgorithmName = algorithmName;
         }
     }
 }

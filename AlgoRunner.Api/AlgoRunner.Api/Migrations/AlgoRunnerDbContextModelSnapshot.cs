@@ -139,6 +139,10 @@ namespace AlgoRunner.Api.Migrations
                     b.Property<string>("ExecutedBy")
                         .HasMaxLength(250);
 
+                    b.Property<int>("ExecutionResult");
+
+                    b.Property<string>("FailureReason");
+
                     b.Property<string>("FileExePath")
                         .HasMaxLength(1000);
 
