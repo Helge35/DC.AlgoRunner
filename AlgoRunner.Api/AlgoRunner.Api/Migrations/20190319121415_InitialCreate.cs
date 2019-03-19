@@ -53,6 +53,22 @@ namespace AlgoRunner.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProjectExecutions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ExecutedBy = table.Column<string>(maxLength: 250, nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    ResultPath = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectExecutions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -174,6 +190,7 @@ namespace AlgoRunner.Api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ProjectExecutionId = table.Column<int>(nullable: false),
                     AlgoId = table.Column<int>(nullable: false),
                     ProjectId1 = table.Column<int>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: true),
@@ -188,6 +205,12 @@ namespace AlgoRunner.Api.Migrations
                         name: "FK_ExecutionInfos_Algorithms_AlgoId",
                         column: x => x.AlgoId,
                         principalTable: "Algorithms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExecutionInfos_ProjectExecutions_ProjectExecutionId",
+                        column: x => x.ProjectExecutionId,
+                        principalTable: "ProjectExecutions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -271,6 +294,11 @@ namespace AlgoRunner.Api.Migrations
                 column: "AlgoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExecutionInfos_ProjectExecutionId",
+                table: "ExecutionInfos",
+                column: "ProjectExecutionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ExecutionInfos_ProjectId1",
                 table: "ExecutionInfos",
                 column: "ProjectId1");
@@ -326,6 +354,9 @@ namespace AlgoRunner.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Algorithms");
+
+            migrationBuilder.DropTable(
+                name: "ProjectExecutions");
 
             migrationBuilder.DropTable(
                 name: "Projects");

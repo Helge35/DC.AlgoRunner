@@ -142,6 +142,8 @@ namespace AlgoRunner.Api.Migrations
                     b.Property<string>("FileExePath")
                         .HasMaxLength(1000);
 
+                    b.Property<int>("ProjectExecutionId");
+
                     b.Property<int?>("ProjectId1");
 
                     b.Property<DateTime?>("StartDate");
@@ -149,6 +151,8 @@ namespace AlgoRunner.Api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AlgoId");
+
+                    b.HasIndex("ProjectExecutionId");
 
                     b.HasIndex("ProjectId1");
 
@@ -220,6 +224,26 @@ namespace AlgoRunner.Api.Migrations
                     b.ToTable("ProjectAlgos");
                 });
 
+            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectExecution", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("EndDate");
+
+                    b.Property<string>("ExecutedBy")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("ResultPath");
+
+                    b.Property<DateTime?>("StartDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectExecutions");
+                });
+
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -287,6 +311,11 @@ namespace AlgoRunner.Api.Migrations
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Algorithm", "Algorithm")
                         .WithMany()
                         .HasForeignKey("AlgoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.ProjectExecution", "ProjectExecution")
+                        .WithMany()
+                        .HasForeignKey("ProjectExecutionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")

@@ -53,25 +53,26 @@ namespace AlgoRunner.Api.Services
             algoExecs = ProjectsRepository.SetAlgoExecutions(projectAlg, executedBy);
             firstAlgoExe = algoExecs.First();
 
-            string resultPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", firstAlgoExe.ProjectId, firstAlgoExe.Id));
+            string resultPath = Path.Combine(ExecutionPath, string.Format("{0}_{1}", firstAlgoExe.ProjectId, firstAlgoExe.ProjectExecutionId));
             Directory.CreateDirectory(resultPath);
 
-            string backgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgoExe, executedBy, resultPath));
+            string backgroundJobID = BackgroundJob.Enqueue(() => StartExecution(firstAlgoExe, executedBy, resultPath, true, algoExecs.Count == 1));
 
             if (algoExecs.Count > 1)
             {
                 for (int i = 1; i < algoExecs.Count; i++)
                 {
-                    backgroundJobID= BackgroundJob.ContinueWith(backgroundJobID, () => StartExecution(algoExecs[i], executedBy, resultPath));
+                    backgroundJobID= BackgroundJob.ContinueWith(backgroundJobID, () => StartExecution(algoExecs[i], executedBy, resultPath, false, i == algoExecs.Count - 1));
                 }
 
                 BackgroundJob.ContinueWith(backgroundJobID, () => FinishProjectExecution(executedBy, firstAlgoExe));
             }
         }
 
-        public void StartExecution(ExecutionInfoEntity algoExe, string executedBy, string resultPath)
+        public void StartExecution(ExecutionInfoEntity algoExe, string executedBy, string resultPath, bool isFirstExecution, bool isLastExecution)
         {
-            ProjectsRepository.StartAlgoExecution(algoExe.Id);
+            var rootResultPath = resultPath;
+            ProjectsRepository.StartAlgoExecution(algoExe.Id, isFirstExecution);
             SendStartExeMessage(executedBy, algoExe.AlgoName);
             ExecutionHabContext.Clients.All.Started(algoExe);
 
@@ -98,7 +99,7 @@ namespace AlgoRunner.Api.Services
             }
             finally
             {
-                ProjectsRepository.EndAlgoExecution(algoExe.Id, resultPath);
+                ProjectsRepository.EndAlgoExecution(algoExe.Id, rootResultPath, isLastExecution);
                 ExecutionHabContext.Clients.All.Finished(algoExe.Id);
             }
         }

@@ -32,30 +32,20 @@ namespace AlgoRunner.Api.Controllers
             try
             {
                 var pathVar = path.Split('_');
-                int exeID;
-                int projectID;
-                List<AlgorithmEntity> algos = new List<AlgorithmEntity>();
                 path = _filesService.GetFullPath(path);
 
-                if (!System.IO.Directory.Exists(path))
+                if (!Directory.Exists(path))
                     return NotFound();
 
-                if (pathVar.Length != 2 || !int.TryParse(pathVar[1], out exeID) || !int.TryParse(pathVar[0], out projectID))
+                if (pathVar.Length != 2 || !int.TryParse(pathVar[1], out int exeID) || !int.TryParse(pathVar[0], out int projectID))
                     return NotFound();
 
                 if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
                     return Forbid();
 
-                if (projectID > 0)
-                    algos = _projectsRepository.GetAlgorithmsByExecution(exeID);
-                else
-                    algos.Add(_projectsRepository.GetAlgorithmByAlgoExeId(exeID));
-
-                List<IAlgoResultEntity> results = ResultsFactory.GetResults(algos, path);
-
-                return Ok(results);
+                return Ok(ResultsFactory.GetResults(_projectsRepository.GetAlgorithmsByExecution(exeID), path));
             }
-            catch(FileNotFoundException exp) { return NotFound(); }
+            catch (FileNotFoundException) { return NotFound(); }
         }
     }
 }
