@@ -21,7 +21,7 @@ namespace AlgoRunner.Api.Dal
                 .Include("ProjectExecution")
                 .Include("Algorithm")
                 .Include("Algorithm.ResultType")
-                .Where(x => x.ProjectExecutionId == projeExeID).ToList()
+                .Where(x => x.ProjectExecutionId == projeExeID && x.ExecutionResult == EF.Entities.ExecutionResult.Success).ToList()
                     .Select(x => _mapper.Map<AlgorithmEntity>(x.Algorithm)).ToList();            
         }
 
@@ -232,9 +232,28 @@ namespace AlgoRunner.Api.Dal
                 .Select(x => x.ProjectExecution)
                 .Distinct();
 
-            var executionInfoList = new List<ExecutionInfoEntity>();
+            var executionInfoList = new List<ExecutionInfoEntity>();            
             foreach (var projectExecution in projectExecutions)
             {
+                #region Aggrigate all failure reasons
+                var failureReason = string.Empty;
+                var executionInfoFailureReasonList = project.ExecutionsList
+                    .Where(x => x.ProjectExecutionId == projectExecution.Id && !string.IsNullOrEmpty(x.FailureReason))
+                    .Select(x => x.FailureReason).ToList();
+
+                for (int i = 0; i < executionInfoFailureReasonList.Count(); i++)
+                {
+                    if (i == 0)
+                        failureReason += $@"Execution failure reason(s):{Environment.NewLine}";
+
+                    failureReason += $@"{i + 1}) {executionInfoFailureReasonList[i]}";
+
+                    if (i < executionInfoFailureReasonList.Count() - 1)
+                        failureReason += Environment.NewLine;
+                }
+                #endregion
+
+                #region Aggrigate all execution results
                 var executionInfoResultList = project.ExecutionsList
                     .Where(x => x.ProjectExecutionId == projectExecution.Id)
                     .Select(x => x.ExecutionResult);
@@ -244,6 +263,7 @@ namespace AlgoRunner.Api.Dal
                     executionInfoResult = Entities.ExecutionResult.Failure;
                 else if (executionInfoResultList.All(x => x == EF.Entities.ExecutionResult.Success))
                     executionInfoResult = Entities.ExecutionResult.Success;
+                #endregion
 
                 executionInfoList.Add(new ExecutionInfoEntity
                 {
@@ -253,7 +273,8 @@ namespace AlgoRunner.Api.Dal
                     ExecutedBy = projectExecution.ExecutedBy,
                     ProjectId = project.Id,
                     ProjectExecutionId = projectExecution.Id,
-                    ExecutionResult = executionInfoResult
+                    ExecutionResult = executionInfoResult,
+                    FailureReason = failureReason
                 });
             }
 
