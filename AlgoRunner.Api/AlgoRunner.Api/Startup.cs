@@ -61,10 +61,10 @@ namespace AlgoRunner.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseCors(x => x
-               // .AllowAnyOrigin()
+               //.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .WithOrigins("http://localhost:4200")
+                .WithOrigins("http://localhost:4200", "http://localhost:86/AlgoRunner", "http://localhost:86")
                 .AllowCredentials());
 
 
