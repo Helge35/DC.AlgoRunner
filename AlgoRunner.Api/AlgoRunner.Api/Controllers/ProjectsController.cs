@@ -21,7 +21,7 @@ namespace AlgoRunner.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _accessor;
         private const int _projectPageSize = 12;
-        private const int _algsPageSize = 14;        
+        private const int _algsPageSize = 10;        
 
         public ProjectsController(IHttpContextAccessor accessor, ProjectsRepository projectsRepository, IMapper mapper)
         {
