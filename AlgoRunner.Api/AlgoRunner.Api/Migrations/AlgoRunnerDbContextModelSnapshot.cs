@@ -25,33 +25,14 @@ namespace AlgoRunner.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AdminInfoId");
-
                     b.Property<string>("Name")
                         .HasMaxLength(250);
 
                     b.Property<string>("ServerPath");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AdminInfoId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Activities");
-                });
-
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AdminInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AdminInfos");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AlgResultType", b =>
@@ -134,19 +115,11 @@ namespace AlgoRunner.Api.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(250);
 
-                    b.Property<int?>("ProjectAlgoListId");
-
-                    b.Property<int?>("ProjectId");
-
                     b.Property<int>("ResultTypeId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ActivityId");
-
-                    b.HasIndex("ProjectAlgoListId");
-
-                    b.HasIndex("ProjectId");
 
                     b.HasIndex("ResultTypeId");
 
@@ -165,6 +138,10 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<string>("ExecutedBy")
                         .HasMaxLength(250);
+
+                    b.Property<int>("ExecutionResult");
+
+                    b.Property<string>("FailureReason");
 
                     b.Property<string>("FileExePath")
                         .HasMaxLength(1000);
@@ -220,8 +197,6 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<string>("Desc");
 
-                    b.Property<bool>("IsFavorite");
-
                     b.Property<DateTime>("LastExecutionDate");
 
                     b.Property<string>("Name")
@@ -253,53 +228,24 @@ namespace AlgoRunner.Api.Migrations
                     b.ToTable("ProjectAlgos");
                 });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgoList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProjectId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("ProjectAlgoLists");
-                });
-
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectExecution", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<DateTime?>("EndDate");
 
                     b.Property<string>("ExecutedBy")
                         .HasMaxLength(250);
 
                     b.Property<string>("ResultPath");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<DateTime?>("StartDate");
 
                     b.HasKey("Id");
 
                     b.ToTable("ProjectExecutions");
-                });
-
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(250);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.User", b =>
@@ -308,8 +254,6 @@ namespace AlgoRunner.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AdminInfoId");
-
                     b.Property<bool>("IsAdmin");
 
                     b.Property<string>("Name")
@@ -317,20 +261,26 @@ namespace AlgoRunner.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdminInfoId");
-
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Activity", b =>
+            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.UserFavoriteProject", b =>
                 {
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.AdminInfo")
-                        .WithMany("Activities")
-                        .HasForeignKey("AdminInfoId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.User")
-                        .WithMany("Activities")
-                        .HasForeignKey("UserId");
+                    b.Property<int>("ProjectId");
+
+                    b.Property<int?>("UserId1");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("UserFavoriteProjects");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.AlgoExecutionParam", b =>
@@ -353,14 +303,6 @@ namespace AlgoRunner.Api.Migrations
                         .WithMany()
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgoList")
-                        .WithMany("Algos")
-                        .HasForeignKey("ProjectAlgoListId");
-
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project")
-                        .WithMany("AlgorithmsList")
-                        .HasForeignKey("ProjectId");
 
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.AlgResultType", "ResultType")
                         .WithMany()
@@ -401,23 +343,20 @@ namespace AlgoRunner.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
-                        .WithMany()
+                        .WithMany("ProjectAlgoList")
                         .HasForeignKey("ProjectId1");
                 });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectAlgoList", b =>
+            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.UserFavoriteProject", b =>
                 {
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
 
-            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.User", b =>
-                {
-                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.AdminInfo")
-                        .WithMany("Members")
-                        .HasForeignKey("AdminInfoId");
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.User", "User")
+                        .WithMany("UserFavoriteProjectList")
+                        .HasForeignKey("UserId1");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,7 +9,6 @@ namespace AlgoRunner.Api.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<ActivityEntity> Activities { get; set; }
         public bool IsAdmin { get; set; }
     }
 }

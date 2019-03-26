@@ -1,5 +1,6 @@
 namespace AlgoRunner.Api.Dal.EF.Entities
 {
+    using AutoMapper;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,7 @@ namespace AlgoRunner.Api.Dal.EF.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [IgnoreMap]
         public int Id { get; set; }
         public int ProjectExecutionId { get; set; }
         [ForeignKey("ProjectExecutionId")]
@@ -23,7 +25,9 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         public string ExecutedBy { get; set; }
         public List<AlgoExecutionParam> ExeParams { get; set; }
         [StringLength(1000)]
-        public string FileExePath { get; set; }        
+        public string FileExePath { get; set; }
+        public ExecutionResult ExecutionResult { get; set; }
+        public string FailureReason { get; set; }
 
         [NotMapped]
         public string AlgoName
@@ -44,7 +48,7 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         {
             get
             {
-                return Project != null ? Project.Id : int.MinValue;
+                return Project != null ? Project.Id : 0;
             }            
         }
 
@@ -61,5 +65,13 @@ namespace AlgoRunner.Api.Dal.EF.Entities
                     Project.Name = value;
             }
         }
+    }
+
+    public enum ExecutionResult
+    {
+        Success,
+        PartialSuccess,
+        Failure,
+        Pending
     }
 }

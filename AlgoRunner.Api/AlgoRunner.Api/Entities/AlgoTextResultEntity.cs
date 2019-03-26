@@ -16,6 +16,9 @@ namespace AlgoRunner.Api.Entities
         {
             Titles = new List<string>();
             Values = new List<string[]>();
+            if (!File.Exists(path))
+                throw new FileNotFoundException();
+
             using (var reader = new StreamReader(path))
             {
                 Titles.Add(reader.ReadLine());

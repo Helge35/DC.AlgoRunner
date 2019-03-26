@@ -1,5 +1,6 @@
 namespace AlgoRunner.Api.Dal.EF.Entities
 {
+    using AutoMapper;
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,7 @@ namespace AlgoRunner.Api.Dal.EF.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [IgnoreMap]
         public int Id { get; set; }
         [StringLength(250)]
         public string Name { get; set; }        

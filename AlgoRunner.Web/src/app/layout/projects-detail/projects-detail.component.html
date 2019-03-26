@@ -94,15 +94,24 @@
                             <th>Started</th>
                             <th>Ended</th>
                             <th>&nbsp;</th>
+                            <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor='let projExe of project.executionsList'>
-                            <td>{{projExe.executedBy}}</td>
-                            <td>{{projExe.startDate | date:'dd/MM/yy HH:mm'}}</td>
-                            <td>{{projExe.endDate | date:'dd/MM/yy HH:mm'}}</td>
+                            <td class="execution-row">{{projExe.executedBy}}</td>
+                            <td class="execution-row">{{projExe.startDate | date:'dd/MM/yy HH:mm'}}</td>
+                            <td class="execution-row">{{projExe.endDate | date:'dd/MM/yy HH:mm'}}</td>
                             <td>
-                                <button type="button" class="show-btn" [routerLink]="['/results', projExe.resultPath]">Show &nbsp;
+                                <div [hidden]="projExe.executionResult != 2" ngbTooltip="{{projExe.failureReason}}" triggers="hover:blur click:blur focus:blur" [ngStyle]="{ 'left.px': leftPosition, 'top.px': topPosition }">
+                                    <img src="../../../assets/images/Ic_execution_failure.svg" class="execution-row-ico">
+                                </div>
+                                <div [hidden]="projExe.executionResult != 1" ngbTooltip="{{projExe.failureReason}}" triggers="hover:blur click:blur focus:blur" [ngStyle]="{ 'left.px': leftPosition, 'top.px': topPosition }">
+                                    <img src="../../../assets/images/Ic_execution_warnning.svg" class="execution-row-ico">
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="show-btn" [hidden]="projExe.executionResult == 2" [routerLink]="['/results', projExe.resultPath]">Show &nbsp;
                                     <span><i class="fa fa-arrow-right"></i></span>
                                 </button>
                             </td>

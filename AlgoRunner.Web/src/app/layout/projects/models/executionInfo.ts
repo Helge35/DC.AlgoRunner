@@ -6,4 +6,6 @@ export class ExecutionInfo {
     projectName: string;
     startDate: Date;
     executedBy: string;
+    executionResult: number;
+    failureReason: string;
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router} from '@angular/router';
 import { Project } from './models/project';
 import { ProjectsDetailService } from './projects-detail.service';
 import { Activity } from '../../shared/models/activity';
@@ -49,12 +49,10 @@ export class ProjectsDetailComponent implements OnInit {
     this.filterAlgs();
   }
 
-  execiteProject(algs : Algorithm[]){
-   // this.http.execiteProject(id).subscribe();
-  }
 
   saveProject(proj : Project){
     this.http.saveProject(proj).subscribe();
+    this.route.navigate(['']);
   }
 
   loadPageAlgs(page: number) {
@@ -74,12 +72,12 @@ export class ProjectsDetailComponent implements OnInit {
     });
   }
 
-  constructor(private route: ActivatedRoute, private http: ProjectsDetailService, private _projectsService: ProjectsService, private _serviceActivity: ActivityService) {
+  constructor(private activeRoute: ActivatedRoute, private route: Router,  private http: ProjectsDetailService, private _projectsService: ProjectsService, private _serviceActivity: ActivityService) {
     this.algsCurrentpage = 1;
    }
 
   ngOnInit() {
-    this.route.params.subscribe(params => { this.id = +params['id']; });
+    this.activeRoute.params.subscribe(params => { this.id = +params['id']; });
     if (this.id) {
       this.getProject();
     } else {

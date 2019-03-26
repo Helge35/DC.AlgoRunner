@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AlgoRunner.Api.Entities
 {
@@ -18,5 +16,15 @@ namespace AlgoRunner.Api.Entities
         public string ExecutedBy {get;set;}
         public List<AlgoExecutionParamEntity> ExeParams { get; set; }
         public string FileExePath { get; set; }
+        public ExecutionResult ExecutionResult { get; set; }
+        public string FailureReason { get; set; }
+    }
+
+    public enum ExecutionResult
+    {
+        Success,
+        PartialSuccess,
+        Failure,
+        Pending
     }
 }

@@ -2,22 +2,16 @@
 using AlgoRunner.Api.Dal.EF.Entities;
 using AlgoRunner.Api.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoRunner.Api.Dal
 {
-    public class MessagesRepository
-    {
-        private readonly IMapper _mapper;
-        private readonly AlgoRunnerDbContext _dbContext;
-
-        public MessagesRepository(AlgoRunnerDbContext dbContext, IMapper mapper)
-        {
-            _dbContext = dbContext;
-            _mapper = mapper;
-        }
+    public class MessagesRepository : RepositoryBase
+    {        
+        public MessagesRepository(AlgoRunnerDbContext dbContext, IMapper mapper, IHttpContextAccessor accessor) : base(dbContext, mapper, accessor) { }
 
         public List<MessageEntity> GetMessages(string userName)
         {

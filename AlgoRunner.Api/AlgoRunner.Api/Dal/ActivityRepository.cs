@@ -2,21 +2,15 @@
 using AlgoRunner.Api.Dal.EF.Entities;
 using AlgoRunner.Api.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoRunner.Api.Dal
 {
-    public class ActivityRepository
-    {
-        private readonly IMapper _mapper;
-        private readonly AlgoRunnerDbContext _dbContext;
-
-        public ActivityRepository(AlgoRunnerDbContext dbContext, IMapper mapper)
-        {
-            _dbContext = dbContext;
-            _mapper = mapper;
-        }
+    public class ActivityRepository : RepositoryBase
+    {        
+        public ActivityRepository(AlgoRunnerDbContext dbContext, IMapper mapper, IHttpContextAccessor accessor) : base(dbContext, mapper, accessor) { }
 
         internal List<ActivityEntity> GetAllActivities()
         {
@@ -35,6 +29,13 @@ namespace AlgoRunner.Api.Dal
 
         internal void RemoveActivity(int id)
         {
+            var executionInfos = _dbContext.ExecutionInfos.Where(x => x.Algorithm.Activity.Id == id || x.Project.Activity.Id == id);
+            foreach(var executionInfo in executionInfos)
+                _dbContext.AlgoExecutionParams.RemoveRange(executionInfo.ExeParams);
+
+            _dbContext.ExecutionInfos.RemoveRange(executionInfos);
+            _dbContext.Projects.RemoveRange(_dbContext.Projects.Where(x => x.Activity.Id == id));
+            _dbContext.Algorithms.RemoveRange(_dbContext.Algorithms.Where(x => x.Activity.Id == id));
             _dbContext.Activities.Remove(_dbContext.Activities.FirstOrDefault(x => x.Id == id));
             _dbContext.SaveChanges();
         }
