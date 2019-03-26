@@ -53,7 +53,6 @@ namespace AlgoRunner.Api
             services.AddScoped<AlgoExecutionService>();//must be NOT singletone
             services.AddSingleton<FilesService>();
 
-
             services.AddHangfire(x => { x.UseMemoryStorage(); });
         }
 
@@ -61,12 +60,10 @@ namespace AlgoRunner.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseCors(x => x
-               //.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .WithOrigins("http://localhost:4200", "http://localhost:86/AlgoRunner", "http://localhost:86")
-                .AllowCredentials());
-
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .WithOrigins(Configuration["Cors:Policies:Origins"].Split(';'))
+                 .AllowCredentials());
 
             if (env.IsDevelopment())
             {
