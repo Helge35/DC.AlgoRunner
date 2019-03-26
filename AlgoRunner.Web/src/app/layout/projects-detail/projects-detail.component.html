@@ -57,7 +57,7 @@
                                 <div class="card mb-4">
                                     <div class="card-body" style="height:70vh; overflow-y: auto; overflow-x: hidden;">
                                         <div *ngFor='let alg of project.algorithmsList'>
-                                            <div  class="algo-ico float-left" style="margin-left: -5px">
+                                            <div  class="algo-ico float-left" >
                                                 <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
                                             </div>
                                             <button *ngIf="!project.id" type="button" class="close float-left attach-btn" aria-label="Close" style="margin-left: 5px; color: #125673;" (click)="removeAlgFromProject(alg)">
@@ -127,7 +127,6 @@
                 </div>
                 <div style="height:72vh;">
                     <div *ngFor='let alg of algs'>
-
                         <button type="button" (click)="addAlgToProject(alg)" class="float-left attach-btn" [attr.disabled]="alg.isAttached ? true : null">
                             <span><i class="fa fa-2x fa-arrow-circle-left" ></i></span></button>
                         <div class="algo-ico" style="margin-left: 38px">
