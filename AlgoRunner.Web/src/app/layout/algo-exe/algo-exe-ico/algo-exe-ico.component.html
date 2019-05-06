@@ -2,7 +2,7 @@
     <div class="algo-header">
         <span>&nbsp;&nbsp;{{algo.name}}
             <span class="text-muted small">
-                <em>[{{algo.activity.name}}]</em>
+                <em *ngIf="algo.activity.name">[{{algo.activity.name}}]</em>
             </span>
         </span>
     </div>

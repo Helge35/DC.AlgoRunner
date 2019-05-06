@@ -6,7 +6,7 @@
                     <div class="projects-section-header fav">
                         FAVORITES
                     </div>
-                    <div style="height: 230px">
+                    <div style="height: 230px; overflow: auto">
                         <span *ngFor='let proj of favoriteProjects' class=" project-ico-fav">
                             <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="true" [activityName]="proj.activity ? proj.activity.name : ''"
                                 [isFavoriteList]="true" (favoriteChangeEvent)='onFavoriteChanged($event)'></project-ico>
@@ -20,7 +20,7 @@
                     <div class="projects-section-header reg" >
                         RECENT
                     </div>
-                    <div style="height: 230px">
+                    <div style="height: 230px; overflow: auto">
                         <span *ngFor='let proj of resentProjects' class=" project-ico">
                             <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
                                 [activityName]="proj.activity ? proj.activity.name : ''" [isFavoriteList]="false"
@@ -39,7 +39,7 @@
                     <div class="projects-section-header reg" >
                         ALL
                     </div>
-                    <div style="height: 48vh">
+                    <div style="height: 48vh; overflow: auto">
                         <span *ngFor='let proj of projects' class=" project-ico">
                             <project-ico [id]="proj.id" [title]="proj.name" [isFavorite]="proj.isFavorite"
                                 [activityName]="proj.activity ? proj.activity.name : ''" [isFavoriteList]="false"
@@ -57,7 +57,7 @@
                     <div class="projects-section-header exe" >
                         EXECUTION
                     </div>
-                    <div style="height: 53vh; overflow-y: auto;">
+                    <div  style="width:100% ; height: 53vh; overflow-y: auto;">
                         <span *ngFor='let exeInfo of executionInfoItems'>
                             <exe-ico [exeInfo]="exeInfo" ></exe-ico>
                         </span>

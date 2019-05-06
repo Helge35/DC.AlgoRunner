@@ -10,11 +10,11 @@ export class ExeIcoComponent implements OnInit {
 
   @Input() exeInfo: ExecutionInfo;
 
-  timeOver: string;
+  /*timeOver: string;
   interval;
+*/
 
-
-  startTimer() {
+ /* startTimer() {
     this.timeOver = "00 : 00";
     this.interval = setInterval(() => {
       var minutes = Math.round( Math.abs(new Date().getTime() - new Date(this.exeInfo.startDate).getTime())/60000);
@@ -29,11 +29,13 @@ export class ExeIcoComponent implements OnInit {
 
       this.timeOver = hr + " : "  + min;
     }, 1000)
-  }
+  }*/
 
   constructor() { }
 
   ngOnInit() {
-    this.startTimer();
+    //this.startTimer();
+    if( this.exeInfo.executedBy.includes("\\"))
+      this.exeInfo.executedBy = this.exeInfo.executedBy.split("\\")[1]
   }
 }

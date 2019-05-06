@@ -17,7 +17,9 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         public ProjectExecution ProjectExecution { get; set; }
         public int AlgoId { get; set; }
         [ForeignKey("AlgoId")]
-        public Algorithm Algorithm { get; set; }          
+        public Algorithm Algorithm { get; set; }
+        public int? ProjectId { get; set; }
+        [ForeignKey("ProjectId")]
         public Project Project { get; set; }                
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
@@ -41,15 +43,6 @@ namespace AlgoRunner.Api.Dal.EF.Entities
                 if (Algorithm != null)
                     Algorithm.Name = value;
             }
-        }
-
-        [NotMapped]
-        public int ProjectId
-        {
-            get
-            {
-                return Project != null ? Project.Id : 0;
-            }            
         }
 
         [NotMapped]

@@ -55,7 +55,7 @@
                             <div class="form-group">
                                 <label class=" col-form-label">Algorithms:</label>
                                 <div class="card mb-4">
-                                    <div class="card-body" style="height:70vh; overflow-y: auto; overflow-x: hidden;">
+                                    <div class="card-body" style="width: 100% ;height:70vh; overflow-y: auto; overflow-x: hidden;">
                                         <div *ngFor='let alg of project.algorithmsList'>
                                             <div  class="algo-ico float-left" >
                                                 <algo-ico [alg]="alg" [activityName]="alg.activity ? alg.activity.name : ''"></algo-ico>
@@ -68,11 +68,10 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                <div class="col-xl-12 btn-footer">
+                <div class="card-footer btn-footer">
                     <button type="button" class="btn btn-lg submit-btn" (click)="saveProject(project)" *ngIf="!project.id">
                         <span><i class="fa fa-save"></i>&nbsp;&nbsp;Save</span>
                     </button>
@@ -82,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="project.id">
+        <div class="col-xl-3" *ngIf="project.id">
             <div class="card mb-3">
                 <div class="projects-section-header" style="color: #125673;">
                     EXECUTION PLANS
@@ -98,7 +97,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor='let projExe of project.executionsList'>
+                        <tr *ngFor='let projExe of project.projectExecutions'>
                             <td class="execution-row">{{projExe.executedBy}}</td>
                             <td class="execution-row">{{projExe.startDate | date:'dd/MM/yy HH:mm'}}</td>
                             <td class="execution-row">{{projExe.endDate | date:'dd/MM/yy HH:mm'}}</td>
@@ -135,7 +134,7 @@
                     </div>
                 </div>
                 <div style="height:50px; margin-top: 2px">
-                    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="algsTotalItems" [pageSize]="14"
+                    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="algsTotalItems" [pageSize]="10"
                         [(page)]="algsCurrentpage" (pageChange)="loadPageAlgs($event)"></ngb-pagination>
                 </div>
             </div>

@@ -1,40 +1,42 @@
+<!--div style="height: 85vh;">-->
 
-<ngb-tabset style="height: 85vh;" type='pills'>
-  <ngb-tab *ngFor='let resultData of algsResultData'>
-    	<ng-template ngbTabTitle>
-          <span>{{resultData.algoName}}</span>
+  <ngb-tabset type='pills'>
+    <ngb-tab *ngFor='let resultData of algsResultData'>
+      <ng-template ngbTabTitle>
+        <span>{{resultData.algoName}}</span>
       </ng-template>
-    <ng-template ngbTabContent >
-      <div class="separator"></div>
-      <div style="display: block;" *ngIf="resultData.typeId===1">
-        <div class="form-group row">
-          <label class="col-3 col-form-label">{{resultData.titles}}</label>
-          <div class="col-8">
-            <input class="form-control" type="text" [(ngModel)]="resultData.values" [readonly]="true">
+      <ng-template ngbTabContent>
+        <div class="separator"></div>
+        <div style="display: block;" *ngIf="resultData.typeId===1">
+          <div class="form-group row">
+            <label class="col-3 col-form-label">{{resultData.titles}}</label>
+            <div class="col-8">
+              <input class="form-control" type="text" [(ngModel)]="resultData.values" [readonly]="true">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div style="display: block;margin: 20px; " *ngIf="resultData.typeId===2">
-        <table class="table table-hover ">
-          <thead>
-            <tr>
-              <th *ngFor='let title of resultData.titles'  >{{title}}</th>
-            </tr>
-          </thead>
-          <tbody style="overflow:auto;height:80vh;   width:98%;">
-            <tr *ngFor='let row of resultData.values'>
-              <td *ngFor='let col of row'>{{col}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div style="display: block;margin: 20px; " *ngIf="resultData.typeId===2">
+          <table class="table table-hover ">
+            <thead>
+              <tr>
+                <th *ngFor='let title of resultData.titles'>{{title}}</th>
+              </tr>
+            </thead>
+            <tbody style="overflow:auto;height:80vh;   width:98%;">
+              <tr *ngFor='let row of resultData.values'>
+                <td *ngFor='let col of row'>{{col}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <div style="display: block;" *ngIf="resultData.typeId===6">
-        <canvas baseChart [datasets]="resultData.categories" [options]="ScatterchartOptions" [legend]="'true'" [colors]="chartColors"
-          height="100%" [chartType]="'scatter'"></canvas>
-      </div>
-    </ng-template>
-  </ngb-tab>
+        <div style="display: block;" *ngIf="resultData.typeId===6">
+          <canvas baseChart [datasets]="resultData.categories" [options]="ScatterchartOptions" [legend]="'true'"
+            [colors]="chartColors" height="100%" [chartType]="'scatter'"></canvas>
+        </div>
+      </ng-template>
+    </ngb-tab>
 
-</ngb-tabset>
+  </ngb-tabset>
+<!--/div>-->

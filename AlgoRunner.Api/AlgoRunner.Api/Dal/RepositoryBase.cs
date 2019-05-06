@@ -17,28 +17,6 @@ namespace AlgoRunner.Api.Dal
             _dbContext = dbContext;
             _mapper = mapper;
             _accessor = accessor;
-
-            TryAddUser();
         }
-
-        internal bool TryAddUser()
-        {
-            try
-            {
-                if (_accessor == null)
-                    return false;
-
-                var userName = _accessor.HttpContext.User.Identity.Name;
-
-                if (_accessor != null && _dbContext.Users.FirstOrDefault(x => x.Name == userName) == null)
-                {
-                    _dbContext.Users.Add(new User { Name = userName });
-                    _dbContext.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch { return false; }
-        }        
     }
 }

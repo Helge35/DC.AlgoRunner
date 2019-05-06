@@ -8,6 +8,6 @@ export class Project {
     createdBy : string;
     isFavorite : boolean;
     lastExecutionDate: Date;
-    executionsList : ProjectExecution[];
+    projectExecutions : ProjectExecution[];
     algorithmsList : Algorithm[]
   }

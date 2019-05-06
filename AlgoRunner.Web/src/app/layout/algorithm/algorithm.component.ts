@@ -65,7 +65,7 @@ export class AlgorithmComponent implements OnInit {
 
   uploadAndSaveAlg({ valid }: { valid: boolean }) {
     this.submitted = true;
-    if (!valid && !this.algoFile) { return}
+    if (!valid && !this.algoFile) { return }
 
     let activityID: number = 0;
 
@@ -76,9 +76,8 @@ export class AlgorithmComponent implements OnInit {
     this._serviceAlgo.uploadAlg(this.algoFile, activityID).subscribe(
       data => {
         this.alg.fileServerPath = data;
-        this._serviceAlgo.saveAlg(this.alg).subscribe();
-        this._route.navigate(['']);
-    },
+        this._serviceAlgo.saveAlg(this.alg).subscribe(() => this._route.navigate(['']));
+      },
       error => alert(error)
     );
 

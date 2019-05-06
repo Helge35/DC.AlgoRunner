@@ -148,7 +148,7 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<int>("ProjectExecutionId");
 
-                    b.Property<int?>("ProjectId1");
+                    b.Property<int?>("ProjectId");
 
                     b.Property<DateTime?>("StartDate");
 
@@ -158,7 +158,7 @@ namespace AlgoRunner.Api.Migrations
 
                     b.HasIndex("ProjectExecutionId");
 
-                    b.HasIndex("ProjectId1");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ExecutionInfos");
                 });
@@ -217,13 +217,13 @@ namespace AlgoRunner.Api.Migrations
 
                     b.Property<int>("AlgoId");
 
-                    b.Property<int?>("ProjectId1");
+                    b.Property<int?>("ProjectId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AlgoId");
 
-                    b.HasIndex("ProjectId1");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectAlgos");
                 });
@@ -239,11 +239,15 @@ namespace AlgoRunner.Api.Migrations
                     b.Property<string>("ExecutedBy")
                         .HasMaxLength(250);
 
+                    b.Property<int?>("ProjectId");
+
                     b.Property<string>("ResultPath");
 
                     b.Property<DateTime?>("StartDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectExecutions");
                 });
@@ -318,13 +322,13 @@ namespace AlgoRunner.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.ProjectExecution", "ProjectExecution")
-                        .WithMany()
+                        .WithMany("ExecutionInfos")
                         .HasForeignKey("ProjectExecutionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
-                        .WithMany("ExecutionsList")
-                        .HasForeignKey("ProjectId1");
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.Project", b =>
@@ -344,7 +348,14 @@ namespace AlgoRunner.Api.Migrations
 
                     b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project", "Project")
                         .WithMany("ProjectAlgoList")
-                        .HasForeignKey("ProjectId1");
+                        .HasForeignKey("ProjectId");
+                });
+
+            modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.ProjectExecution", b =>
+                {
+                    b.HasOne("AlgoRunner.Api.Dal.EF.Entities.Project")
+                        .WithMany("ProjectExecutions")
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("AlgoRunner.Api.Dal.EF.Entities.UserFavoriteProject", b =>

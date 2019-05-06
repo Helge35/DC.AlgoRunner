@@ -175,8 +175,8 @@ namespace AlgoRunner.Api.Services
 
         public void FinishProjectExecution(string executedBy, ExecutionInfoEntity firstAlgoExe)
         {
-
-            var message = MessagesRepository.AddNewMessage("Execution results", $"Project [{firstAlgoExe.ProjectName}] finish execution.", executedBy);
+            var projectName = ProjectsRepository.GetProject(firstAlgoExe.ProjectId).Name;
+            var message = MessagesRepository.AddNewMessage("Execution results", $"Project [{projectName}] finish execution.", executedBy);
             MessageHubContext.Clients.All.Send(message);
         }
     }

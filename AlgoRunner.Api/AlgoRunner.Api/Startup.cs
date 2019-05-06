@@ -66,13 +66,9 @@ namespace AlgoRunner.Api
                  .AllowCredentials());
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
             app.UseSignalR(routes =>
             {

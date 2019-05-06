@@ -10,18 +10,12 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [IgnoreMap]
         public int Id { get; set; }
+        public int? ProjectId { get; set; }
+
+        [ForeignKey("ProjectId")]
         public Project Project { get; set; }
         public int AlgoId { get; set; }
         [ForeignKey("AlgoId")]
         public Algorithm Algorithm { get; set; }
-
-        [NotMapped]
-        public int ProjectId
-        {
-            get
-            {
-                return Project != null ? Project.Id : 0;
-            }
-        }
     }
 }

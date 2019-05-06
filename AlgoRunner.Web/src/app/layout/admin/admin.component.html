@@ -2,50 +2,58 @@
 
 <div class=row>
 
-    <div class="col-lg-6">
-        <div class="card card-default mb-6">
-          <div class="card-header">
-            <i class="fa fa-bolt fa-fw"></i> Activities
-          </div>
-          <!-- /.projects -->
-          <div class="card-body">
-            <div class="list-group">
-              <div href="#" class="list-group-item clearfix d-block" *ngFor="let act of activities">
-    
-                <div class="form-group row">
-                  <label class="col-3 col-form-label">{{act.name}}</label>
-                  <div class="col-8">
-                    <input class="form-control" type="text" [(ngModel)]="act.serverPath">
-                  </div>
-                  <span class="float-right text-muted small"><em>
-                      <button type="button" class="close" aria-label="Close" (click)="removeActivity(act.id)">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </em></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
+  <div class="col-lg-6">
+    <form (ngSubmit)="addActivity(mform)" #mform="ngForm">
+    <div class="card card-default mb-6">
+      <div class="card-header">
+        <i class="fa fa-bolt fa-fw"></i> Activities
+      </div>
+      <!-- /.projects -->
+      <div class="card-body">
+        <div class="list-group">
+          <div href="#" class="list-group-item clearfix d-block" *ngFor="let act of activities">
             <div class="form-group row">
-              <div class="col-5">
-                <input class="form-control" type="text" placeholder="Activity name" [(ngModel)]="newActivitie.name">
+              <label class="col-3 col-form-label">{{act.name}}</label>
+              <div class="col-8">
+                 <!--<input class="form-control" type="text" [(ngModel)]="act.serverPath"/>--> 
+                  <label class="col-form-label">{{act.serverPath}}</label>
               </div>
-              <div class="col-5">
-                <input class="form-control" type="text" placeholder="Algorithm path" [(ngModel)]="newActivitie.serverPath">
-              </div>
-              <button type="button" class="btn btn-default btn-block col-2" (click)="addActivity()">+</button>
+              <span class="float-right text-muted small"><em>
+                  <button type="button" class="close" aria-label="Close" (click)="removeActivity(act.id)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </em></span>
             </div>
           </div>
         </div>
       </div>
+      <div class="card-footer">
+        <div class="form-group row">
+          <div class="col-5">
+            <input class="form-control" type="text" placeholder="Activity name"  required  #newActivitieName="ngModel" name="newActivitieName" [(ngModel)]="newActivitie.name">
+            <div *ngIf="submitted && newActivitieName.invalid" style="color:red">
+              Activity name is required
+            </div>
+          </div>
+          <div class="col-5">
+            <input class="form-control" type="text" placeholder="Algorithm path" required  #newActivitieServerPath="ngModel" name="newActivitieServerPath"  [(ngModel)]="newActivitie.serverPath">
+            <div *ngIf="submitted && newActivitieServerPath.invalid" style="color:red">
+              Activity server path is required
+            </div>
+          </div>
+          <button type="submit"  class="fa fa-save fa-2x col-2" ></button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
 
   <div class="col-lg-6">
     <div class="card card-default mb-6">
       <div class="card-header">
         <i class="fa fa-bolt fa-fw"></i> Common activity
       </div>
-      <div >
+      <div>
         <div class="list-group">
           <div href="#" class="list-group-item clearfix d-block">
 
@@ -53,13 +61,13 @@
               <div class="col-11">
                 <input class="form-control" type="text" [(ngModel)]="commonActivitie.serverPath">
               </div>
-                  <button type="button"  class="fa fa-save fa-2x" (click)="saveCommonPath()"></button>
+              <button type="button" class="fa fa-save fa-2x" (click)="saveCommonPath()"></button>
             </div>
           </div>
         </div>
       </div>
       <div class="card-footer">
-        
+
       </div>
     </div>
   </div>

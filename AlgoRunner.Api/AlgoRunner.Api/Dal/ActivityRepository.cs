@@ -21,7 +21,6 @@ namespace AlgoRunner.Api.Dal
 
         internal ActivityEntity AddActivity(ActivityEntity newActivity)
         {
-            newActivity.Id = 1000;
             _dbContext.Activities.Add(_mapper.Map<Activity>(newActivity));
             _dbContext.SaveChanges();
             return newActivity;

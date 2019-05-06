@@ -20,10 +20,10 @@ export class AlgoExeComponent implements OnInit {
     this._serviceAlgo.checkAccess(this.projectId, this.id).subscribe(data => {
       this.accessStatus = 200;
       this._serviceAlgo.getAlg(this.projectId, this.id).subscribe(a => {
-      this.algos = a;
+        this.algos = a;
       });
     },
-     (error) => this.accessStatus = parseInt(error.status));
+      (error) => this.accessStatus = parseInt(error.status));
   }
 
   runAlgorithms() {

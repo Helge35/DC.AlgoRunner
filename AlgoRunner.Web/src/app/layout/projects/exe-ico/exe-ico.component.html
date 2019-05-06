@@ -1,9 +1,9 @@
 <div class="exe-ico row" style="width: 90%">
-  <div class="col-xl-1">
-    <img src="../../../../assets/images/exe-ico.png" style="height: 28px; width: 28; margin: 8px;">
+  <div class="col-xl-1" style=" width:50px" >
+    <img src="../../../../assets/images/exe-ico.png" style="height: 28px; width: 28; margin-left: -8px;">
   </div>
-  <div class=" col-xl-5 text-left">{{exeInfo.algoName}}</div>
-  <div class=" col-xl-2 text-left small-text"  >{{timeOver}}</div>
-  <div class=" col-xl-2 text-left small-text"  >{{exeInfo.projectName | slice:0:8}}</div>
-  <div class=" col-xl-2 text-left small-text"  >[{{exeInfo.executedBy | slice:0:8}}]</div>
+  <div class=" col-xl-5 text-left" style="margin-left: 5px; width: 50%">{{exeInfo.algoName}}</div>
+
+  <div class=" col-xl-3 text-center small-text" style="width:100px " >{{exeInfo.projectName | slice:0:8}}</div>
+  <div class=" col-xl-2 text-right small-text"  style=" width:120px ">[{{exeInfo.executedBy | slice:0:8}}]</div>
 </div>

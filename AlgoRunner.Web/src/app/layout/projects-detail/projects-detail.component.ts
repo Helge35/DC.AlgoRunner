@@ -23,14 +23,16 @@ export class ProjectsDetailComponent implements OnInit {
   algsTotalItems: number
 
   getProject() {
+    /*
     this.http.getProject(this.id).subscribe(info => {
       this.project = info;
-      this.project.executionsList.forEach(exe => {
-        exe.resultPath = exe.projectId.toString()+ '_' +exe.projectExecutionId.toString();
+      this.project.executionsList.forEach(exe => {exe.resultPath = exe.projectId.toString()+ '_' +exe.projectExecutionId.toString();
       });
     },
       error => { console.log('Error: ' + error.message); }
-    );
+    );*/
+
+    this.http.getProject(this.id).subscribe(info =>  this.project = info)
   }
 
   getActivities() {
@@ -51,8 +53,7 @@ export class ProjectsDetailComponent implements OnInit {
 
 
   saveProject(proj : Project){
-    this.http.saveProject(proj).subscribe();
-    this.route.navigate(['']);
+    this.http.saveProject(proj).subscribe(()=>{this.route.navigate([''])});
   }
 
   loadPageAlgs(page: number) {

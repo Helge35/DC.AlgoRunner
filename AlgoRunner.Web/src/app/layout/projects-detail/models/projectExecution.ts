@@ -4,6 +4,6 @@ export class ProjectExecution {
   startDate: Date;
   endDate: Date;
   projectId: number;
-  projectExecutionId: number;
+  //projectExecutionId: number;
   resultPath: string;
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoRunner.Api.Controllers
@@ -43,6 +44,21 @@ namespace AlgoRunner.Api.Controllers
             dashboard.AlgorithmsList = _repository.GetAlgsByPage(1, _algsPageSize, out algsTotalSize);
             dashboard.AlgorithmsTotalSize = algsTotalSize;
             dashboard.ExecutionInfoList = _repository.GetExecutions();
+
+            if (dashboard.FavoriteList.Count() > 0)
+            {
+                IEnumerable<int> favoritesID = dashboard.FavoriteList.Select(x => x.Id);
+                foreach (var pr in dashboard.ResentList)
+                {
+                    if (favoritesID.Contains(pr.Id)) pr.IsFavorite = true;
+                }
+
+                foreach (var pr in dashboard.AllList)
+                {
+                    if (favoritesID.Contains(pr.Id)) pr.IsFavorite = true;
+                }
+            }
+
             return Ok(dashboard);
         }
 

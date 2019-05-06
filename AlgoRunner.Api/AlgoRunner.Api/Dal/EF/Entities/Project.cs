@@ -22,7 +22,7 @@ namespace AlgoRunner.Api.Dal.EF.Entities
         [StringLength(250)]
         public string CreatedBy { get; set; }        
         public DateTime LastExecutionDate { get; set; }
-        public List<ExecutionInfo> ExecutionsList { get; set; }        
+        public List<ProjectExecution> ProjectExecutions { get; set; }        
         public List<ProjectAlgo> ProjectAlgoList { get; set; }
 
         [NotMapped]
@@ -51,7 +51,7 @@ namespace AlgoRunner.Api.Dal.EF.Entities
 
         public Project()
         {
-            ExecutionsList = new List<ExecutionInfo>();
+            ProjectExecutions = new List<ProjectExecution>();
             ProjectAlgoList = new List<ProjectAlgo>();
         }
     }

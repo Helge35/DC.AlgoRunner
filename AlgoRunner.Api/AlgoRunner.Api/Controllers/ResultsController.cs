@@ -43,7 +43,7 @@ namespace AlgoRunner.Api.Controllers
                 if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
                     return Forbid();
 
-                return Ok(ResultsFactory.GetResults(_projectsRepository.GetAlgorithmsByExecution(exeID), path));
+                return Ok(ResultsFactory.GetResults(_projectsRepository.GetExecutionResults(exeID), path));
             }
             catch (FileNotFoundException) { return NotFound(); }
         }

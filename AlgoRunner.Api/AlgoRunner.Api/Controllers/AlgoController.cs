@@ -83,7 +83,7 @@ namespace AlgoRunner.Api.Controllers
         [HttpPost("CheckAccess")]
         public ActionResult CheckAccess([FromBody]ProjectAlgoEntity projectAlgo)
         {
-            foreach (var path in _projectsRepository.GetAlgFilePath(projectAlgo))
+            foreach (var path in _projectsRepository.GetAlgFilePath(projectAlgo.ProjectId, projectAlgo.AlgoId))
             {
                 if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
                     return Forbid();
@@ -98,7 +98,7 @@ namespace AlgoRunner.Api.Controllers
         [HttpPost("RunAlgorithms")]
         public ActionResult RunAlgorithms([FromBody]ProjectAlgoListEntity data)
         {
-            foreach (var path in _projectsRepository.GetAlgosFilePath(data))
+            foreach (var path in _projectsRepository.GetAlgFilePath(data.ProjectId,  data.Algos.FirstOrDefault()?.Id))
             {
                 if (!_filesService.IsFolderAllowed(path, _accessor.HttpContext.User.Identity.Name))
                     return Forbid();

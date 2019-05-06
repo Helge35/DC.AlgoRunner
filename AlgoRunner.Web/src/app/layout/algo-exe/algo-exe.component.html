@@ -1,5 +1,5 @@
 <projects-page-header [header]="'Algorithm Execution'"></projects-page-header>
-<div style="height: 86vh;">
+<div style="height: 84vh; width: 99%;">
     <div *ngIf="accessStatus===403">
         <ngb-alert [type]="'warning'">You don't have permission to access this directory. Contact administrator to
             obtain
@@ -13,14 +13,10 @@
         <div class="col-md-6" *ngFor='let algo of algos; let i = index;'>
             <algo-exe-ico class="col-md-6" [algo]="algo"></algo-exe-ico>
         </div>
-    </div>
-
-
-
-
-    <div class="col-xl-12 btn-footer">
-        <button type="button" class="btn btn-lg submit-btn" (click)="runAlgorithms()">
-            <span><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Run</span>
-        </button>
+        <div class="col-xl-12 btn-footer">
+            <button type="button" class="btn btn-lg submit-btn" (click)="runAlgorithms()">
+                <span><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Run</span>
+            </button>
+        </div>
     </div>
 </div>

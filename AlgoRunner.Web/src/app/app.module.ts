@@ -1,4 +1,4 @@
-import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,12 +20,6 @@ import { WinAuthInterceptor } from './shared/interceptors/auth.Interceptor';
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
-    /* for development
-    return new TranslateHttpLoader(
-        http,
-        '/start-angular/SB-Admin-BS4-Angular-6/master/dist/assets/i18n/',
-        '.json'
-    ); */
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 };
 
@@ -50,7 +44,8 @@ export const createTranslateLoader = (http: HttpClient) => {
         useClass: WinAuthInterceptor,
         multi: true
     }, 
-    {provide: LocationStrategy, useClass: HashLocationStrategy}],
+//    {provide: LocationStrategy, useClass: HashLocationStrategy}
+],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
