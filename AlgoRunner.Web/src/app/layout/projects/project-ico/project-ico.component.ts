@@ -17,16 +17,15 @@ export class ProjectIcoComponent implements OnInit {
   @Input() isFavorite: boolean;
   @Input() isFavoriteList: boolean;
   @Input() activityName: string;
+  @Input() intoFavorites: boolean;
 
   @Output() favoriteChangeEvent: EventEmitter<Project> = new EventEmitter<Project>();
 
 
   addToFavorite(): void {
-    this._service.addToFavorite(this.id).subscribe();
-    this.isFavorite = !this.isFavorite;
-    this.favoriteChangeEvent.emit(this.project);
-
-    this.isFavoriteVisible = (this.isFavorite && this.isFavoriteList) || !this.isFavorite
+    this._service.addToFavorite(this.id).subscribe(i =>
+      this.favoriteChangeEvent.emit(this.project)
+    );
   }
 
   constructor(private _service: ProjectsService) {
@@ -39,8 +38,6 @@ export class ProjectIcoComponent implements OnInit {
     this.project.isFavorite = this.isFavorite;
     this.project.activity = new Activity();
     this.project.activity.name = this.activityName;
-
-    this.isFavoriteVisible = (this.isFavorite && this.isFavoriteList) || (!this.isFavorite && !this.isFavoriteList)
   }
 
 }

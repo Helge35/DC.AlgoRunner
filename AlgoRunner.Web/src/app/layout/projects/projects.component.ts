@@ -39,6 +39,18 @@ export class ProjectsComponent implements OnInit {
     {
       this.favoriteProjects.push(proj);
     }
+
+    var projResent = this.resentProjects.find(p => p.id  === proj.id);
+    var projAll = this.projects.find(p => p.id  === proj.id);
+
+    if(projResent != null)
+    {
+      projResent.isFavorite = !proj.isFavorite ;
+    }
+    if(projAll != null)
+    {
+      projAll.isFavorite = !proj.isFavorite ;
+    }
   }
 
   loadPageAlgs(page: number) {

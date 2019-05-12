@@ -159,7 +159,7 @@ namespace AlgoRunner.Api.Dal
             //    .Where(x => x.ProjectId == projectId)
             //    .Select(x => _mapper.Map<AlgorithmEntity>(x.Algorithm)).ToList();
 
-            var algosIds= _dbContext.ProjectAlgos
+            var algosIds = _dbContext.ProjectAlgos
       .Where(x => x.ProjectId == projectId)
       .Select(x => x.Algorithm.Id).ToList();
 
@@ -250,8 +250,9 @@ namespace AlgoRunner.Api.Dal
         internal IEnumerable<ProjectEntity> GetResentProjects()
         {
             return _dbContext.Projects
-                .Include("Activity")
-                .OrderByDescending(x => x.LastExecutionDate)
+    .Include("Activity").Include("ProjectExecutions")
+    .Where(x => x.ProjectExecutions.Count > 0)
+                .OrderByDescending(x => x.LastExecutionDate).Take(6)
                 .Select(x => _mapper.Map<ProjectEntity>(x)).ToList();
         }
 
