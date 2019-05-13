@@ -6,13 +6,21 @@
         <div class="float-left">
             <div class="d-block" title="{{title}}">{{title | slice:0:10}}</div>
         </div>
+        <span class="float-right text-muted small"><em>
+                <button type="button" class="close" aria-label="Close" (click)="removeActivity()" style="color: white; margin-right: 5px">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </em></span>
     </div>
     <div style="height: 55px;" [style.background]="isFavorite && intoFavorites ? '#fae1bb' : '#F3E9B5'">
-        <div style="font-size: 15px; ;height: 10px; text-align: center" [style.color]="isFavorite && intoFavorites ? '#EC8800' : '#B6A710'">{{activityName}}</div>
+        <div style="font-size: 15px; ;height: 10px; text-align: center"
+            [style.color]="isFavorite && intoFavorites ? '#EC8800' : '#B6A710'">{{activityName}}</div>
         <div>
-            <a href="javascript:void(0)" class="float-left card-inverse" (click)="addToFavorite()" [style.visibility]="(isFavorite && intoFavorites) || !isFavorite ? 'visible' : 'hidden'">
+            <a href="javascript:void(0)" class="float-left card-inverse" (click)="addToFavorite()"
+                [style.visibility]="(isFavorite && intoFavorites) || !isFavorite ? 'visible' : 'hidden'">
                 <svg class="project-ico" [style.fill]="intoFavorites ? '#EC8800' : '#B6A710'">
-                    <polygon points="30.5,13.1 20.8,11.2 16,2.7 11.2,11.3 1.5,13.2 8.3,20.3 7.1,30.2 16,26.5 25,30.1 23.7,20.3 " />
+                    <polygon
+                        points="30.5,13.1 20.8,11.2 16,2.7 11.2,11.3 1.5,13.2 8.3,20.3 7.1,30.2 16,26.5 25,30.1 23.7,20.3 " />
                 </svg>
             </a>
             <a href="javascript:void(0)" class="float-right card-inverse" [routerLink]="['/project', id]">

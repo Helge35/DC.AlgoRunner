@@ -22,6 +22,10 @@ export class ProjectsService {
     return this._http.get<boolean>(this.apiUrl + "/AddToFavorite/" + id);
   }
 
+  deleteProject(id: number): Observable<boolean> {
+    return this._http.delete<boolean>(this.apiUrl + "/" + id);
+  }
+
   loadProjectData(page: number): Observable<DashboardInfo> {
     return this._http.get<DashboardInfo>(this.apiUrl + "/LoadProjects/" + page);
   }

@@ -113,7 +113,19 @@ namespace AlgoRunner.Api.Controllers
         [HttpPost]
         public ActionResult Post([FromBody]ProjectEntity proj)
         {
+            proj.CreatedBy = _accessor.HttpContext.User.Identity.Name;
             _repository.AddNewProject(proj);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var creatorName  = _accessor.HttpContext.User.Identity.Name;
+            if(creatorName != _repository.GetProject(id).CreatedBy)
+                 return Forbid();
+
+            _repository.DeleteProject(id);
             return Ok();
         }
     }

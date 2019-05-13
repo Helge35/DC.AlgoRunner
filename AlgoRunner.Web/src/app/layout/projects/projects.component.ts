@@ -29,7 +29,7 @@ export class ProjectsComponent implements OnInit {
   algsTotalItems: number
 
 
-  onFavoriteChanged(proj: Project, ) {
+  onFavoriteChanged(proj: Project) {
 
     if (proj.isFavorite == true)//remove
     {
@@ -51,6 +51,12 @@ export class ProjectsComponent implements OnInit {
     {
       projAll.isFavorite = !proj.isFavorite ;
     }
+  }
+
+  onRemoveProjectChangeEvent(id :number){
+    this.resentProjects = this.resentProjects.filter(p => p.id  !== id);
+    this.projects = this.projects.filter(p => p.id  !== id);
+    this.favoriteProjects = this.favoriteProjects.filter(p => p.id  !== id);
   }
 
   loadPageAlgs(page: number) {

@@ -134,6 +134,7 @@ namespace AlgoRunner.Api.Dal
         internal void AddNewProject(ProjectEntity projectEntity)
         {
             var project = _mapper.Map<Project>(projectEntity);
+            project.Activity = null;
             project.ActivityId = projectEntity.Activity.Id;
 
             project.ProjectAlgoList.Clear();
@@ -279,6 +280,12 @@ namespace AlgoRunner.Api.Dal
                 .Include("Algorithm")
                 .Where(x => !x.EndDate.HasValue)
                 .Select(x => _mapper.Map<ExecutionInfoEntity>(x)).ToList();
+        }
+
+        internal void DeleteProject(int id)
+        {
+            _dbContext.Projects.Remove(_dbContext.Projects.FirstOrDefault(x => x.Id == id));
+            _dbContext.SaveChanges();
         }
     }
 }

@@ -6,7 +6,7 @@
     <form (ngSubmit)="addActivity(mform)" #mform="ngForm">
     <div class="card card-default mb-6">
       <div class="card-header">
-        <i class="fa fa-bolt fa-fw"></i> Activities
+        <i class="fa fa-bolt fa-fw"></i> Projects
       </div>
       <!-- /.projects -->
       <div class="card-body">
@@ -15,7 +15,6 @@
             <div class="form-group row">
               <label class="col-3 col-form-label">{{act.name}}</label>
               <div class="col-8">
-                 <!--<input class="form-control" type="text" [(ngModel)]="act.serverPath"/>--> 
                   <label class="col-form-label">{{act.serverPath}}</label>
               </div>
               <span class="float-right text-muted small"><em>
@@ -51,7 +50,7 @@
   <div class="col-lg-6">
     <div class="card card-default mb-6">
       <div class="card-header">
-        <i class="fa fa-bolt fa-fw"></i> Common activity
+        <i class="fa fa-bolt fa-fw"></i> Common project
       </div>
       <div>
         <div class="list-group">

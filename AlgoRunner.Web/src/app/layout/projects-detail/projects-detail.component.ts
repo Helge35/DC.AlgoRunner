@@ -18,20 +18,11 @@ export class ProjectsDetailComponent implements OnInit {
   project: Project;
   activities: Activity[];
   algs: Algorithm[];
-
+  submitted : boolean =false;
   algsCurrentpage: number
   algsTotalItems: number
 
   getProject() {
-    /*
-    this.http.getProject(this.id).subscribe(info => {
-      this.project = info;
-      this.project.executionsList.forEach(exe => {exe.resultPath = exe.projectId.toString()+ '_' +exe.projectExecutionId.toString();
-      });
-    },
-      error => { console.log('Error: ' + error.message); }
-    );*/
-
     this.http.getProject(this.id).subscribe(info =>  this.project = info)
   }
 
@@ -52,8 +43,11 @@ export class ProjectsDetailComponent implements OnInit {
   }
 
 
-  saveProject(proj : Project){
-    this.http.saveProject(proj).subscribe(()=>{this.route.navigate([''])});
+  saveProject({ valid }: { valid: boolean }) {
+
+    this.submitted = true;
+    if (!valid) { return }
+    this.http.saveProject(this.project).subscribe(()=>{this.route.navigate([''])});
   }
 
   loadPageAlgs(page: number) {
