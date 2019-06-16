@@ -4,7 +4,7 @@ import { AlgoExeComponent } from './algo-exe.component';
 
 const routes: Routes = [
     {
-        path: '', component: AlgoExeComponent,
+        path: ':projectId/:id', component: AlgoExeComponent,
     }
 ];
 

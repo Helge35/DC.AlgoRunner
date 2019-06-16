@@ -153,12 +153,6 @@ namespace AlgoRunner.Api.Dal
 
         internal List<AlgorithmEntity> GetProjectAlgorithms(int projectId)
         {
-            //return _dbContext.ProjectAlgos
-            //    .Include("Algorithm.Activity")
-            //    .Include("Algorithm.ResultType")
-            //    .Include("Algorithm.AlgoParams")
-            //    .Where(x => x.ProjectId == projectId)
-            //    .Select(x => _mapper.Map<AlgorithmEntity>(x.Algorithm)).ToList();
 
             var algosIds = _dbContext.ProjectAlgos
       .Where(x => x.ProjectId == projectId)

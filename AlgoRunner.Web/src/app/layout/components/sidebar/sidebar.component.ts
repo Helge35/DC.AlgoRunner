@@ -22,13 +22,13 @@ export class SidebarComponent {
         this.translate.use(browserLang.match(/en|fr|ur|es|it|fa|de/) ? browserLang : 'en');
 
         this.router.events.subscribe(val => {
-            if (
+           /* if (
                 val instanceof NavigationEnd &&
                 window.innerWidth <= 992 &&
                 this.isToggled()
             ) {
                 this.toggleSidebar();
-            }
+            }*/
         });
     }
 

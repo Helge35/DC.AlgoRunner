@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgbAlertModule ,NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { ProjectsDetailRoutingModule } from './projects-detail-routing.module';
 import { ProjectsDetailComponent } from './projects-detail.component';
